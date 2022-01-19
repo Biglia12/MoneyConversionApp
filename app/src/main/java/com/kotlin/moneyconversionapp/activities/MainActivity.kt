@@ -25,6 +25,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun bottomNavigation() {
+
+        replaceFragment(dashBoardFragment)//init first fragment when app run the first time
+
         binding.navigationBottom.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.item_resume -> replaceFragment(dashBoardFragment)
