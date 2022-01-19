@@ -15,13 +15,13 @@
 
     <item
         android:id="@+id/item_history"
-        android:icon="@drawable/ic_baseline_dashboard"
+        android:icon="@drawable/ic_baseline_show_chart_24"
         android:visible="true"
         android:title="Historico" />
 
     <item
         android:id="@+id/item_moneys"
-        android:icon="@drawable/ic_baseline_dashboard"
+        android:icon="@drawable/ic_baseline_monetization_on_24"
         android:visible="true"
         android:title="Monedas" />
 
