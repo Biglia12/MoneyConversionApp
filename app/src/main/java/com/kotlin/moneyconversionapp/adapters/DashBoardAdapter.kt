@@ -29,8 +29,8 @@ class DashBoardAdapter(private val pokemonList: List<DollarResponse>): RecyclerV
         val binding = ItemDashboardBinding.bind(view)
 
         fun bind(pokemon: DollarResponse){
-            binding.txtBuyMoney.text = pokemon.name
-            binding.txtSellMoney.text = pokemon.type
+           // binding.txtBuyMoney.text = pokemon.compra
+           // binding.txtSellMoney.text = pokemon.type
         }
     }
 }
