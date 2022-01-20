@@ -6,10 +6,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.adapters.DashBoardAdapter
 import com.kotlin.moneyconversionapp.databinding.FragmentDashBoardBinding
-import com.kotlin.moneyconversionapp.model.MoneyResponse
+import com.kotlin.moneyconversionapp.model.DollarResponse
 
 class DashBoardFragment : Fragment() {
 
@@ -31,13 +30,13 @@ class DashBoardFragment : Fragment() {
 
     private fun initRecyler() {
 
-        val moneyResponse: List<MoneyResponse> = listOf(
-            MoneyResponse("pikachu", "truen"),
-            MoneyResponse("bulbazoor", "agua")
+        val dollarResponse: List<DollarResponse> = listOf(
+            DollarResponse("pikachu", "truen"),
+            DollarResponse("bulbazoor", "agua")
         )
         binding.recyclerResumeFragment.apply {
             layoutManager = LinearLayoutManager(context)
-            adapter = DashBoardAdapter(moneyResponse)
+            adapter = DashBoardAdapter(dollarResponse)
 
         }
 
