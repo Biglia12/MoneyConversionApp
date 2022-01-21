@@ -6,9 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.databinding.ItemDashboardBinding
-import com.kotlin.moneyconversionapp.model.DollarResponse
+import com.kotlin.moneyconversionapp.model.DollarCasaResponse
 
-class DashBoardAdapter(private val pokemonList: List<DollarResponse>): RecyclerView.Adapter<DashBoardAdapter.DashBoardHolder>() {
+class DashBoardAdapter(private val pokemonList: List<DollarCasaResponse>): RecyclerView.Adapter<DashBoardAdapter.DashBoardHolder>() {
 
     override fun onBindViewHolder(holder: DashBoardHolder, position: Int) {
         val item = pokemonList[position]
@@ -28,7 +28,7 @@ class DashBoardAdapter(private val pokemonList: List<DollarResponse>): RecyclerV
     class DashBoardHolder(val view: View): RecyclerView.ViewHolder(view){
         val binding = ItemDashboardBinding.bind(view)
 
-        fun bind(pokemon: DollarResponse){
+        fun bind(pokemon: DollarCasaResponse){
            // binding.txtBuyMoney.text = pokemon.compra
            // binding.txtSellMoney.text = pokemon.type
         }
