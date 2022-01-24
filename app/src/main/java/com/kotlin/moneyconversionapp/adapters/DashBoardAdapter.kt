@@ -6,14 +6,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.databinding.ItemDashboardBinding
-import com.kotlin.moneyconversionapp.model.DollarCasaResponse
+import com.kotlin.moneyconversionapp.model.CasaResponse
 
-class DashBoardAdapter(private val pokemonList: List<DollarCasaResponse>): RecyclerView.Adapter<DashBoardAdapter.DashBoardHolder>() {
-
-    override fun onBindViewHolder(holder: DashBoardHolder, position: Int) {
-        val item = pokemonList[position]
-        holder.bind(item)
-    }
+class DashBoardAdapter(private val dollarList: List<CasaResponse>): RecyclerView.Adapter<DashBoardAdapter.DashBoardHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DashBoardHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -21,16 +16,23 @@ class DashBoardAdapter(private val pokemonList: List<DollarCasaResponse>): Recyc
     }
 
     override fun getItemCount(): Int =
-        pokemonList.size
+        dollarList.size
+
+    override fun onBindViewHolder(holder: DashBoardHolder, position: Int) {
+        val item = dollarList[position]
+        holder.bind(item)
+
+    }
 
 
+    class DashBoardHolder(view: View): RecyclerView.ViewHolder(view){
+        private val binding = ItemDashboardBinding.bind(view)
 
-    class DashBoardHolder(val view: View): RecyclerView.ViewHolder(view){
-        val binding = ItemDashboardBinding.bind(view)
-
-        fun bind(pokemon: DollarCasaResponse){
-           // binding.txtBuyMoney.text = pokemon.compra
-           // binding.txtSellMoney.text = pokemon.type
+        fun bind(dollar: CasaResponse){
+            binding.txtTypeDollar.text = dollar.dollarCasa.nombre
+            binding.txtSellMoney.text = dollar.dollarCasa.venta
+            binding.txtBuyMoney.text = dollar.dollarCasa.compra
+            binding.textViewVariation.text = dollar.dollarCasa.variacion
         }
     }
 }

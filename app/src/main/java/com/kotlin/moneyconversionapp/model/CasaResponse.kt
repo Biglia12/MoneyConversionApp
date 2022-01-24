@@ -6,6 +6,6 @@ import com.google.gson.annotations.SerializedName
 data class CasaResponse (
     @SerializedName("casa")
     @Expose
-    private val  dollarCasa:  DollarCasaResponse
+    val  dollarCasa:  DollarCasaResponse
 
 )
