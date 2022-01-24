@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.kotlin.moneyconversionapp.Constants
 import com.kotlin.moneyconversionapp.adapters.DashBoardAdapter
 import com.kotlin.moneyconversionapp.databinding.FragmentDashBoardBinding
 import com.kotlin.moneyconversionapp.model.CasaResponse
@@ -52,7 +53,7 @@ class DashBoardFragment : Fragment() {
 
     private fun getRetrofit(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl("https://www.dolarsi.com/api/")
+            .baseUrl(Constants.BASE_URL_DOLARSI)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 
