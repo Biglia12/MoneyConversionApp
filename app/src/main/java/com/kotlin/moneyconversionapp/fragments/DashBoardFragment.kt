@@ -11,7 +11,6 @@ import com.kotlin.moneyconversionapp.Constants
 import com.kotlin.moneyconversionapp.adapters.DashBoardAdapter
 import com.kotlin.moneyconversionapp.databinding.FragmentDashBoardBinding
 import com.kotlin.moneyconversionapp.model.CasaResponse
-import com.kotlin.moneyconversionapp.model.DollarCasaResponse
 import com.kotlin.moneyconversionapp.services.Services
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -24,9 +23,11 @@ class DashBoardFragment : Fragment() {
 
     private var _binding: FragmentDashBoardBinding? = null
     private val binding get() = _binding!!
+
     //private var dollarResponse = listOf<DollarCasaResponse>()
-    private var dollarResponse = listOf<CasaResponse>()
-    private lateinit var adapter : DashBoardAdapter
+    private var dollarResponse = ArrayList<CasaResponse>()
+    private lateinit var adapter: DashBoardAdapter
+    private var position : Int = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -48,7 +49,6 @@ class DashBoardFragment : Fragment() {
         adapter = DashBoardAdapter(dollarResponse)
         binding.recyclerResumeFragment.layoutManager = LinearLayoutManager(context)
         binding.recyclerResumeFragment.adapter = adapter
-
     }
 
     private fun getRetrofit(): Retrofit {
@@ -62,13 +62,21 @@ class DashBoardFragment : Fragment() {
     private fun callService() {
         CoroutineScope(Dispatchers.IO).launch {
             val call: Services = getRetrofit().create(Services::class.java)
-            val response: Response<List<CasaResponse>> = call.callApiDollar("valoresprincipales")
+            val response: Response<ArrayList<CasaResponse>> =
+                call.callApiDollar("valoresprincipales")
             val dollar = response.body()!!
             activity?.runOnUiThread {
                 if (response.isSuccessful && response.body() != null) {
-                    dollarResponse= dollar
+                    dollarResponse = dollar
                     adapter.notifyDataSetChanged()
-                  initRecyler()
+                    initRecyler()
+
+                    dollarResponse.forEachIndexed{index, item ->     //TODO se remueve el indice el cual se llama por el parametro "nombre" "argentina" ya que el servicio nos brinda un objeto que en este caso no nesecitamos
+                        if (item.dollarCasa.nombre.equals("Argentina")) {
+                            adapter.removeItem(index)
+                        }
+                    }
+
                 } else {
                     Toast.makeText(context, "error", Toast.LENGTH_SHORT).show()
                 }

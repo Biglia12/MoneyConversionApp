@@ -10,6 +10,6 @@ import retrofit2.http.Query
 interface Services {
 
     @GET("api.php")
-    suspend fun callApiDollar(@Query ("type")type : String): Response<List<CasaResponse>> //response es para el uso de corrutinas
+    suspend fun callApiDollar(@Query ("type")type : String): Response<ArrayList<CasaResponse>> //response es para el uso de corrutinas
 
 }
