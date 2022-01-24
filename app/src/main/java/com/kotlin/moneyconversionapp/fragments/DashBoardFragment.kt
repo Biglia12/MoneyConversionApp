@@ -63,7 +63,7 @@ class DashBoardFragment : Fragment() {
         CoroutineScope(Dispatchers.IO).launch {
             val call: Services = getRetrofit().create(Services::class.java)
             val response: Response<ArrayList<CasaResponse>> =
-                call.callApiDollar("valoresprincipales")
+                call.callApiDollar(Constants.PARAMETER_DOLARSI)
             val dollar = response.body()!!
             activity?.runOnUiThread {
                 if (response.isSuccessful && response.body() != null) {

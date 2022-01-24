@@ -9,7 +9,8 @@ import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.databinding.ItemDashboardBinding
 import com.kotlin.moneyconversionapp.model.CasaResponse
 
-class DashBoardAdapter(private val dollarList: ArrayList<CasaResponse>): RecyclerView.Adapter<DashBoardAdapter.DashBoardHolder>() {
+class DashBoardAdapter(private val dollarList: ArrayList<CasaResponse>) :
+    RecyclerView.Adapter<DashBoardAdapter.DashBoardHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DashBoardHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -25,34 +26,42 @@ class DashBoardAdapter(private val dollarList: ArrayList<CasaResponse>): Recycle
 
     }
 
-     fun removeItem(position: Int){
+    fun removeItem(position: Int) {
         dollarList.removeAt(position)
         notifyItemRemoved(position)
     }
 
 
-    class DashBoardHolder(view: View): RecyclerView.ViewHolder(view){
+    class DashBoardHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ItemDashboardBinding.bind(view)
 
-        fun bind(dollar: CasaResponse){
-            binding.txtTypeDollar.text = dollar.dollarCasa.nombre
-            binding.txtSellMoney.text = dollar.dollarCasa.venta
-            binding.txtBuyMoney.text = dollar.dollarCasa.compra
-            binding.textViewVariation.text = dollar.dollarCasa.variacion
+        fun bind(dollar: CasaResponse) {
+            val sellMoney = "$" + dollar.dollarCasa.venta
+            val buyMoney = "$" + dollar.dollarCasa.compra
 
-            if (dollar.dollarCasa.nombre.isNullOrEmpty()){
+            binding.txtTypeDollar.text = dollar.dollarCasa.nombre
+            binding.txtSellMoney.text = sellMoney
+            binding.txtBuyMoney.text = buyMoney
+            binding.textViewVariation.text = dollar.dollarCasa.variacion
+            binding.imageViewCountry.setImageResource(R.drawable.ic_bitcoin_color)
+
+            if (dollar.dollarCasa.nombre?.startsWith("Dolar") == true) {
+                binding.imageViewCountry.setImageResource(R.drawable.ic_dollar_icon)
+            }
+
+            if (dollar.dollarCasa.nombre.isNullOrEmpty()) {
                 changeText(binding.txtTypeDollar)
             }
 
-            if (dollar.dollarCasa.venta.isNullOrEmpty()){
+            if (dollar.dollarCasa.venta.isNullOrEmpty()) {
                 changeText(binding.txtSellMoney)
             }
 
-            if (dollar.dollarCasa.compra.isNullOrEmpty()){
+            if (dollar.dollarCasa.compra.isNullOrEmpty()) {
                 changeText(binding.txtBuyMoney)
             }
 
-            if (dollar.dollarCasa.variacion.isNullOrEmpty()){
+            if (dollar.dollarCasa.variacion.isNullOrEmpty()) {
                 changeText(binding.textViewVariation)
             }
         }
@@ -60,5 +69,6 @@ class DashBoardAdapter(private val dollarList: ArrayList<CasaResponse>): Recycle
         private fun changeText(text: TextView) {
             text.text = "No hay datos"
         }
+
     }
 }
