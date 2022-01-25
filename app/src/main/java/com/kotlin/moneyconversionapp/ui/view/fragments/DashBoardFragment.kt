@@ -1,4 +1,4 @@
-package com.kotlin.moneyconversionapp.fragments
+package com.kotlin.moneyconversionapp.ui.view.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,8 +10,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.kotlin.moneyconversionapp.Constants
 import com.kotlin.moneyconversionapp.adapters.DashBoardAdapter
 import com.kotlin.moneyconversionapp.databinding.FragmentDashBoardBinding
-import com.kotlin.moneyconversionapp.model.CasaResponse
-import com.kotlin.moneyconversionapp.services.Services
+import com.kotlin.moneyconversionapp.data.model.CasaResponse
+import com.kotlin.moneyconversionapp.data.services.Services
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

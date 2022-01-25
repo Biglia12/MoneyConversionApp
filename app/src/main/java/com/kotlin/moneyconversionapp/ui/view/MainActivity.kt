@@ -1,12 +1,12 @@
-package com.kotlin.moneyconversionapp.activities
+package com.kotlin.moneyconversionapp.ui.view
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.databinding.ActivityMainBinding
-import com.kotlin.moneyconversionapp.fragments.DashBoardFragment
-import com.kotlin.moneyconversionapp.fragments.HistoryFragment
+import com.kotlin.moneyconversionapp.ui.view.fragments.DashBoardFragment
+import com.kotlin.moneyconversionapp.ui.view.fragments.HistoryFragment
 
 //test
 class MainActivity : AppCompatActivity() {
