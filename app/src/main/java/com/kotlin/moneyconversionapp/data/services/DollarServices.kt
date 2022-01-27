@@ -5,14 +5,16 @@ import com.kotlin.moneyconversionapp.core.RetrofitHelper
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import javax.inject.Inject
 
-class DollarServices {
+class DollarServices @Inject constructor(
+    private val api:Services
 
-    private val retrofit = RetrofitHelper.getRetrofit()
-
+) {
+    //private val retrofit = RetrofitHelper.getRetrofit()
     suspend fun getDollar(): ArrayList<CasaResponse> {
         return withContext(Dispatchers.IO) {
-            val response = retrofit.create(Services::class.java).callApiDollar(Constants.PARAMETER_DOLARSI)
+            val response = api.callApiDollar(Constants.PARAMETER_DOLARSI)
             response.body() ?: arrayListOf()
         }
     }

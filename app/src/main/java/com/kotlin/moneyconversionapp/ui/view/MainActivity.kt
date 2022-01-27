@@ -7,8 +7,9 @@ import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.databinding.ActivityMainBinding
 import com.kotlin.moneyconversionapp.ui.view.fragments.DashBoardFragment
 import com.kotlin.moneyconversionapp.ui.view.fragments.HistoryFragment
+import dagger.hilt.android.AndroidEntryPoint
 
-//test
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding

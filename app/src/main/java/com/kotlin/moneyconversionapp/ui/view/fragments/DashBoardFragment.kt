@@ -17,6 +17,7 @@ import com.kotlin.moneyconversionapp.databinding.FragmentDashBoardBinding
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.data.services.Services
 import com.kotlin.moneyconversionapp.ui.viewmodel.DollarViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -24,6 +25,7 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
+@AndroidEntryPoint
 class DashBoardFragment : Fragment() {
 
     private var _binding: FragmentDashBoardBinding? = null

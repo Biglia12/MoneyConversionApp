@@ -6,12 +6,19 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.domain.GetDollarsUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DollarViewModel : ViewModel() {
+@HiltViewModel
+class DollarViewModel @Inject constructor(
+    private val getDollarUseCase : GetDollarsUseCase
+
+): ViewModel() {
 
     val dollarModel = MutableLiveData<ArrayList<CasaResponse>>()
-    var getDollarUseCase = GetDollarsUseCase()
+   // var getDollarUseCase = GetDollarsUseCase()
+
     var casaResponseList = ArrayList<CasaResponse>()
     var isLoading = MutableLiveData<Boolean>()
 
