@@ -1,5 +1,6 @@
 package com.kotlin.moneyconversionapp.ui.viewmodel
 
+import android.widget.FrameLayout
 import android.widget.Toast
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -21,6 +22,7 @@ class DollarViewModel @Inject constructor(
 
     var casaResponseList = ArrayList<CasaResponse>()
     var isLoading = MutableLiveData<Boolean>()
+   // var errorMessage = MutableLiveData<Boolean>()
 
     fun onCreate() {
         viewModelScope.launch {
@@ -31,6 +33,9 @@ class DollarViewModel @Inject constructor(
                 isLoading.postValue(false)
                 casaResponseList = result
                 dollarModel.postValue(casaResponseList)
+                //errorMessage.postValue(false)
+            }else{
+               // errorMessage.postValue(true)
             }
         }
 

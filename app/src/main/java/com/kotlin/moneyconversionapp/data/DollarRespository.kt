@@ -10,8 +10,6 @@ class DollarRespository @Inject constructor(
     private val dollarProvider: DollarProvider
 ) {
 
-    //private val api = DollarServices()
-
     suspend fun getAllDollar(): ArrayList<CasaResponse>{
         val response = api.getDollar()
         dollarProvider.dollars = response

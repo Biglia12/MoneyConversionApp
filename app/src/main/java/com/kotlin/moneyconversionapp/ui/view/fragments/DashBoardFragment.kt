@@ -16,6 +16,7 @@ import com.kotlin.moneyconversionapp.adapters.DashBoardAdapter
 import com.kotlin.moneyconversionapp.databinding.FragmentDashBoardBinding
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.data.services.Services
+import com.kotlin.moneyconversionapp.ui.view.ErrorMessageView
 import com.kotlin.moneyconversionapp.ui.viewmodel.DollarViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineScope
@@ -34,6 +35,7 @@ class DashBoardFragment : Fragment() {
     private var dollarResponse = ArrayList<CasaResponse>()
     private lateinit var adapter: DashBoardAdapter
     private val dollarViewModel: DollarViewModel by viewModels()
+   // private lateinit var errorMessageView: ErrorMessageView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,6 +62,15 @@ class DashBoardFragment : Fragment() {
         dollarViewModel.isLoading.observe(this, {
             binding.progressBarFragmentDash.isVisible = it
         })
+
+       /* dollarViewModel.errorMessage.observe(this, Observer {
+            binding.errorServiceFrame.isVisible = it
+            errorMessageView.errorMessageService(View.OnClickListener {
+                binding.errorServiceFrame.removeView(errorMessageView.view)
+
+            })
+
+        })*/
 
     }
 
