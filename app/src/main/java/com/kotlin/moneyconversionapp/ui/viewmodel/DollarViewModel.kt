@@ -22,7 +22,7 @@ class DollarViewModel @Inject constructor(
 
     var casaResponseList = ArrayList<CasaResponse>()
     var isLoading = MutableLiveData<Boolean>()
-   // var errorMessage = MutableLiveData<Boolean>()
+    var errorMessage = MutableLiveData<Boolean>()
 
     fun onCreate() {
         viewModelScope.launch {
@@ -33,9 +33,10 @@ class DollarViewModel @Inject constructor(
                 isLoading.postValue(false)
                 casaResponseList = result
                 dollarModel.postValue(casaResponseList)
-                //errorMessage.postValue(false)
+                errorMessage.postValue(false)
             }else{
-               // errorMessage.postValue(true)
+                errorMessage.postValue(true)
+                isLoading.postValue(false)
             }
         }
 
