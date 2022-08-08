@@ -1,4 +1,4 @@
-package com.kotlin.moneyconversionapp.fragments
+package com.kotlin.moneyconversionapp.ui.view.fragments
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

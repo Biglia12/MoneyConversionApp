@@ -1,8 +1,6 @@
-package com.kotlin.moneyconversionapp.services
+package com.kotlin.moneyconversionapp.data.services
 
-import com.google.gson.JsonArray
-import com.kotlin.moneyconversionapp.model.CasaResponse
-import retrofit2.Call
+import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Query

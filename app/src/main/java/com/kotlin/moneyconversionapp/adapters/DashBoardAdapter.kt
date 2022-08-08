@@ -7,7 +7,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.databinding.ItemDashboardBinding
-import com.kotlin.moneyconversionapp.model.CasaResponse
+import com.kotlin.moneyconversionapp.data.model.CasaResponse
 
 class DashBoardAdapter(private val dollarList: ArrayList<CasaResponse>) :
     RecyclerView.Adapter<DashBoardAdapter.DashBoardHolder>() {
