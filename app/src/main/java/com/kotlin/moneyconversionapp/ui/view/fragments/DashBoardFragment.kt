@@ -64,6 +64,17 @@ class DashBoardFragment : Fragment() {
             })
         }
 
+        activity?.let {
+            dollarViewModel.showError.observe(it, Observer {
+                binding.constraintErrorService.isVisible = it
+            })
+        }
+
+        activity.let {
+            binding.retryErrorButton.setOnClickListener {
+                dollarViewModel.callService()
+            }
+        }
 
 
         /*   dollarViewModel.dollarModel.observe(this, {
