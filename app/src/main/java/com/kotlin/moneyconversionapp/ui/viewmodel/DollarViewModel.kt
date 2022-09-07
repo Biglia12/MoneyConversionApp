@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 class DollarViewModel : ViewModel() {
 
     val casaResponse = MutableLiveData<ArrayList<CasaResponse>>()
+    val isLoading = MutableLiveData<Boolean>()
 
     var casaResponseList = ArrayList<CasaResponse>()
 
@@ -20,12 +21,18 @@ class DollarViewModel : ViewModel() {
 
             val result = getDollarUseCases()
 
-            if (!result.isNullOrEmpty()){
+            isLoading.postValue(true)
+
+            if (!result.isNullOrEmpty()) {
 
                 casaResponseList = result
 
                 casaResponse.postValue(casaResponseList)
 
+                isLoading.postValue(false)
+
+            } else{
+                isLoading.postValue(false)
             }
         }
     }
