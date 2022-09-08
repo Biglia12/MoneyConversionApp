@@ -26,7 +26,7 @@ class DollarViewModel : ViewModel() {
 
     fun callService() {
 
-        viewModelScope.launch (Dispatchers.IO){
+        viewModelScope.launch {
 
             val result = getDollarUseCases()
 
