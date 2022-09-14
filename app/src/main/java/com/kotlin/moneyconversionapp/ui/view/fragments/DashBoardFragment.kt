@@ -47,7 +47,7 @@ class DashBoardFragment : Fragment() {
 
         //callService()
 
-        dollarViewModel.onCreate()
+        //dollarViewModel.ini
 
         dollarViewModel.casaResponse.observe(viewLifecycleOwner, Observer {
             initRecyler(it)
@@ -72,6 +72,8 @@ class DashBoardFragment : Fragment() {
 
         activity.let {
             binding.retryErrorButton.setOnClickListener {
+                binding.constraintErrorService.isVisible = false
+                binding.progessService.isVisible = true
                 dollarViewModel.callService()
             }
         }
