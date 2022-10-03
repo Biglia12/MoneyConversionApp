@@ -10,8 +10,9 @@ import kotlinx.coroutines.launch
 class DollarViewModel : ViewModel() {
 
     val casaResponse = MutableLiveData<ArrayList<CasaResponse>>()
+    val array = MutableLiveData<ArrayList<String>>()
     val isLoading = MutableLiveData<Boolean>()
-    val showError  = MutableLiveData<Boolean>()
+    val showError = MutableLiveData<Boolean>()
 
     private val getDollarUseCases = DollarUseCases()
 
@@ -20,6 +21,19 @@ class DollarViewModel : ViewModel() {
         callService()
 
     }
+
+    fun setSpinner(result: ArrayList<CasaResponse>) {
+        val arrayNames = arrayListOf<String>()
+        for (i in result.indices) {
+            arrayNames.add(result[i].dollarCasa.nombre.toString())
+
+            if (result[i].dollarCasa.nombre.toString() == "Argentina") {
+                arrayNames.remove("Argentina")
+            }
+                array.postValue(arrayNames)
+        }
+    }
+
 
     fun callService() {
 
@@ -37,14 +51,16 @@ class DollarViewModel : ViewModel() {
 
                 showError.postValue(false)
 
-            } else{
+                setSpinner(result)
+
+            } else {
                 showError.postValue(true)
                 isLoading.postValue(false)
             }
         }
     }
 
-     fun retryService(retry: Boolean) {
+    fun retryService(retry: Boolean) {
 
     }
 }

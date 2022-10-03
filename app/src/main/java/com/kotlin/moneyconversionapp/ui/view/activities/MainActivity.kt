@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import com.kotlin.moneyconversionapp.Application
 import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.databinding.ActivityMainBinding
+import com.kotlin.moneyconversionapp.ui.view.fragments.CalculatorFragment
 import com.kotlin.moneyconversionapp.ui.view.fragments.DashBoardFragment
 import com.kotlin.moneyconversionapp.ui.view.fragments.HistoryFragment
 
@@ -17,6 +18,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private val dashBoardFragment = DashBoardFragment()
     private val historyFragment = HistoryFragment()
+    private val calculatorFragment = CalculatorFragment()
     private val application: Application = Application()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -50,6 +52,7 @@ class MainActivity : AppCompatActivity() {
             when (it.itemId) {
                 R.id.item_resume -> replaceFragment(dashBoardFragment)
                 R.id.item_history -> replaceFragment(historyFragment)
+                R.id.item_conversor -> replaceFragment(calculatorFragment)
             }
             true
         }
