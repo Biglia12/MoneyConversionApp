@@ -7,7 +7,7 @@ import android.os.Build
 
 class Application {
 
-    fun isConnected(context: Context?): Boolean {
+    fun isConnected(context: Context?): Boolean { // para la conexion a internet
         val connectivityManager =
             context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
