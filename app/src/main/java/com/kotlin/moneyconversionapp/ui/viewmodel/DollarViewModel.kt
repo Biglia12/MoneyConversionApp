@@ -23,14 +23,14 @@ class DollarViewModel : ViewModel() {
     }
 
     fun setSpinner(result: ArrayList<CasaResponse>) {
-        val arrayNames = arrayListOf<String>()
+        val arrayNames = arrayListOf<CasaResponse>()
         for (i in result.indices) {
-            arrayNames.add(result[i].dollarCasa.nombre.toString())
-
+            arrayNames.add(result[i])
             if (result[i].dollarCasa.nombre.toString() == "Argentina") {
-                arrayNames.remove("Argentina")
+                arrayNames.remove(result[i])
+                //result
             }
-                array.postValue(arrayNames)
+                casaResponse.postValue(arrayNames)
         }
     }
 
