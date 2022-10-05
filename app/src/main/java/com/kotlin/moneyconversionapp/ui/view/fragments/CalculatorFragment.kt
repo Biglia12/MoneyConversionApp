@@ -20,14 +20,7 @@ class CalculatorFragment : Fragment() {
     private val dollarViewModel: DollarViewModel by viewModels()
     private lateinit var priceWithDollarVenta : String
     private lateinit var priceWithDollarCompra : String
-   // private val arrayNames = arrayListOf<String>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-
-        }
-    }
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -50,24 +43,19 @@ class CalculatorFragment : Fragment() {
             override fun onClick(v: View?) {
 
                 val valueEtString = binding.editTextCalculate.text.toString()
-                val valueCompraWithPoint = priceWithDollarCompra.replace(",", ".")
-                val valueVentaWithPoint = priceWithDollarVenta.replace(",", ".")
-
-                dollarViewModel.setCalculate(valueEtString, valueCompraWithPoint, valueVentaWithPoint) // se pasan los parametro para poder hacer la cuenta
+                dollarViewModel.setCalculate(valueEtString, priceWithDollarCompra, priceWithDollarVenta) // se pasan los parametro para poder hacer la cuenta
             }
-
         })
 
         dollarViewModel.getCalculateSell().observe(requireActivity(), object :Observer<String> { // se llama para obtenrer el resultado
-            override fun onChanged(t: String?) {
-                binding.textSellPriceMount.text = t
+            override fun onChanged(resultSellAccount: String?) {
+                binding.textSellPriceMount.text = resultSellAccount
             }
 
         })
-
         dollarViewModel.getCalculateBuy().observe(requireActivity(), object :Observer<String> {
-            override fun onChanged(t: String?) {
-                binding.textBuyPriceMount.text = t
+            override fun onChanged(resultBuyAccount: String?) {
+                binding.textBuyPriceMount.text = resultBuyAccount
             }
 
         })
@@ -82,7 +70,6 @@ class CalculatorFragment : Fragment() {
            }
             val adapterSpinner = activity?.let { it1 -> ArrayAdapter(it1, android.R.layout.simple_spinner_item, arrayNames) }
             binding.spinnerChoose.adapter = adapterSpinner
-            val spinnerSelected = binding.spinnerChoose.selectedItem.toString()
 
             binding.spinnerChoose.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
                 override fun onNothingSelected(parent: AdapterView<*>?) {

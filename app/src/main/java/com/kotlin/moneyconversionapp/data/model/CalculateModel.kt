@@ -7,14 +7,16 @@ class CalculateModel {
 
      fun finishResult(value: String, dataValue: String): String {
 
-        if (value.isEmpty() || dataValue.isEmpty()){
+         val valueWithPoint = dataValue.replace(",", ".")
+
+        if (value.isEmpty() || valueWithPoint.isEmpty()){
             return "0"
         }else{
-            result = value.toLong() * dataValue.toDouble()
-            resultToString = result.toString()
+            result = value.toLong() * valueWithPoint.toDouble()
+            resultToString = "%.2f".format(result)
         }
 
-        return resultToString
+        return (resultToString)
 
     }
 
