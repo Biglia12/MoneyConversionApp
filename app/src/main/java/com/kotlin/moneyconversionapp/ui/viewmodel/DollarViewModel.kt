@@ -1,8 +1,10 @@
 package com.kotlin.moneyconversionapp.ui.viewmodel
 
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.kotlin.moneyconversionapp.data.model.CalculateModel
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.domain.DollarUseCases
 import kotlinx.coroutines.launch
@@ -10,9 +12,11 @@ import kotlinx.coroutines.launch
 class DollarViewModel : ViewModel() {
 
     val casaResponse = MutableLiveData<ArrayList<CasaResponse>>()
-    val array = MutableLiveData<ArrayList<String>>()
     val isLoading = MutableLiveData<Boolean>()
     val showError = MutableLiveData<Boolean>()
+    val resultCalculateBuy = MutableLiveData<String>()
+    val resultCalculateSell = MutableLiveData<String>()
+    val calculateModel: CalculateModel = CalculateModel()
 
     private val getDollarUseCases = DollarUseCases()
 
@@ -21,19 +25,6 @@ class DollarViewModel : ViewModel() {
         callService()
 
     }
-
-    fun setSpinner(result: ArrayList<CasaResponse>) {
-        val arrayNames = arrayListOf<CasaResponse>()
-        for (i in result.indices) {
-            arrayNames.add(result[i])
-            if (result[i].dollarCasa.nombre.toString() == "Argentina") {
-                arrayNames.remove(result[i])
-                //result
-            }
-                casaResponse.postValue(arrayNames)
-        }
-    }
-
 
     fun callService() {
 
@@ -60,7 +51,28 @@ class DollarViewModel : ViewModel() {
         }
     }
 
-    fun retryService(retry: Boolean) {
+    fun setSpinner(result: ArrayList<CasaResponse>) { // se pasa array de nombres para el spinner
+        val arrayNames = arrayListOf<CasaResponse>()
+        for (i in result.indices) {
+            arrayNames.add(result[i])
+            if (result[i].dollarCasa.nombre.toString() == "Argentina") {
+                arrayNames.remove(result[i]) // se remueve del spinner ya que no nos sirve
+                //result
+            }
+            casaResponse.postValue(arrayNames)
+        }
+    }
 
+    fun getCalculateBuy(): MutableLiveData<String> { //Obtener resultado del calculo
+        return resultCalculateBuy
+    }
+
+    fun getCalculateSell(): MutableLiveData<String> { //Obtener resultado del calculo
+        return resultCalculateSell
+    }
+
+    fun setCalculate (dataEditText: String, dataValue: String, valueVentaWithPoint: String){ //pasar parametros para hacer el calculo de la cuenta
+          resultCalculateBuy.value = calculateModel.finishResult(dataEditText, dataValue)
+          resultCalculateSell.value = calculateModel.finishResult(dataEditText, valueVentaWithPoint)
     }
 }

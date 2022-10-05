@@ -18,6 +18,8 @@ class CalculatorFragment : Fragment() {
     private var _binding: FragmentCalculatorBinding? = null
     private val binding get() = _binding!!
     private val dollarViewModel: DollarViewModel by viewModels()
+    private lateinit var priceWithDollarVenta : String
+    private lateinit var priceWithDollarCompra : String
    // private val arrayNames = arrayListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -26,7 +28,6 @@ class CalculatorFragment : Fragment() {
 
         }
     }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -39,34 +40,47 @@ class CalculatorFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         setSpinner()
-        valueEt()
+        btnCalculateListener()
 
         }
 
-    private fun valueEt() {
-        binding.btnCalculate.setOnClickListener {
+    private fun btnCalculateListener() {
 
-            val valueEtString = binding.editTextCalculate.text
-            val valueStringWithDollar = "$$valueEtString"
+        binding.btnCalculate.setOnClickListener(object: View.OnClickListener {
+            override fun onClick(v: View?) {
 
-            if (valueEtString.isNotEmpty()) {
-                binding.textSellPriceMount.text = valueStringWithDollar
-                binding.textBuyPriceMount.text = valueStringWithDollar
-            }else{
-                binding.textSellPriceMount.text = "$0"
-                binding.textBuyPriceMount.text = "$0"
+                val valueEtString = binding.editTextCalculate.text.toString()
+                val valueCompraWithPoint = priceWithDollarCompra.replace(",", ".")
+                val valueVentaWithPoint = priceWithDollarVenta.replace(",", ".")
+
+                dollarViewModel.setCalculate(valueEtString, valueCompraWithPoint, valueVentaWithPoint) // se pasan los parametro para poder hacer la cuenta
             }
-        }
+
+        })
+
+        dollarViewModel.getCalculateSell().observe(requireActivity(), object :Observer<String> { // se llama para obtenrer el resultado
+            override fun onChanged(t: String?) {
+                binding.textSellPriceMount.text = t
+            }
+
+        })
+
+        dollarViewModel.getCalculateBuy().observe(requireActivity(), object :Observer<String> {
+            override fun onChanged(t: String?) {
+                binding.textBuyPriceMount.text = t
+            }
+
+        })
 
     }
 
     private fun setSpinner() {
         dollarViewModel.casaResponse.observe(viewLifecycleOwner, Observer {
-            val arraNames = arrayListOf<String>()
+            val arrayNames = arrayListOf<String>()
            it.forEach {
-              arraNames.add(it.dollarCasa.nombre.toString())
+              arrayNames.add(it.dollarCasa.nombre.toString())
            }
-            val adapterSpinner = activity?.let { it1 -> ArrayAdapter(it1, android.R.layout.simple_spinner_item, arraNames) }
+            val adapterSpinner = activity?.let { it1 -> ArrayAdapter(it1, android.R.layout.simple_spinner_item, arrayNames) }
             binding.spinnerChoose.adapter = adapterSpinner
             val spinnerSelected = binding.spinnerChoose.selectedItem.toString()
 
@@ -76,10 +90,9 @@ class CalculatorFragment : Fragment() {
                 }
 
                 override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                   // Toast.makeText(requireActivity(), arrayNames[position], Toast.LENGTH_SHORT).show()
-                    val names = arraNames[position]
-                    when (names){
-                        "Dolar Oficial" -> setPrices(it[position])
+                    val names = arrayNames[position]
+                    when (names) {
+                        "Dolar Oficial" -> setPrices(it[position]) //Al ser un servicio de terceros puede haber problemas con esto, pero no hay otra manera por el momento
                         "Dolar Blue" -> setPrices(it[position])
                         "Dolar Soja" -> setPrices(it[position])
                         "Dolar Contado con Liqui" -> setPrices(it[position])
@@ -89,19 +102,6 @@ class CalculatorFragment : Fragment() {
                         "Dolar" -> setPrices(it[position])
                         else -> setWithoutPrices("$0")
                     }
-                   /* if (arraNames[position] == "Dolar Oficial" || ){
-                        binding.textSellPrice.text = it[position].dollarCasa.venta
-                        binding.textBuyPrice.text = it[position].dollarCasa.venta
-                    }else if (arraNames[position] == "Dolar Oficial"){
-                        binding.textSellPrice.text = it[position].dollarCasa.venta
-                        binding.textBuyPrice.text = it[position].dollarCasa.venta
-                    }else if (arraNames[position] == "Dolar Blue"){
-                        binding.textSellPrice.text = it[position].dollarCasa.venta
-                        binding.textBuyPrice.text = it[position].dollarCasa.venta
-                    }else if (arraNames[position] == "Dolar Soja"){
-                        binding.textSellPrice.text = it[position].dollarCasa.venta
-                        binding.textBuyPrice.text = it[position].dollarCasa.venta
-                    }*/
                 }
 
             }
@@ -115,8 +115,8 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun setPrices(casaResponse: CasaResponse) {
-        val priceWithDollarVenta = "$" + casaResponse.dollarCasa.venta
-        val priceWithDollarCompra = "$" + casaResponse.dollarCasa.compra
+         priceWithDollarVenta = casaResponse.dollarCasa.venta.toString()
+         priceWithDollarCompra = casaResponse.dollarCasa.compra.toString()
 
         binding.textSellPrice.text = priceWithDollarVenta
         binding.textBuyPrice.text = priceWithDollarCompra
