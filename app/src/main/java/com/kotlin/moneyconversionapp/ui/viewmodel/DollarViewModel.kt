@@ -1,6 +1,5 @@
 package com.kotlin.moneyconversionapp.ui.viewmodel
 
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -37,7 +36,7 @@ class DollarViewModel : ViewModel() {
 
             if (!result.isNullOrEmpty()) {
 
-                casaResponse.postValue(result)
+                removeName(result)
 
                 isLoading.postValue(false)
 
@@ -52,16 +51,24 @@ class DollarViewModel : ViewModel() {
         }
     }
 
+    private fun removeName(result: ArrayList<CasaResponse>) {
+        for (i in result.indices) {
+            if (result[i].dollarCasa.nombre.toString() == "Argentina") {
+                result.remove(result[i]) // se remueve de la lista ya "Argentina" que no nos sirve
+            }
+            casaResponse.postValue(result)
+        }
+    }
+
     fun setSpinner(result: ArrayList<CasaResponse>) { // se pasa array de nombres para el spinner
         val arrayNames = arrayListOf<CasaResponse>()
         for (i in result.indices) {
             arrayNames.add(result[i])
-            if (result[i].dollarCasa.nombre.toString() == "Argentina" || result[i].dollarCasa.nombre.toString() == "Dolar Soja" || result[i].dollarCasa.nombre.toString() == "Bitcoin") {
+            if (result[i].dollarCasa.nombre.toString() == "Dolar Soja" || result[i].dollarCasa.nombre.toString() == "Bitcoin") {
                 arrayNames.remove(result[i]) // se remueve del spinner ya que no nos sirve
-                //result
             }
-            casaResponseCalculator.postValue(arrayNames)
         }
+        casaResponseCalculator.postValue(result)
     }
 
     fun getCalculateBuy(): MutableLiveData<String> { //Obtener resultado del calculo

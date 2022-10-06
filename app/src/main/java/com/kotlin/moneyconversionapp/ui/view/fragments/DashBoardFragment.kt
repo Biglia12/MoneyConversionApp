@@ -51,11 +51,6 @@ class DashBoardFragment : Fragment() {
 
         dollarViewModel.casaResponse.observe(viewLifecycleOwner, Observer {
             initRecyler(it)
-            it.forEachIndexed { index, item ->     //TODO se remueve el indice el cual se llama por el parametro "nombre" "argentina" ya que el servicio nos brinda un objeto que en este caso no nesecitamos
-                if (item.dollarCasa.nombre.equals("Argentina")) {
-                    adapter.removeItem(index)
-                }
-            }
         })
 
         activity?.let {
