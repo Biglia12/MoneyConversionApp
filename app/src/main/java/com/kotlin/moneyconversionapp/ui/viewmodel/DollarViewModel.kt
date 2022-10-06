@@ -68,7 +68,7 @@ class DollarViewModel : ViewModel() {
                 arrayNames.remove(result[i]) // se remueve del spinner ya que no nos sirve
             }
         }
-        casaResponseCalculator.postValue(result)
+        casaResponseCalculator.postValue(arrayNames)
     }
 
     fun getCalculateBuy(): MutableLiveData<String> { //Obtener resultado del calculo
