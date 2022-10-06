@@ -1,8 +1,5 @@
 package com.kotlin.moneyconversionapp.data.model
 
-import java.text.NumberFormat
-import java.util.*
-
 class CalculateModel {
 
     private var result :Double = 0.0

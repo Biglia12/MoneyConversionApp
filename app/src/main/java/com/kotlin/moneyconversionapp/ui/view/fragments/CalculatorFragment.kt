@@ -9,6 +9,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.kotlin.moneyconversionapp.Constants
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.databinding.FragmentCalculatorBinding
 import com.kotlin.moneyconversionapp.ui.viewmodel.DollarViewModel
@@ -18,8 +19,8 @@ class CalculatorFragment : Fragment() {
     private var _binding: FragmentCalculatorBinding? = null
     private val binding get() = _binding!!
     private val dollarViewModel: DollarViewModel by viewModels()
-    private lateinit var priceWithDollarVenta : String
-    private lateinit var priceWithDollarCompra : String
+    private  var priceWithDollarVenta : String = ""
+    private  var priceWithDollarCompra : String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,13 +50,13 @@ class CalculatorFragment : Fragment() {
 
         dollarViewModel.getCalculateSell().observe(requireActivity(), object :Observer<String> { // se llama para obtenrer el resultado
             override fun onChanged(resultSellAccount: String?) {
-                binding.textSellPriceMount.text = resultSellAccount
+                binding.textSellPriceMount.text = stringWithDollarSign(resultSellAccount)
             }
 
         })
         dollarViewModel.getCalculateBuy().observe(requireActivity(), object :Observer<String> {
             override fun onChanged(resultBuyAccount: String?) {
-                binding.textBuyPriceMount.text = resultBuyAccount
+                binding.textBuyPriceMount.text = stringWithDollarSign(resultBuyAccount)
             }
 
         })
@@ -105,10 +106,14 @@ class CalculatorFragment : Fragment() {
          priceWithDollarVenta = casaResponse.dollarCasa.venta.toString()
          priceWithDollarCompra = casaResponse.dollarCasa.compra.toString()
 
-        binding.textSellPrice.text = priceWithDollarVenta
-        binding.textBuyPrice.text = priceWithDollarCompra
-        binding.textSellPriceMount.text = priceWithDollarVenta
-        binding.textBuyPriceMount.text = priceWithDollarCompra
+        binding.textSellPrice.text = stringWithDollarSign(priceWithDollarVenta)
+        binding.textBuyPrice.text = stringWithDollarSign(priceWithDollarCompra)
+        binding.textSellPriceMount.text = stringWithDollarSign(priceWithDollarVenta)
+        binding.textBuyPriceMount.text = stringWithDollarSign(priceWithDollarCompra)
+    }
+
+    private fun stringWithDollarSign(price: String?): String {
+        return Constants.DOLLAR_SIGN + price
     }
 
 }
