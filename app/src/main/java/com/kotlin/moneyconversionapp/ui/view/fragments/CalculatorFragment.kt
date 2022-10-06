@@ -63,7 +63,7 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun setSpinner() {
-        dollarViewModel.casaResponse.observe(viewLifecycleOwner, Observer {
+        dollarViewModel.casaResponseCalculator.observe(viewLifecycleOwner, Observer {
             val arrayNames = arrayListOf<String>()
            it.forEach {
               arrayNames.add(it.dollarCasa.nombre.toString())
@@ -107,6 +107,8 @@ class CalculatorFragment : Fragment() {
 
         binding.textSellPrice.text = priceWithDollarVenta
         binding.textBuyPrice.text = priceWithDollarCompra
+        binding.textSellPriceMount.text = priceWithDollarVenta
+        binding.textBuyPriceMount.text = priceWithDollarCompra
     }
 
 }

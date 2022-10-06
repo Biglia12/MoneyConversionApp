@@ -12,6 +12,7 @@ import kotlinx.coroutines.launch
 class DollarViewModel : ViewModel() {
 
     val casaResponse = MutableLiveData<ArrayList<CasaResponse>>()
+    val casaResponseCalculator = MutableLiveData<ArrayList<CasaResponse>>()
     val isLoading = MutableLiveData<Boolean>()
     val showError = MutableLiveData<Boolean>()
     val resultCalculateBuy = MutableLiveData<String>()
@@ -55,11 +56,11 @@ class DollarViewModel : ViewModel() {
         val arrayNames = arrayListOf<CasaResponse>()
         for (i in result.indices) {
             arrayNames.add(result[i])
-            if (result[i].dollarCasa.nombre.toString() == "Argentina") {
+            if (result[i].dollarCasa.nombre.toString() == "Argentina" || result[i].dollarCasa.nombre.toString() == "Dolar Soja" || result[i].dollarCasa.nombre.toString() == "Bitcoin") {
                 arrayNames.remove(result[i]) // se remueve del spinner ya que no nos sirve
                 //result
             }
-            casaResponse.postValue(arrayNames)
+            casaResponseCalculator.postValue(arrayNames)
         }
     }
 

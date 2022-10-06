@@ -1,5 +1,8 @@
 package com.kotlin.moneyconversionapp.data.model
 
+import java.text.NumberFormat
+import java.util.*
+
 class CalculateModel {
 
     private var result :Double = 0.0
@@ -9,7 +12,7 @@ class CalculateModel {
 
          val valueWithPoint = dataValue.replace(",", ".")
 
-        if (value.isEmpty() || valueWithPoint.isEmpty()){
+        if (value.isNullOrEmpty() || valueWithPoint.isNullOrEmpty() || valueWithPoint == "No Cotiza"){
             return "0"
         }else{
             result = value.toLong() * valueWithPoint.toDouble()
