@@ -3,7 +3,7 @@ package com.kotlin.moneyconversionapp.ui.viewmodel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kotlin.moneyconversionapp.data.model.CalculateModel
+import com.kotlin.moneyconversionapp.data.model.Calculator
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.domain.DollarUseCases
 import kotlinx.coroutines.launch
@@ -16,7 +16,7 @@ class DollarViewModel : ViewModel() {
     val showError = MutableLiveData<Boolean>()
     val resultCalculateBuy = MutableLiveData<String>()
     val resultCalculateSell = MutableLiveData<String>()
-    val calculateModel: CalculateModel = CalculateModel()
+    val calculator: Calculator = Calculator()
 
     private val getDollarUseCases = DollarUseCases()
 
@@ -80,7 +80,7 @@ class DollarViewModel : ViewModel() {
     }
 
     fun setCalculate (dataEditText: String, dataValue: String, valueVentaWithPoint: String){ //pasar parametros para hacer el calculo de la cuenta
-          resultCalculateBuy.value = calculateModel.finishResult(dataEditText, dataValue)
-          resultCalculateSell.value = calculateModel.finishResult(dataEditText, valueVentaWithPoint)
+          resultCalculateBuy.value = calculator.finishResult(dataEditText, dataValue)
+          resultCalculateSell.value = calculator.finishResult(dataEditText, valueVentaWithPoint)
     }
 }

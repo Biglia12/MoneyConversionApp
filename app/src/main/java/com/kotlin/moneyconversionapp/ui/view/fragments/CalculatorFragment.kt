@@ -103,8 +103,12 @@ class CalculatorFragment : Fragment() {
 
     }
 
-    private fun stringWithDollarSign(price: String?): String {
-        return Constants.DOLLAR_SIGN + price
+    private fun stringWithDollarSign(price: String?): String? {
+        return if (price.equals("No Cotiza")){
+            price
+        }else {
+            Constants.DOLLAR_SIGN + price
+        }
     }
 
     private fun callViewModelCalculate() {

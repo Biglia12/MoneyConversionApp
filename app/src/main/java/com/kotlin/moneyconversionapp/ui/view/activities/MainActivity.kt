@@ -34,6 +34,7 @@ class MainActivity : AppCompatActivity() {
         if (application.isConnected(this)) {
             binding.constraintErrorInternet.visibility = GONE
             binding.navigationBottom.visibility = VISIBLE
+            binding.fragmentContainer.visibility = VISIBLE
             bottomNavigation()
         } else {
             binding.constraintErrorInternet.visibility = VISIBLE

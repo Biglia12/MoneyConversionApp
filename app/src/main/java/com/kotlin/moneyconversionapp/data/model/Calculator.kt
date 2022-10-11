@@ -1,6 +1,6 @@
 package com.kotlin.moneyconversionapp.data.model
 
-class CalculateModel {
+class Calculator {
 
     private var result :Double = 0.0
     private var resultToString : String = ""
