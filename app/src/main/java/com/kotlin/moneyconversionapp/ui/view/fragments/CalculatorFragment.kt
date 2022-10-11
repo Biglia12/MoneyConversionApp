@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
+import android.widget.EditText
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.kotlin.moneyconversionapp.Constants
@@ -21,6 +22,7 @@ class CalculatorFragment : Fragment() {
     private val dollarViewModel: DollarViewModel by viewModels()
     private  var priceWithDollarVenta : String = ""
     private  var priceWithDollarCompra : String = ""
+    private lateinit var valueEtString : String
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,25 +44,11 @@ class CalculatorFragment : Fragment() {
 
         binding.btnCalculate.setOnClickListener(object: View.OnClickListener {
             override fun onClick(v: View?) {
-
-                val valueEtString = binding.editTextCalculate.text.toString()
+                valueEtString = binding.editTextCalculate.text.toString()
                 dollarViewModel.setCalculate(valueEtString, priceWithDollarCompra, priceWithDollarVenta) // se pasan los parametro para poder hacer la cuenta
             }
         })
-
-        dollarViewModel.getCalculateSell().observe(requireActivity(), object :Observer<String> { // se llama para obtenrer el resultado
-            override fun onChanged(resultSellAccount: String?) {
-                binding.textSellPriceMount.text = stringWithDollarSign(resultSellAccount)
-            }
-
-        })
-        dollarViewModel.getCalculateBuy().observe(requireActivity(), object :Observer<String> {
-            override fun onChanged(resultBuyAccount: String?) {
-                binding.textBuyPriceMount.text = stringWithDollarSign(resultBuyAccount)
-            }
-
-        })
-
+        callViewModelCalculate()//el viewModel nos pasara el calculo de la cuenta(lo hicmos en una funcion por q lo llamaremos  cuando selecionamos el spinner y cuando tocamos el boton calcular)
     }
 
     private fun setSpinner() {
@@ -108,12 +96,32 @@ class CalculatorFragment : Fragment() {
 
         binding.textSellPrice.text = stringWithDollarSign(priceWithDollarVenta)
         binding.textBuyPrice.text = stringWithDollarSign(priceWithDollarCompra)
-        binding.textSellPriceMount.text = stringWithDollarSign(priceWithDollarVenta)
-        binding.textBuyPriceMount.text = stringWithDollarSign(priceWithDollarCompra)
+
+        dollarViewModel.setCalculate(binding.editTextCalculate.text.toString(), priceWithDollarCompra, priceWithDollarVenta)
+
+        callViewModelCalculate() //el viewModel nos pasara el calculo de la cuenta(lo hicmos en una funcion por q lo llamaremos  cuando selecionamos el spinner y cuando tocamos el boton calcular)
+
     }
 
     private fun stringWithDollarSign(price: String?): String {
         return Constants.DOLLAR_SIGN + price
     }
+
+    private fun callViewModelCalculate() {
+
+        dollarViewModel.getCalculateSell().observe(requireActivity(), object :Observer<String> { // se llama para obtenrer el resultado
+            override fun onChanged(resultSellAccount: String?) {
+                binding.textSellPriceMount.text = stringWithDollarSign(resultSellAccount)
+            }
+
+        })
+        dollarViewModel.getCalculateBuy().observe(requireActivity(), object :Observer<String> {
+            override fun onChanged(resultBuyAccount: String?) {
+                binding.textBuyPriceMount.text = stringWithDollarSign(resultBuyAccount)
+            }
+
+        })
+    }
+
 
 }

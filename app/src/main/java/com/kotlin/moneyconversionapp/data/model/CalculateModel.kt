@@ -10,7 +10,7 @@ class CalculateModel {
          val valueWithPoint = dataValue.replace(",", ".")
 
         if (value.isNullOrEmpty() || valueWithPoint.isNullOrEmpty() || valueWithPoint == "No Cotiza"){
-            return "0"
+            return dataValue
         }else{
             result = value.toLong() * valueWithPoint.toDouble()
             resultToString = "%.2f".format(result)
