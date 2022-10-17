@@ -1,6 +1,7 @@
 package com.kotlin.moneyconversionapp.ui.view.fragments
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -38,19 +39,9 @@ class CalculatorFragment : Fragment() {
 
         setSpinner()
         btnCalculateListener()
+        sharePrice()
 
         }
-
-    private fun btnCalculateListener() {
-
-        binding.btnCalculate.setOnClickListener(object: View.OnClickListener {
-            override fun onClick(v: View?) {
-                valueEtString = binding.editTextCalculate.text.toString()
-                dollarViewModel.setCalculate(valueEtString, priceWithDollarCompra, priceWithDollarVenta) // se pasan los parametro para poder hacer la cuenta
-            }
-        })
-        callViewModelCalculate()//el viewModel nos pasara el calculo de la cuenta(lo hicmos en una funcion por q lo llamaremos  cuando selecionamos el spinner y cuando tocamos el boton calcular)
-    }
 
     private fun setSpinner() {
         dollarViewModel.casaResponseCalculator.observe(viewLifecycleOwner, Observer {
@@ -83,6 +74,27 @@ class CalculatorFragment : Fragment() {
 
             }
         })
+    }
+
+    private fun btnCalculateListener() {
+
+        binding.btnCalculate.setOnClickListener(object: View.OnClickListener {
+            override fun onClick(v: View?) {
+                valueEtString = binding.editTextCalculate.text.toString()
+                dollarViewModel.setCalculate(valueEtString, priceWithDollarCompra, priceWithDollarVenta) // se pasan los parametro para poder hacer la cuenta
+            }
+        })
+        callViewModelCalculate()//el viewModel nos pasara el calculo de la cuenta(lo hicmos en una funcion por q lo llamaremos  cuando selecionamos el spinner y cuando tocamos el boton calcular)
+    }
+
+    private fun sharePrice() {
+        binding.imgShare.setOnClickListener {
+            val intent = Intent()
+            intent.action = Intent.ACTION_SEND
+            intent.putExtra(Intent.EXTRA_TEXT, "Hey Check out this Great app:")
+            intent.type = "text/plain"
+            startActivity(Intent.createChooser(intent, "Share To:"))
+        }
     }
 
     private fun setWithoutPrices(priceWithCero: String) {
