@@ -51,7 +51,10 @@ class MainActivity : AppCompatActivity() {
 
         binding.navigationBottom.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.item_resume -> replaceFragment(dashBoardFragment)
+                R.id.item_resume -> {
+                    replaceFragment(dashBoardFragment)
+
+                }
                 R.id.item_history -> replaceFragment(historyFragment)
                 R.id.item_conversor -> replaceFragment(calculatorFragment)
             }
