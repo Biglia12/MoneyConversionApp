@@ -20,12 +20,12 @@ class HistoricDollarViewModel : ViewModel() {
     }
 
     private fun callService() {
-        /*viewModelScope.launch {// por el momento lo dejamos comentado ya que el servicio no esta funcionando si sigue asi se sacara
+        viewModelScope.launch {// por el momento lo dejamos comentado ya que el servicio no esta funcionando si sigue asi se sacara
             val result = getDollarUseCases()
 
             result
 
-        }*/
+        }
     }
 
 
