@@ -88,7 +88,7 @@ class DashBoardFragment : Fragment() {
 
 
     private fun initRecyler(arrayList: ArrayList<CasaResponse>) {
-        adapter = DashBoardAdapter(arrayList)
+        adapter = DashBoardAdapter(arrayList, requireContext())
         binding.recyclerResumeFragment.layoutManager = LinearLayoutManager(context)
         binding.recyclerResumeFragment.adapter = adapter
     }
