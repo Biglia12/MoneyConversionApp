@@ -7,15 +7,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 
-class DollarService {
+class DollarHistoricService {
 
-    private val retrofit : Retrofit = RetrofitHelper.getRetrofitDollarSi()
+    private val retrofit : Retrofit = RetrofitHelper.getRetrofitHistoricDollar()
 
-    suspend fun getDollar () : ArrayList<CasaResponse> {
+    suspend fun historicDollar () : Any {
         return withContext(Dispatchers.IO){
-            val response = retrofit.create(Services::class.java).callApiDollar(Constants.PARAMETER_DOLARSI)
+            val response = retrofit.create(Services::class.java).callApiHistoricDollar()
             Log.i("Response", response.toString())
-            response.body() ?: arrayListOf() // llamada en un hilo secundario para no saturar la interfaz del usuario
+            response.body() ?: "" // llamada en un hilo secundario para no saturar la interfaz del usuario
 
         }
 

@@ -1,16 +1,19 @@
 package com.kotlin.moneyconversionapp.adapters
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.kotlin.moneyconversionapp.R
-import com.kotlin.moneyconversionapp.databinding.ItemDashboardBinding
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
+import com.kotlin.moneyconversionapp.databinding.ItemDashboardBinding
 
-class DashBoardAdapter(private val dollarList: ArrayList<CasaResponse>) :
+class DashBoardAdapter(private val dollarList: ArrayList<CasaResponse>, private val context: Context) :
     RecyclerView.Adapter<DashBoardAdapter.DashBoardHolder>() {
+
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): DashBoardHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -22,7 +25,7 @@ class DashBoardAdapter(private val dollarList: ArrayList<CasaResponse>) :
 
     override fun onBindViewHolder(holder: DashBoardHolder, position: Int) {
         val item = dollarList[position]
-        holder.bind(item)
+        holder.bind(item, context)
 
     }
 
@@ -35,9 +38,10 @@ class DashBoardAdapter(private val dollarList: ArrayList<CasaResponse>) :
     class DashBoardHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ItemDashboardBinding.bind(view)
 
-        fun bind(dollar: CasaResponse) {
+        fun bind(dollar: CasaResponse, context: Context) {
             val sellMoney = "$" + dollar.dollarCasa.venta
             val buyMoney = "$" + dollar.dollarCasa.compra
+
 
             binding.txtTypeDollar.text = dollar.dollarCasa.nombre
             binding.txtSellMoney.text = sellMoney
@@ -63,7 +67,12 @@ class DashBoardAdapter(private val dollarList: ArrayList<CasaResponse>) :
 
             if (dollar.dollarCasa.variacion.isNullOrEmpty()) {
                 changeText(binding.textViewVariation)
+            }else{
+                if (dollar.dollarCasa.variacion.contains("-")){
+                    binding.textViewVariation.setTextColor(ContextCompat.getColor(context,R.color.red))
+                }
             }
+
         }
 
         private fun changeText(text: TextView) {

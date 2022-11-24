@@ -6,9 +6,17 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object RetrofitHelper {
 
-    fun getRetrofit(): Retrofit {
+    fun getRetrofitDollarSi(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL_DOLARSI)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+
+    }
+
+    fun getRetrofitHistoricDollar(): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL_API_DOLLAR)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

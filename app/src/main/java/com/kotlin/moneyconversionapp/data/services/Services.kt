@@ -10,4 +10,7 @@ interface Services {
     @GET("api.php")
     suspend fun callApiDollar(@Query ("type")type : String): Response<ArrayList<CasaResponse>> //response es para el uso de corrutinas
 
+    @GET("/api/evolucion/dolarblue")
+    suspend fun callApiHistoricDollar(): Response<Any> //response es para el uso de corrutinas
+
 }
