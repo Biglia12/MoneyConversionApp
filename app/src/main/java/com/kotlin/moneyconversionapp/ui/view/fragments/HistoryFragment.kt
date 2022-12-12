@@ -7,11 +7,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.kotlin.moneyconversionapp.R
-import com.kotlin.moneyconversionapp.databinding.FragmentDashBoardBinding
 import com.kotlin.moneyconversionapp.databinding.FragmentHistoryBinding
-import com.kotlin.moneyconversionapp.ui.viewmodel.DollarViewModel
-import com.kotlin.moneyconversionapp.ui.viewmodel.HistoricDollarViewModel
+import com.kotlin.moneyconversionapp.ui.viewmodel.Historic.HistoricDollarViewModel
 
 class HistoryFragment : Fragment() {
     private var _binding: FragmentHistoryBinding? = null
@@ -30,7 +27,7 @@ class HistoryFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         historicDollarViewModel.historicDollarResponse.observe(viewLifecycleOwner, Observer {
-            //initRecyler(it)
+
         })
 
     }

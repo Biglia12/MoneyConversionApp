@@ -1,4 +1,4 @@
-package com.kotlin.moneyconversionapp.ui.viewmodel
+package com.kotlin.moneyconversionapp.ui.viewmodel.Historic
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -11,19 +11,19 @@ import kotlinx.coroutines.launch
 class HistoricDollarViewModel : ViewModel() {
 
     val historicDollarResponse = MutableLiveData<Any>()
-    private val getDollarUseCases = HistoricDollarUseCase()
+    private val getDollarHistoricUseCases = HistoricDollarUseCase()
 
     init {
-
         callService()
-
     }
 
     private fun callService() {
         viewModelScope.launch {// por el momento lo dejamos comentado ya que el servicio no esta funcionando si sigue asi se sacara
-            val result = getDollarUseCases()
+            val result = getDollarHistoricUseCases()
 
-            result
+            if (result != null){
+
+            }
 
         }
     }
