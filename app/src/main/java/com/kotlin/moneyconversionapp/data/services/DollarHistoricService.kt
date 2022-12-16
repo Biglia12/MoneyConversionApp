@@ -14,7 +14,7 @@ class DollarHistoricService {
 
     suspend fun historicDollar () : HistoricDollarModel {
         return withContext(Dispatchers.IO){
-            val response = retrofit.create(Services::class.java).callApiHistoricDollar()
+            val response = retrofit.create(Services::class.java).callApiHistoricDollar() // servicio sin funcionar cambiar
             Log.i("Response", response.toString())
             response.body() ?: HistoricDollarModel() // llamada en un hilo secundario para no saturar la interfaz del usuario
 
