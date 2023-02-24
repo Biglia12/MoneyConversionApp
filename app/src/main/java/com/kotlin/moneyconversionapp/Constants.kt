@@ -8,4 +8,6 @@ object Constants {
      const val PARAMETER_DOLARSI = "valoresprincipales"
      const val DOLLAR_SIGN = "$"
 
+     const val BASE_URL_LOGIN = "http://192.168.56.1/android_mysql/"
+
 }

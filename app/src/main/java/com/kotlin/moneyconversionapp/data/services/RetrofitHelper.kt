@@ -21,4 +21,11 @@ object RetrofitHelper {
             .build()
 
     }
+
+    fun getRetrofitLogin(): Retrofit {
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL_LOGIN)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
 }
