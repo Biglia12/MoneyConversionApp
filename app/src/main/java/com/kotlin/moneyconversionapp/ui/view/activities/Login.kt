@@ -6,7 +6,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.kotlin.moneyconversionapp.Constants
-import com.kotlin.moneyconversionapp.data.model.LoginModel
+import com.kotlin.moneyconversionapp.data.model.UsuarioModel
 import com.kotlin.moneyconversionapp.data.services.Services
 import com.kotlin.moneyconversionapp.databinding.ActivityLoginAcitvitiyBinding
 import kotlinx.coroutines.CoroutineScope
@@ -18,7 +18,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
 
-class LoginAcitvitiy : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginAcitvitiyBinding
 
@@ -33,22 +33,17 @@ class LoginAcitvitiy : AppCompatActivity() {
     private fun clickBtn() {
         binding.buttonRegister.setOnClickListener {
 
-            //getRetrofit()
 
-            val loginModel: LoginModel = LoginModel()
-            loginModel.nombre = "aa"
-            loginModel.email = "aa@dssd"
-            loginModel.telefono = "212121"
-            loginModel.pass = "12345"
+            val usuario = UsuarioModel(binding.editTextTextPersonName.text.toString(),binding.editTextTextEmailAddress.text.toString(),binding.editTextPhone.text.toString(), binding.editTextTextPassword.text.toString())
 
             val parametros = HashMap<String, String>()
-            parametros.put("nombre", "nanana")
-            parametros.put("email", "dasdasd")
-            parametros.put("telefono", "6")
-            parametros.put("pass", "44545")
+            parametros.put("nombre", usuario.nombre)
+            parametros.put("email", usuario.email)
+            parametros.put("telefono", usuario.telefono)
+            parametros.put("pass", usuario.pass)
 
             initRetrofit(parametros)
-            // Toast.makeText(this,"eddasdsada",Toast.LENGTH_LONG).show()
+
         }
     }
 
@@ -61,15 +56,16 @@ class LoginAcitvitiy : AppCompatActivity() {
 
     fun initRetrofit(requestBody: HashMap<String, String>) {
         CoroutineScope(Dispatchers.IO).launch {
+
             val response = getRetrofit().create(Services::class.java).callLogin(requestBody)
             runOnUiThread {
                 if (response.isSuccessful) {
-                    Toast.makeText(this@LoginAcitvitiy, response.toString(), Toast.LENGTH_SHORT)
+                    Toast.makeText(this@LoginActivity, response.toString(), Toast.LENGTH_SHORT)
                         .show()
                 } else {
 
                     Toast.makeText(
-                        this@LoginAcitvitiy,
+                        this@LoginActivity,
                         response.code().toString(),
                         Toast.LENGTH_SHORT
                     ).show()
@@ -80,7 +76,6 @@ class LoginAcitvitiy : AppCompatActivity() {
 
 
     fun getRetrofit(): Retrofit {
-        //gson()
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL_LOGIN)
             .addConverterFactory(ScalarsConverterFactory.create()) //important

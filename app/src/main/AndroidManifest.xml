@@ -14,7 +14,7 @@
         android:usesCleartextTraffic="true"
         android:theme="@style/Theme.MoneyConversionApp">
         <activity
-            android:name=".ui.view.activities.LoginAcitvitiy"
+            android:name=".ui.view.activities.LoginActivity"
             android:exported="true">
             <intent-filter>
             <action android:name="android.intent.action.MAIN" />

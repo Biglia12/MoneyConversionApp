@@ -1,8 +1,6 @@
 package com.kotlin.moneyconversionapp.data.services
 
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
-import com.kotlin.moneyconversionapp.data.model.LoginModel
-import okhttp3.RequestBody
 import retrofit2.Response
 import retrofit2.http.*
 
@@ -21,9 +19,9 @@ interface Services {
     @POST("insertar.php")
     suspend fun callLogin(@FieldMap fields : HashMap<String,String>): Response<String>
 
-   /* @Multipart
-    @POST("insertar.php")
-    suspend fun callLogin(@Body request: RequestBody): Response<Any>*/
+
+   /* @POST("insertar.php")
+    suspend fun callLogin(@Body fields : JSONObject): Response<String>*/
 
   /*  @FormUrlEncoded
     @POST("insertar.php")
