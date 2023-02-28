@@ -1,10 +1,5 @@
 package com.kotlin.moneyconversionapp.data.services
 
-import android.util.Log
-import com.kotlin.moneyconversionapp.Constants
-import com.kotlin.moneyconversionapp.data.model.CasaResponse
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
 
 class LoginService {

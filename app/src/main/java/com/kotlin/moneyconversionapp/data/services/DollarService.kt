@@ -9,7 +9,7 @@ import retrofit2.Retrofit
 
 class DollarService {
 
-    private val retrofit : Retrofit = RetrofitHelper.getRetrofitDollarSi()
+    private val retrofit : Retrofit = RetrofitHelper.getBaseUrl(Constants.BASE_URL_DOLARSI)
 
     suspend fun getDollar () : ArrayList<CasaResponse> {
         return withContext(Dispatchers.IO){

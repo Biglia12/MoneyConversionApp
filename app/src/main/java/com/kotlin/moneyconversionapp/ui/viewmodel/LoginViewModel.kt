@@ -8,12 +8,10 @@ import com.google.gson.Gson
 import com.google.gson.GsonBuilder
 import com.kotlin.moneyconversionapp.Constants
 import com.kotlin.moneyconversionapp.data.model.UsuarioModel
+import com.kotlin.moneyconversionapp.data.services.RetrofitHelper
 import com.kotlin.moneyconversionapp.data.services.Services
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import retrofit2.Retrofit
-import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.converter.scalars.ScalarsConverterFactory
 
@@ -34,20 +32,9 @@ class LoginViewModel : ViewModel() {
 
     }
 
-
-    fun getRetrofit(): Retrofit {
-        //gson()
-        return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL_LOGIN)
-            .addConverterFactory(ScalarsConverterFactory.create()) //important
-            .addConverterFactory(GsonConverterFactory.create(gson()))
-            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
-            .build()
-    }
-
     fun initRetrofit(requestBody: HashMap<String, String>, activity: Activity) {
             viewModelScope.launch {
-            val response = getRetrofit().create(Services::class.java).callLogin(requestBody)
+            val response = RetrofitHelper.getRetrofitLogin().create(Services::class.java).callLogin(requestBody)
             activity.runOnUiThread {
                 if (response.isSuccessful) {
                     showToast(activity, response.toString())
@@ -58,11 +45,6 @@ class LoginViewModel : ViewModel() {
         }
     }
 
-    fun gson(): Gson {
-        return GsonBuilder()
-            .setLenient()
-            .create()
-    }
 
     fun showToast(activity: Activity, message: String) {
         Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
