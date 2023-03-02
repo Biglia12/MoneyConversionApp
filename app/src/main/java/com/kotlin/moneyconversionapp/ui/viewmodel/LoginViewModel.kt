@@ -13,7 +13,7 @@ import kotlinx.coroutines.launch
 class LoginViewModel : ViewModel() {
 
     val messageLiveData = MutableLiveData<String>()
-    val responseSuccesfull = MutableLiveData<Boolean>()
+    val responseSuccessfull = MutableLiveData<Boolean>()
 
     private val loginUseCase: LoginUseCase = LoginUseCase()
 
@@ -23,10 +23,10 @@ class LoginViewModel : ViewModel() {
             val response = loginUseCase.callLogin(usuario)
             if (response.isSuccessful) {
                 messageLiveData.value = response.toString()
-                responseSuccesfull.value = true
+                responseSuccessfull.value = true
             } else {
                 messageLiveData.value = response.code().toString()
-                responseSuccesfull.value = false
+                responseSuccessfull.value = false
             }
         }
     }

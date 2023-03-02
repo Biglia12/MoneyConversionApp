@@ -22,21 +22,10 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         clickBtn()
-
-        // Pasar el LiveData a la vista (mostraremos el mensajes)
-        loginViewModel.messageLiveData.observe(this as LifecycleOwner, Observer { message ->
-            showToast(message)
-        })
-
-
-        loginViewModel.responseSuccesfull.observe(this as LifecycleOwner, Observer { responseIsSuccesfull ->
-            if (responseIsSuccesfull == true) {
-                intent = Intent(this, MainActivity::class.java)
-                startActivity(intent)
-            }
-        })
+        observeLiveData()
 
     }
+
     private fun clickBtn() {
         binding.buttonRegister.setOnClickListener {
             when {
@@ -56,6 +45,21 @@ class LoginActivity : AppCompatActivity() {
             }
 
         }
+    }
+
+    private fun observeLiveData() {
+        // Pasar el LiveData a la vista (mostraremos el mensajes)
+        loginViewModel.messageLiveData.observe(this as LifecycleOwner, Observer { message ->
+            showToast(message)
+        })
+
+
+        loginViewModel.responseSuccessfull.observe(this as LifecycleOwner, Observer {responseIsSuccessful ->
+            if (responseIsSuccessful == true) {
+                intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }
+        })
     }
 
     private fun showToast(message: String?) {
