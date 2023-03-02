@@ -2,7 +2,11 @@ package com.kotlin.moneyconversionapp.ui.view.fragments
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -15,9 +19,11 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.kotlin.moneyconversionapp.Application
 import com.kotlin.moneyconversionapp.Constants
+import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.databinding.FragmentCalculatorBinding
 import com.kotlin.moneyconversionapp.ui.viewmodel.DollarViewModel
+
 
 class CalculatorFragment : Fragment() {
 
@@ -111,15 +117,6 @@ class CalculatorFragment : Fragment() {
         //callViewModelCalculate()//el viewModel nos pasara el calculo de la cuenta(lo hicmos en una funcion por q lo llamaremos  cuando selecionamos el spinner y cuando tocamos el boton calcular)
     }
 
-    private fun sharePrice() {
-        binding.imgShare.setOnClickListener {
-            val intent = Intent()
-            intent.action = Intent.ACTION_SEND
-            intent.putExtra(Intent.EXTRA_TEXT, "Hey Check out this Great app:")
-            intent.type = "text/plain"
-            startActivity(Intent.createChooser(intent, "Share To:"))
-        }
-    }
 
     private fun setWithoutPrices(priceWithCero: String) {
         binding.textSellPrice.text = priceWithCero
@@ -160,6 +157,37 @@ class CalculatorFragment : Fragment() {
             Constants.DOLLAR_SIGN + price
         }
     }
+
+    private fun sharePrice() {
+        binding.imgShare.setOnClickListener {
+            view?.let { it1 -> screenShot(it1)?.let { it1 -> share(it1) } }
+        }
+    }
+
+    private fun screenShot(view: View): Bitmap? {
+
+        val rootView: View = requireView().rootView
+        val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        view.draw(canvas)
+        rootView.isDrawingCacheEnabled = true
+        return rootView.drawingCache
+    }
+
+    private fun share(bitmap: Bitmap) {
+        val pathofBmp = MediaStore.Images.Media.insertImage(
+            requireActivity().contentResolver,
+            bitmap, "title", null
+        )
+        val uri: Uri = Uri.parse(pathofBmp)
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.type = "image/*"
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Star App")
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "Precio de compra:\$$priceWithDollarCompra\nPrecio de venta: \$$priceWithDollarVenta")
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+        requireActivity().startActivity(Intent.createChooser(shareIntent, "hello hello"))
+    }
+
 
 
     @SuppressLint("RestrictedApi")

@@ -1,5 +1,9 @@
 package com.kotlin.moneyconversionapp.ui.viewmodel
 
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.view.View
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -79,4 +83,5 @@ class DollarViewModel : ViewModel() {
         resultCalculateBuy.value = calculatorUseCase.calculateResult(dataEditText, dataValue)
         resultCalculateSell.value = calculatorUseCase.calculateResult(dataEditText, valueVentaWithPoint)
     }
+
 }
