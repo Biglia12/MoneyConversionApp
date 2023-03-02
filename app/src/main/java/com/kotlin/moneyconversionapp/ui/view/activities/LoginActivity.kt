@@ -22,7 +22,7 @@ class LoginActivity : AppCompatActivity() {
 
         clickBtn()
 
-        // Pasar el LiveData a la vista (mostraremos el mensaje del servicio)
+        // Pasar el LiveData a la vista (mostraremos el mensajes)
         loginViewModel.messageLiveData.observe(this as LifecycleOwner, Observer { message ->
             showToast(message)
         })
@@ -35,8 +35,8 @@ class LoginActivity : AppCompatActivity() {
 
     private fun clickBtn() {
         binding.buttonRegister.setOnClickListener {
-
             when {
+                binding.editTextTextPersonName.text.isNullOrEmpty() && binding.editTextTextEmailAddress.text.isNullOrEmpty() && binding.editTextPhone.text.isNullOrEmpty() && binding.editTextTextPassword.text.isNullOrEmpty() -> Toast.makeText(this, "Todos los campos son obligatorios", Toast.LENGTH_SHORT).show()
                 binding.editTextTextPersonName.text.isNullOrEmpty() -> Toast.makeText(this, "El campo de nombre es obligatorio", Toast.LENGTH_SHORT).show()
                 binding.editTextTextEmailAddress.text.isNullOrEmpty() -> Toast.makeText(this, "El campo de email es obligatorio", Toast.LENGTH_SHORT).show()
                 binding.editTextPhone.text.isNullOrEmpty() -> Toast.makeText(this, "El campo de teléfono es obligatorio", Toast.LENGTH_SHORT).show()
