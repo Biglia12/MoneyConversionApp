@@ -1,24 +1,19 @@
 package com.kotlin.moneyconversionapp.ui.viewmodel
 
 import android.app.Activity
-import android.widget.Toast
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.google.gson.Gson
-import com.google.gson.GsonBuilder
-import com.kotlin.moneyconversionapp.Constants
 import com.kotlin.moneyconversionapp.data.model.UsuarioModel
 import com.kotlin.moneyconversionapp.data.services.RetrofitHelper
 import com.kotlin.moneyconversionapp.data.services.Services
 import kotlinx.coroutines.launch
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.converter.scalars.ScalarsConverterFactory
 
 class LoginViewModel : ViewModel() {
 
+    val messageLiveData = MutableLiveData<String>()
 
-    fun createUser(name: String,email: String,telefono: String,pass: String, activity: Activity) {
+    fun createUser(name: String, email: String, telefono: String, pass: String, activity: Activity) {
 
         val usuario = UsuarioModel(name, email, telefono, pass)
 
@@ -30,25 +25,21 @@ class LoginViewModel : ViewModel() {
 
         initRetrofit(parametros, activity)
 
+
     }
 
     fun initRetrofit(requestBody: HashMap<String, String>, activity: Activity) {
-            viewModelScope.launch {
-            val response = RetrofitHelper.getRetrofitLogin().create(Services::class.java).callLogin(requestBody)
+        viewModelScope.launch {
+            val response = RetrofitHelper.getRetrofitLogin().create(Services::class.java)
+                .callLogin(requestBody)
             activity.runOnUiThread {
                 if (response.isSuccessful) {
-                    showToast(activity, response.toString())
+                    messageLiveData.value = response.toString()
                 } else {
-                    showToast(activity, response.code().toString())
+                    messageLiveData.value = response.code().toString()
                 }
             }
         }
     }
-
-
-    fun showToast(activity: Activity, message: String) {
-        Toast.makeText(activity, message, Toast.LENGTH_SHORT).show()
-    }
-
 
 }
