@@ -84,7 +84,7 @@ class CalculatorFragment : Fragment() {
                 dollarViewModel.setCalculate(valueEtString, priceWithDollarCompra, priceWithDollarVenta) // se pasan los parametro para poder hacer la cuenta
             }
         })
-        callViewModelCalculate()//el viewModel nos pasara el calculo de la cuenta(lo hicmos en una funcion por q lo llamaremos  cuando selecionamos el spinner y cuando tocamos el boton calcular)
+        //callViewModelCalculate()//el viewModel nos pasara el calculo de la cuenta(lo hicmos en una funcion por q lo llamaremos  cuando selecionamos el spinner y cuando tocamos el boton calcular)
     }
 
     private fun sharePrice() {
@@ -116,28 +116,25 @@ class CalculatorFragment : Fragment() {
 
     }
 
+
+    private fun callViewModelCalculate() {
+
+        dollarViewModel.resultCalculateSell.observe(viewLifecycleOwner, Observer {
+            binding.textSellPriceMount.text = stringWithDollarSign(it)
+        })
+
+        dollarViewModel.resultCalculateBuy.observe(viewLifecycleOwner, Observer {
+            binding.textBuyPriceMount.text = stringWithDollarSign(it)
+        })
+
+    }
+
     private fun stringWithDollarSign(price: String?): String? {
         return if (price.equals("No Cotiza")){
             price
         }else {
             Constants.DOLLAR_SIGN + price
         }
-    }
-
-    private fun callViewModelCalculate() {
-
-        dollarViewModel.getCalculateSell().observe(requireActivity(), object :Observer<String> { // se llama para obtenrer el resultado
-            override fun onChanged(resultSellAccount: String?) {
-                binding.textSellPriceMount.text = stringWithDollarSign(resultSellAccount)
-            }
-
-        })
-        dollarViewModel.getCalculateBuy().observe(requireActivity(), object :Observer<String> {
-            override fun onChanged(resultBuyAccount: String?) {
-                binding.textBuyPriceMount.text = stringWithDollarSign(resultBuyAccount)
-            }
-
-        })
     }
 
 
