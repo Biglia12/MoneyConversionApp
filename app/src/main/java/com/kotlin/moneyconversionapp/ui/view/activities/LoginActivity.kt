@@ -47,7 +47,6 @@ class LoginActivity : AppCompatActivity() {
                         binding.editTextTextEmailAddress.text.toString(),
                         binding.editTextPhone.text.toString(),
                         binding.editTextTextPassword.text.toString(),
-                        this@LoginActivity
                     )
                 }
             }
