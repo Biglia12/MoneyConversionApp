@@ -1,5 +1,6 @@
 package com.kotlin.moneyconversionapp.ui.view.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
@@ -27,12 +28,15 @@ class LoginActivity : AppCompatActivity() {
             showToast(message)
         })
 
-    }
 
-    private fun showToast(message: String?) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
-    }
+        loginViewModel.responseSuccesfull.observe(this as LifecycleOwner, Observer { responseIsSuccesfull ->
+            if (responseIsSuccesfull == true) {
+                intent = Intent(this, MainActivity::class.java)
+                startActivity(intent)
+            }
+        })
 
+    }
     private fun clickBtn() {
         binding.buttonRegister.setOnClickListener {
             when {
@@ -52,6 +56,10 @@ class LoginActivity : AppCompatActivity() {
             }
 
         }
+    }
+
+    private fun showToast(message: String?) {
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show()
     }
 
 }
