@@ -1,15 +1,19 @@
 package com.kotlin.moneyconversionapp
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import com.google.gson.Gson
+import com.kotlin.moneyconversionapp.data.model.CasaResponse
+import com.kotlin.moneyconversionapp.ui.view.fragments.CalculatorFragment
 
-class Application {
+class MoneyApplication(val context: Context) {
 
-    fun isConnected(context: Context?): Boolean { // para la conexion a internet
+    fun isConnected(): Boolean { // para la conexion a internet
         val connectivityManager =
-            context?.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+            context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
         // if the android version is equal to M
         // or greater we need to use the
@@ -45,4 +49,21 @@ class Application {
         }
     }
 
+    //Store in SharedPreference
+    fun setDollarValue(key: String?, value: ArrayList<CasaResponse>) {
+        val prefs: SharedPreferences = context.getSharedPreferences("APP", 0)
+        val editor: SharedPreferences.Editor = prefs.edit()
+        editor.putString(key, Gson().toJson(value))
+        editor.apply()
+    }
+
+    //Retrieve from SharedPreference
+    fun getDollarValue(key: String?): String? {
+        val prefs: SharedPreferences = context.getSharedPreferences("APP", 0)
+        return prefs.getString(key, "null")
+    }
+
 }
+
+
+

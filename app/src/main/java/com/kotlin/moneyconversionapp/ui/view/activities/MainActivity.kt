@@ -5,7 +5,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.kotlin.moneyconversionapp.Application
+import com.kotlin.moneyconversionapp.MoneyApplication
 import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.databinding.ActivityMainBinding
 import com.kotlin.moneyconversionapp.ui.view.fragments.CalculatorFragment
@@ -19,7 +19,7 @@ class MainActivity : AppCompatActivity() {
     private val dashBoardFragment = DashBoardFragment()
     private val historyFragment = HistoryFragment()
     private val calculatorFragment = CalculatorFragment()
-    private val application: Application = Application()
+    private val moneyApplication: MoneyApplication = MoneyApplication(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,7 +31,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun checkConecction() {
-        if (application.isConnected(this)) {
+        if (moneyApplication.isConnected()) {
             binding.constraintErrorInternet.visibility = GONE
             binding.navigationBottom.visibility = VISIBLE
             binding.fragmentContainer.visibility = VISIBLE

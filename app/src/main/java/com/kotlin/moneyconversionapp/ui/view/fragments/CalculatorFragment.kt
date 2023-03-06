@@ -17,23 +17,27 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.kotlin.moneyconversionapp.Application
+import com.kotlin.moneyconversionapp.MoneyApplication
 import com.kotlin.moneyconversionapp.Constants
-import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.databinding.FragmentCalculatorBinding
 import com.kotlin.moneyconversionapp.ui.viewmodel.DollarViewModel
+import com.kotlin.moneyconversionapp.ui.viewmodel.DollarViewModelFactory
 
 
 class CalculatorFragment : Fragment() {
 
     private var _binding: FragmentCalculatorBinding? = null
     private val binding get() = _binding!!
-    private val dollarViewModel: DollarViewModel by viewModels()
+
+    private val dollarViewModel: DollarViewModel by viewModels(){
+        DollarViewModelFactory(requireActivity().application)
+    }
+
     private  var priceWithDollarVenta : String = ""
     private  var priceWithDollarCompra : String = ""
     private lateinit var valueEtString : String
-    private val application: Application = Application()
+    //rivate val moneyApplication: MoneyApplication = MoneyApplication(requireContext().applicationContext)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,7 +58,7 @@ class CalculatorFragment : Fragment() {
 
 
     private fun setSpinner() {
-        if (application.isConnected(context)) {
+        if (dollarViewModel.moneyApplication.isConnected()) {
             dollarViewModel.casaResponseCalculator.observe(viewLifecycleOwner, Observer {
                 val arrayNames = arrayListOf<String>()
                 it.forEach {
