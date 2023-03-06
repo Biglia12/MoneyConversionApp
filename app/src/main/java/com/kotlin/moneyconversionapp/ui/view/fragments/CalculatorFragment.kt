@@ -17,7 +17,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.kotlin.moneyconversionapp.MoneyApplication
 import com.kotlin.moneyconversionapp.Constants
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.databinding.FragmentCalculatorBinding
@@ -59,7 +58,8 @@ class CalculatorFragment : Fragment() {
 
     private fun setSpinner() {
         if (dollarViewModel.moneyApplication.isConnected()) {
-            dollarViewModel.casaResponseCalculator.observe(viewLifecycleOwner, Observer {
+            spinner()
+         /*   dollarViewModel.casaResponseCalculator.observe(viewLifecycleOwner, Observer {
                 val arrayNames = arrayListOf<String>()
                 it.forEach {
                     arrayNames.add(it.dollarCasa.nombre.toString())
@@ -74,10 +74,32 @@ class CalculatorFragment : Fragment() {
                 binding.spinnerChoose.adapter = adapterSpinner
 
                 setSpinnerSelection(arrayNames, it)
-            })
-        }else{
+            })*/
+        }else {
+           if (dollarViewModel.moneyApplication.getDollarValue(Constants.DOLLAR_VALUE) != null){
+               //spinner(dollarViewModel.moneyApplication.getDollarValue())
+           }
             Toast.makeText(activity,"No hay conexion",Toast.LENGTH_SHORT).show()
         }
+    }
+
+    fun spinner() {
+        dollarViewModel.casaResponseCalculator.observe(viewLifecycleOwner, Observer {
+            val arrayNames = arrayListOf<String>()
+            it.forEach {
+                arrayNames.add(it.dollarCasa.nombre.toString())
+            }
+            val adapterSpinner = activity?.let { it1 ->
+                ArrayAdapter(
+                    it1,
+                    android.R.layout.simple_spinner_item,
+                    arrayNames
+                )
+            }
+            binding.spinnerChoose.adapter = adapterSpinner
+
+            setSpinnerSelection(arrayNames, it)
+        })
     }
 
    private fun setSpinnerSelection(

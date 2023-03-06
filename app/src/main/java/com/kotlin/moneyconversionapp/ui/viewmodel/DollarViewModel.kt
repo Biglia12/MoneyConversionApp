@@ -1,6 +1,7 @@
 package com.kotlin.moneyconversionapp.ui.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
@@ -56,11 +57,10 @@ class DollarViewModel (application: Application) : AndroidViewModel(application)
 
                 moneyApplication.setDollarValue(Constants.DOLLAR_VALUE, result)
 
+                Log.d("dada","dasdasd")
+
 
             } else {
-                if (moneyApplication.getDollarValue(Constants.DOLLAR_VALUE) != null){
-                    moneyApplication.getDollarValue(Constants.DOLLAR_VALUE)
-                }
                 showError.postValue(true)
                 isLoading.postValue(false)
             }

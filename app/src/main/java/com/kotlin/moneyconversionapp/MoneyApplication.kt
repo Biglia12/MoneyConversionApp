@@ -6,6 +6,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.ui.view.fragments.CalculatorFragment
 
@@ -58,10 +59,20 @@ class MoneyApplication(val context: Context) {
     }
 
     //Retrieve from SharedPreference
-    fun getDollarValue(key: String?): String? {
+    fun getDollarValue(key: String?): ArrayList<CasaResponse>? {
         val prefs: SharedPreferences = context.getSharedPreferences("APP", 0)
-        return prefs.getString(key, "null")
+        val gson = Gson()
+        val json = prefs.getString(key,null)
+        val type = object : TypeToken<ArrayList<CasaResponse>>(){}.type
+        return gson.fromJson(json, type)
     }
+
+  /*  fun getList():ArrayList<String>{
+        val gson = Gson()
+        val json = preferences.getString("LIST",null)
+        val type = object :TypeToken<ArrayList<String>>(){}.type//converting the json to list
+        return gson.fromJson(json,type)//returning the list
+    }*/
 
 }
 
