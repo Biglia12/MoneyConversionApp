@@ -1,4 +1,4 @@
-package com.kotlin.moneyconversionapp.ui.view.fragments
+package com.kotlin.moneyconversionapp.ui.view.fragments.CalculatorModule
 
 import android.annotation.SuppressLint
 import android.content.Intent

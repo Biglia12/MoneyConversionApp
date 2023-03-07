@@ -1,4 +1,4 @@
-package com.kotlin.moneyconversionapp.ui.view.fragments
+package com.kotlin.moneyconversionapp.ui.view.fragments.DashBoardModule
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,20 +10,11 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.kotlin.moneyconversionapp.Constants
-import com.kotlin.moneyconversionapp.MoneyApplication
 import com.kotlin.moneyconversionapp.adapters.DashBoardAdapter
 import com.kotlin.moneyconversionapp.databinding.FragmentDashBoardBinding
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
-import com.kotlin.moneyconversionapp.data.services.Services
 import com.kotlin.moneyconversionapp.ui.viewmodel.DollarViewModel
 import com.kotlin.moneyconversionapp.ui.viewmodel.DollarViewModelFactory
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
 
 class DashBoardFragment : Fragment() {
 

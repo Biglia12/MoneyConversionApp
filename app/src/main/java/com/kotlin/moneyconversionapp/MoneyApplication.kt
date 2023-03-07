@@ -8,7 +8,6 @@ import android.os.Build
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
-import com.kotlin.moneyconversionapp.ui.view.fragments.CalculatorFragment
 
 class MoneyApplication(val context: Context) {
 

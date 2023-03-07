@@ -1,4 +1,4 @@
-package com.kotlin.moneyconversionapp.ui.view.fragments
+package com.kotlin.moneyconversionapp.ui.view.fragments.HistoricModule
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment

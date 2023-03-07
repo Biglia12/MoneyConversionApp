@@ -8,9 +8,9 @@ import androidx.fragment.app.Fragment
 import com.kotlin.moneyconversionapp.MoneyApplication
 import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.databinding.ActivityMainBinding
-import com.kotlin.moneyconversionapp.ui.view.fragments.CalculatorFragment
-import com.kotlin.moneyconversionapp.ui.view.fragments.DashBoardFragment
-import com.kotlin.moneyconversionapp.ui.view.fragments.HistoryFragment
+import com.kotlin.moneyconversionapp.ui.view.fragments.CalculatorModule.CalculatorFragment
+import com.kotlin.moneyconversionapp.ui.view.fragments.DashBoardModule.DashBoardFragment
+import com.kotlin.moneyconversionapp.ui.view.fragments.HistoricModule.HistoryFragment
 
 //test
 class MainActivity : AppCompatActivity() {
