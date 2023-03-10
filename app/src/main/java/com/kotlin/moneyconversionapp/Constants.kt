@@ -8,4 +8,7 @@ object Constants {
      const val PARAMETER_DOLARSI = "valoresprincipales"
      const val DOLLAR_SIGN = "$"
 
+     //Constantes para la clase MoneyApplication
+     const val DOLLAR_VALUE = "DOLLAR_VALUE"
+
 }

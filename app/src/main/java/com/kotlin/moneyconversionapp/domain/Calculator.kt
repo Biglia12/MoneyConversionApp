@@ -1,4 +1,4 @@
-package com.kotlin.moneyconversionapp.data.model
+package com.kotlin.moneyconversionapp.domain
 
 class Calculator {
 
