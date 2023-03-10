@@ -8,7 +8,7 @@ class HistoricDollarRepository {
 
     private val api = DollarHistoricService()
 
-    suspend fun getAllDollar(): HistoricDollarModel {
+    suspend fun getAllDollar(): Any {
         val response = api.historicDollar()
         HistoricDollarProvider.dollars = response
         return response

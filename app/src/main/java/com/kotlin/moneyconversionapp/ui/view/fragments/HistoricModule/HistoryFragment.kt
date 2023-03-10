@@ -26,6 +26,8 @@ class HistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        historicDollarViewModel.loadData()
+
         historicDollarViewModel.historicDollarResponse.observe(viewLifecycleOwner, Observer {
 
         })

@@ -16,7 +16,7 @@ object RetrofitHelper {
 
     fun getRetrofitHistoricDollar(): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL_API_DOLLAR)
+            .baseUrl("https:api.bluelytics.com.ar/v2/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
 

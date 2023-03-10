@@ -9,7 +9,7 @@ class HistoricDollarUseCase {
 
         private val repository = HistoricDollarRepository()
 
-        suspend operator fun invoke(): HistoricDollarModel = repository.getAllDollar()
+        suspend operator fun invoke(): Any = repository.getAllDollar()
 
 
 }

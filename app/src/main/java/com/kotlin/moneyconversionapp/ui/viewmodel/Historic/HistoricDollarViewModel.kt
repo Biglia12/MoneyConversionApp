@@ -8,23 +8,37 @@ import com.kotlin.moneyconversionapp.domain.DollarUseCases
 import com.kotlin.moneyconversionapp.domain.HistoricDollarUseCase
 import kotlinx.coroutines.launch
 
+/**
+ * Se utiliza una variable isLoadingData
+ * para indicar si hay una corutina en ejecución.
+ * Si el valor es true, significa que hay una corutina en ejecución y la
+ * función no inicia una nueva.
+ * De lo contrario, se inicia una nueva corutina para obtener los datos y
+ * se actualiza el valor de isLoadingData en consecuencia.
+ */
+
 class HistoricDollarViewModel : ViewModel() {
 
     val historicDollarResponse = MutableLiveData<Any>()
     private val getDollarHistoricUseCases = HistoricDollarUseCase()
 
+    private var isLoadingData = false
+
     init {
-        callService()
+        loadData()
     }
 
-    private fun callService() {
-        viewModelScope.launch {// por el momento lo dejamos comentado ya que el servicio no esta funcionando si sigue asi se sacara
-            val result = getDollarHistoricUseCases()
+    fun loadData() {
+        if (!isLoadingData) {
+            isLoadingData = true
+            viewModelScope.launch {
+                val result = getDollarHistoricUseCases()
+                isLoadingData = false
 
-            if (result != null){
+                if (result != null){
 
+                }
             }
-
         }
     }
 
