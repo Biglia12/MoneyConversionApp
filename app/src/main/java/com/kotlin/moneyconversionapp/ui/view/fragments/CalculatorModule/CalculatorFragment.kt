@@ -59,36 +59,23 @@ class CalculatorFragment : Fragment() {
     private fun setSpinner() {
         if (dollarViewModel.moneyApplication.isConnected()) {
             spinner()
-         /*   dollarViewModel.casaResponseCalculator.observe(viewLifecycleOwner, Observer {
-                val arrayNames = arrayListOf<String>()
-                it.forEach {
-                    arrayNames.add(it.dollarCasa.nombre.toString())
-                }
-                val adapterSpinner = activity?.let { it1 ->
-                    ArrayAdapter(
-                        it1,
-                        android.R.layout.simple_spinner_item,
-                        arrayNames
-                    )
-                }
-                binding.spinnerChoose.adapter = adapterSpinner
-
-                setSpinnerSelection(arrayNames, it)
-            })*/
         }else {
            if (dollarViewModel.moneyApplication.getDollarValue(Constants.DOLLAR_VALUE) != null){
-               //spinner(dollarViewModel.moneyApplication.getDollarValue())
+               dollarViewModel.setSpinner(dollarViewModel.moneyApplication.getDollarValue(Constants.DOLLAR_VALUE)!!)//le pasamos lo que tenemos almacenado al view model para poder seguir con la calculadora con los ultimos datos guardados
+               spinner()
            }
             Toast.makeText(activity,"No hay conexion",Toast.LENGTH_SHORT).show()
         }
     }
 
+
     fun spinner() {
         dollarViewModel.casaResponseCalculator.observe(viewLifecycleOwner, Observer {
             val arrayNames = arrayListOf<String>()
             it.forEach {
-                arrayNames.add(it.dollarCasa.nombre.toString())
-            }
+                    arrayNames.add(it.dollarCasa.nombre.toString())
+                }
+
             val adapterSpinner = activity?.let { it1 ->
                 ArrayAdapter(
                     it1,
