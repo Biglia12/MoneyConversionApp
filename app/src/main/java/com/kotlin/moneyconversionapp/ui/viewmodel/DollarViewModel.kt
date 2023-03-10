@@ -1,15 +1,22 @@
 package com.kotlin.moneyconversionapp.ui.viewmodel
 
+import android.app.Application
+import android.util.Log
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kotlin.moneyconversionapp.data.model.Calculator
+import com.kotlin.moneyconversionapp.Constants
+import com.kotlin.moneyconversionapp.MoneyApplication
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
+import com.kotlin.moneyconversionapp.domain.Calculator
+import com.kotlin.moneyconversionapp.domain.CalculatorUseCase
 import com.kotlin.moneyconversionapp.domain.DollarUseCases
 import kotlinx.coroutines.launch
 
-class DollarViewModel : ViewModel() {
+class DollarViewModel (application: Application) : AndroidViewModel(application) {
 
+    val moneyApplication = MoneyApplication(application)
     val casaResponse = MutableLiveData<ArrayList<CasaResponse>>()
     val casaResponseCalculator = MutableLiveData<ArrayList<CasaResponse>>()
     val isLoading = MutableLiveData<Boolean>()
@@ -18,7 +25,11 @@ class DollarViewModel : ViewModel() {
     val resultCalculateSell = MutableLiveData<String>()
     val calculator: Calculator = Calculator()
 
+
     private val getDollarUseCases = DollarUseCases()
+
+    private val calculatorUseCase = CalculatorUseCase()
+
 
     init {
 
@@ -43,6 +54,11 @@ class DollarViewModel : ViewModel() {
                 showError.postValue(false)
 
                 setSpinner(result)
+
+                moneyApplication.setDollarValue(Constants.DOLLAR_VALUE, result)
+
+                Log.d("dada","dasdasd")
+
 
             } else {
                 showError.postValue(true)
@@ -71,16 +87,15 @@ class DollarViewModel : ViewModel() {
         casaResponseCalculator.postValue(arrayNames)
     }
 
-    fun getCalculateBuy(): MutableLiveData<String> { //Obtener resultado del calculo
-        return resultCalculateBuy
+
+    fun setCalculate(
+        dataEditText: String,
+        dataValue: String,
+        valueVentaWithPoint: String
+    ) { //pasar parametros para hacer el calculo de la cuenta
+        resultCalculateBuy.value = calculatorUseCase.calculateResult(dataEditText, dataValue)
+        resultCalculateSell.value =
+            calculatorUseCase.calculateResult(dataEditText, valueVentaWithPoint)
     }
 
-    fun getCalculateSell(): MutableLiveData<String> { //Obtener resultado del calculo
-        return resultCalculateSell
-    }
-
-    fun setCalculate (dataEditText: String, dataValue: String, valueVentaWithPoint: String){ //pasar parametros para hacer el calculo de la cuenta
-          resultCalculateBuy.value = calculator.finishResult(dataEditText, dataValue)
-          resultCalculateSell.value = calculator.finishResult(dataEditText, valueVentaWithPoint)
-    }
 }
