@@ -17,6 +17,6 @@ interface Services {
 
     //https:api.bluelytics.com.ar/v2/evolution.json
     @GET("evolution.json")
-    suspend fun callApiHistoricDollar(): Response<Any>
+    suspend fun callApiHistoricDollar(): Response<ArrayList<HistoricDollarModel>>
 
 }

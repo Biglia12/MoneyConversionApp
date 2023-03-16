@@ -4,11 +4,19 @@ import com.google.gson.annotations.Expose
 
 import com.google.gson.annotations.SerializedName
 class HistoricDollarModel {
-    @SerializedName("fecha")
+    @SerializedName("date")
     @Expose
-    private val fecha: String? = null
+    private val date: String? = null
 
-    @SerializedName("meses")
+    @SerializedName("source")
     @Expose
-    private val meses: List<MesesModel>? = null
+    private val source: String? = null
+
+    @SerializedName("value_sell")
+    @Expose
+    private val valueSell: Int? = null
+
+    @SerializedName("value_buy")
+    @Expose
+    private val valueBuy: Int? = null
 }

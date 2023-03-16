@@ -12,11 +12,11 @@ class DollarHistoricService {
 
     private val retrofit : Retrofit = RetrofitHelper.getRetrofitHistoricDollar()
 
-    suspend fun historicDollar () : Any {
+    suspend fun historicDollar () : ArrayList<HistoricDollarModel> {
         return withContext(Dispatchers.IO){
             val response = retrofit.create(Services::class.java).callApiHistoricDollar() // servicio sin funcionar cambiar
             Log.i("Response", response.toString())
-            response.body() ?: Any() // llamada en un hilo secundario para no saturar la interfaz del usuario
+            response.body() ?: ArrayList() // llamada en un hilo secundario para no saturar la interfaz del usuario
 
         }
 

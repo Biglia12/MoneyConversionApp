@@ -94,8 +94,7 @@ class DollarViewModel (application: Application) : AndroidViewModel(application)
         valueVentaWithPoint: String
     ) { //pasar parametros para hacer el calculo de la cuenta
         resultCalculateBuy.value = calculatorUseCase.calculateResult(dataEditText, dataValue)
-        resultCalculateSell.value =
-            calculatorUseCase.calculateResult(dataEditText, valueVentaWithPoint)
+        resultCalculateSell.value = calculatorUseCase.calculateResult(dataEditText, valueVentaWithPoint)
     }
 
 }

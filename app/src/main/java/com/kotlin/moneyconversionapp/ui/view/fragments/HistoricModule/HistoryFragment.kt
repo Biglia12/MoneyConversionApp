@@ -28,9 +28,13 @@ class HistoryFragment : Fragment() {
 
         historicDollarViewModel.loadData()
 
-        historicDollarViewModel.historicDollarResponse.observe(viewLifecycleOwner, Observer {
+        binding.imgBtnRefresh.setOnClickListener {
+            historicDollarViewModel.resetLoading()
+        }
 
-        })
+        /*historicDollarViewModel.historicDollarResponse.observe(viewLifecycleOwner, Observer {
+
+        })*/
 
     }
 
