@@ -21,9 +21,19 @@ import kotlinx.coroutines.launch
 class HistoricDollarViewModel : ViewModel() {
 
     val historicDollarResponse = MutableLiveData<ArrayList<HistoricDollarModel>>()
+    val historicDollarBlueLiveData = MutableLiveData<ArrayList<HistoricDollarModel>>()
+    val historicDollarOficialLiveData = MutableLiveData<ArrayList<HistoricDollarModel>>()
+    val dateLiveData = MutableLiveData<String>()
+    val valueBuyLiveData = MutableLiveData<Int>()
+    val sourceLiveData = MutableLiveData<String>()
     private val getDollarHistoricUseCases = HistoricDollarUseCase()
 
     private var isLoadingData = false
+
+    private var source: String = ""
+    private var date: String = ""
+    private var valueSell: Int = 0
+    private var valueBuy: Int = 0
 
     init {
         loadData()
@@ -38,7 +48,31 @@ class HistoricDollarViewModel : ViewModel() {
                 isLoadingData = false
 
                 if (result != null){
-                    historicDollarResponse.value = result
+
+                    val lowArrayDollar = result
+
+                    for (i in result.size - 1 downTo 500){ // el json nostra 7500 elementos lo que hace una gran carga para la app por lo que se dejara solo 500 elementos
+                        lowArrayDollar.removeAt(i)
+                    }
+
+
+                    val blueDollarModels = ArrayList(lowArrayDollar.filter { it.source == "Blue" })
+                    val oficialDollarModels = ArrayList(lowArrayDollar.filter { it.source == "Oficial" })
+
+
+                    historicDollarBlueLiveData.postValue(blueDollarModels)
+                    historicDollarOficialLiveData.postValue(oficialDollarModels)
+
+                   /* val blueDollarValues = blueDollarModels.map { it.valueSell } // Crear un array con los valores de "valueSell"
+                    historicDollarBlueLiveData.postValue(blueDollarValues as ArrayList<Int>)
+                    //val dateDollarBlueDate
+
+                    val oficialDollarValues = oficialDollarModels.map { it.valueSell } // Crear un array con los valores de "valueSell"
+                    historicDollarOficialLiveData.postValue(oficialDollarValues as ArrayList<Int>)*/
+
+
+                    //historicDollarResponse.value = result
+                    //historicDollarResponse.postValue(result)
                 }
             }
         }
