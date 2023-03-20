@@ -3,12 +3,12 @@ package com.kotlin.moneyconversionapp.ui.view.fragments.HistoricModule
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.github.mikephil.charting.components.XAxis
@@ -65,20 +65,25 @@ class HistoryFragment : Fragment() {
         dataSet.add(lineDataSet)
 
         val  data = LineData(dataSet)
-        //binding.barChart.data = data
 
         val xAxis = binding.barChart.xAxis
         xAxis.valueFormatter = datesForm(historicDollarModels)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
-        xAxis.granularity = 1f
+        xAxis.labelRotationAngle = 45f
+
+
         binding.barChart.setTouchEnabled(true)
         binding.barChart.isDragEnabled = true
-        binding.barChart.setScaleEnabled(false)
+        binding.barChart.setScaleEnabled(true)
+        binding.barChart.setPinchZoom(true)
+        binding.barChart.isDragDecelerationEnabled = true;
+
 
         binding.barChart.data = data
         binding.barChart.invalidate()
 
     }
+
 
     private fun datesForm(historicDollarModels: ArrayList<HistoricDollarModel>): ValueFormatter? {
         return object : ValueFormatter() {
@@ -92,10 +97,7 @@ class HistoryFragment : Fragment() {
 
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun datavlues(historicDollarModels: ArrayList<HistoricDollarModel>): MutableList<Entry>? {
-
-       // datesForm(historicDollarModels)
-
+    private fun datavlues(historicDollarModels: ArrayList<HistoricDollarModel>): MutableList<Entry> {
         val dataVals = mutableListOf<Entry>()
         for (i in 0 until historicDollarModels.size) {
             val date = historicDollarModels[i].date
@@ -105,13 +107,40 @@ class HistoryFragment : Fragment() {
         return dataVals
 
 
-     /*  dataVals.add(Entry(0f,20f))
+      /* dataVals.add(Entry(0f,20f))
        dataVals.add(Entry(1f,24f))
        dataVals.add(Entry(2f,28f))
        dataVals.add(Entry(3f,32f))
-       dataVals.add(Entry(4f, 36F))
-
-        return dataVals*/
+       dataVals.add(Entry(5f, 36F))
+       dataVals.add(Entry(6f, 37F))
+       dataVals.add(Entry(7f, 38F))
+       dataVals.add(Entry(8f, 39F))
+       dataVals.add(Entry(9f, 40F))
+       dataVals.add(Entry(10f, 41F))
+       dataVals.add(Entry(11f, 42F))
+       dataVals.add(Entry(12f, 43F))
+       dataVals.add(Entry(13f, 44F))
+       dataVals.add(Entry(14f, 45F))
+       dataVals.add(Entry(15f, 46F))
+       dataVals.add(Entry(16f, 47F))
+       dataVals.add(Entry(17f, 48F))
+       dataVals.add(Entry(18f, 49F))
+       dataVals.add(Entry(19f, 50F))
+       dataVals.add(Entry(20f, 51F))
+       dataVals.add(Entry(21f, 55F))
+       dataVals.add(Entry(22f, 56F))
+       dataVals.add(Entry(23f, 57F))
+       dataVals.add(Entry(24f, 58F))
+       dataVals.add(Entry(25f, 59F))
+       dataVals.add(Entry(26f, 60F))
+       dataVals.add(Entry(27f, 61F))
+       dataVals.add(Entry(30f, 62F))
+       dataVals.add(Entry(31f, 63F))
+       dataVals.add(Entry(32f, 64F))
+       dataVals.add(Entry(33f, 65F))
+       dataVals.add(Entry(34f, 66F))
+       dataVals.add(Entry(35f, 67F))*/
+        
     }
 
    /* @RequiresApi(Build.VERSION_CODES.O)

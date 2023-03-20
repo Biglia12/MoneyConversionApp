@@ -55,6 +55,7 @@ class HistoricDollarViewModel : ViewModel() {
                         lowArrayDollar.removeAt(i)
                     }
 
+                    lowArrayDollar.reverse()
 
                     val blueDollarModels = ArrayList(lowArrayDollar.filter { it.source == "Blue" })
                     val oficialDollarModels = ArrayList(lowArrayDollar.filter { it.source == "Oficial" })
