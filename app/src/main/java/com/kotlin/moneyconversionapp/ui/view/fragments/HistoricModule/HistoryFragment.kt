@@ -89,10 +89,20 @@ class HistoryFragment : Fragment() {
         lineChart.isDragEnabled = true
         lineChart.setScaleEnabled(true)
         lineChart.setPinchZoom(true)
-        lineChart.isDragDecelerationEnabled = true;
-
+        lineChart.isDragDecelerationEnabled = true
 
         lineChart.data = data
+
+        // Obtener la posición de la última entrada en el conjunto de datos del gráfico
+        val ultimaPosicion = lineChart.data.entryCount - 1
+
+        // Establecer el rango máximo visible en el eje X
+        lineChart.setVisibleXRangeMaximum(5f)
+
+        // Mover la vista del gráfico a la última entrada
+        lineChart.moveViewToX(ultimaPosicion.toFloat())
+        //lineChart.zoom(50f,50f,50f,50f)
+
         lineChart.invalidate()
 
     }
