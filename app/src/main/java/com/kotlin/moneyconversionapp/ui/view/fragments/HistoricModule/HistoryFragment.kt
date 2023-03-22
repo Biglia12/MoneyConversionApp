@@ -8,9 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -21,6 +23,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.kotlin.moneyconversionapp.data.model.HistoricDollar.HistoricDollarModel
 import com.kotlin.moneyconversionapp.databinding.FragmentHistoryBinding
 import com.kotlin.moneyconversionapp.ui.viewmodel.Historic.HistoricDollarViewModel
+import kotlinx.coroutines.Job
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -28,8 +31,11 @@ class HistoryFragment : Fragment() {
     private var _binding: FragmentHistoryBinding? = null
     private val binding get() = _binding!!
     private val historicDollarViewModel: HistoricDollarViewModel by viewModels()
+    //private val historicDollarViewModel = ViewModelProvider(this)[HistoricDollarViewModel::class.java]
 
     private  var  dataVals: ArrayList<Entry> = ArrayList()
+    private var loadDataJob: Job? = null
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,19 +51,36 @@ class HistoryFragment : Fragment() {
 
         historicDollarViewModel.loadData()
 
+        observeLiveData()
+
+
+    }
+
+    @RequiresApi(Build.VERSION_CODES.O)
+    private fun observeLiveData() {
+
+        historicDollarViewModel.loading.observe(viewLifecycleOwner, Observer {
+            binding.progressHistory.isVisible = it
+        })
+
+        historicDollarViewModel.graphicVisible.observe(viewLifecycleOwner, Observer {
+            binding.lineChartBlue.isVisible = it
+            binding.lineChartOficial.isVisible = it
+        })
+
         binding.imgBtnRefresh.setOnClickListener {
             historicDollarViewModel.resetLoading()
         }
 
         historicDollarViewModel.historicDollarBlueLiveData.observe(viewLifecycleOwner, Observer {
-              graphic(it)
+            graphic(it)
         })
 
         historicDollarViewModel.historicDollarOficialLiveData.observe(viewLifecycleOwner, Observer {
             graphic(it)
         })
-
     }
+
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun graphic(historicDollarModels: ArrayList<HistoricDollarModel>) {

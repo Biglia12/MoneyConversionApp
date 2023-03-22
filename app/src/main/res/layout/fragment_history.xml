@@ -30,25 +30,24 @@
 
     </androidx.appcompat.widget.Toolbar>
 
-   <!-- <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
+
+    <ProgressBar
+        android:id="@+id/progress_history"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/toolbar"
-        android:fillViewport="true"
-        android:scrollbars="horizontal">
+        app:layout_constraintTop_toTopOf="parent" />
 
-       <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">-->
+
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/line_chart_oficial"
         android:layout_width="match_parent"
         android:layout_height="300dp"
+        android:visibility="gone"
+        tools:visibility="visible"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/toolbar" />
@@ -57,12 +56,12 @@
         android:id="@+id/line_chart_blue"
         android:layout_width="match_parent"
         android:layout_height="300dp"
+        android:visibility="gone"
+        tools:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/line_chart_oficial" />
-  <!--  </LinearLayout>
 
-    </HorizontalScrollView>-->
 
 
 
