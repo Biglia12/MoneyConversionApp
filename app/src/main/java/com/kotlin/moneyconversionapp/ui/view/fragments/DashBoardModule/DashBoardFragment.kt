@@ -42,7 +42,6 @@ class DashBoardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
         //dollarViewModel.callService()
 
         //dollarViewModel.ini
@@ -88,6 +87,8 @@ class DashBoardFragment : Fragment() {
         binding.recyclerResumeFragment.layoutManager = LinearLayoutManager(context)
         binding.recyclerResumeFragment.adapter = adapter
     }
+
+
 
 
     }

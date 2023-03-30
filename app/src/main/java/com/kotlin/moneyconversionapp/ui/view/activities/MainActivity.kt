@@ -3,7 +3,7 @@ package com.kotlin.moneyconversionapp.ui.view.activities
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
-import androidx.activity.viewModels
+import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.kotlin.moneyconversionapp.MoneyApplication
@@ -12,7 +12,6 @@ import com.kotlin.moneyconversionapp.databinding.ActivityMainBinding
 import com.kotlin.moneyconversionapp.ui.view.fragments.CalculatorModule.CalculatorFragment
 import com.kotlin.moneyconversionapp.ui.view.fragments.DashBoardModule.DashBoardFragment
 import com.kotlin.moneyconversionapp.ui.view.fragments.HistoricModule.HistoryFragment
-import com.kotlin.moneyconversionapp.ui.viewmodel.Historic.HistoricDollarViewModel
 
 //test
 class MainActivity : AppCompatActivity() {
@@ -28,6 +27,9 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        val actionBar: ActionBar? = supportActionBar // ocultamos el action bar
+        actionBar!!.hide()
 
         checkConecction()
 
