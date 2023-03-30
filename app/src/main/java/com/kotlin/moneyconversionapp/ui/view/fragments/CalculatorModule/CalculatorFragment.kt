@@ -15,6 +15,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.kotlin.moneyconversionapp.Constants
@@ -29,7 +30,7 @@ class CalculatorFragment : Fragment() {
     private var _binding: FragmentCalculatorBinding? = null
     private val binding get() = _binding!!
 
-    private val dollarViewModel: DollarViewModel by viewModels(){
+    private val dollarViewModel: DollarViewModel by activityViewModels {
         DollarViewModelFactory(requireActivity().application)
     }
 
@@ -101,7 +102,7 @@ class CalculatorFragment : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val names = arrayNames[position]
                 when (names) {
-                    "Dolar Oficial" -> setPrices(casaResponses[position]) //Al ser un servicio de terceros puede haber problemas con esto, pero no hay otra manera por el momento
+                    "Dolar Oficial" -> setPrices(casaResponses[position]) //Al ser un servicio de terceros puede haber problemas con esto, pero no encuentro otra manera por el momento
                     "Dolar Blue" -> setPrices(casaResponses[position])
                     "Dolar Soja" -> setPrices(casaResponses[position])
                     "Dolar Contado con Liqui" -> setPrices(casaResponses[position])

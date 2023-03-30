@@ -21,6 +21,7 @@ class MainActivity : AppCompatActivity() {
     private val dashBoardFragment = DashBoardFragment()
     private val historyFragment = HistoryFragment()
     private val calculatorFragment = CalculatorFragment()
+    private lateinit var currentFragment: Fragment
     private val moneyApplication: MoneyApplication = MoneyApplication(this)
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,22 +50,34 @@ class MainActivity : AppCompatActivity() {
 
     private fun bottomNavigation() {
 
-        replaceFragment(dashBoardFragment)//init first fragment when app run the first time
+        currentFragment = dashBoardFragment
+        showFragment(currentFragment)//init first fragment when app run the first time
 
         binding.navigationBottom.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.item_resume -> {
-                    replaceFragment(dashBoardFragment)
-
-                }
-                R.id.item_history -> replaceFragment(historyFragment)
-                R.id.item_conversor -> replaceFragment(calculatorFragment)
+                R.id.item_resume -> showFragment(dashBoardFragment)
+                R.id.item_history -> showFragment(historyFragment)
+                R.id.item_conversor -> showFragment(calculatorFragment)
             }
             true
         }
     }
 
-    private fun replaceFragment(fragment: Fragment) {
+    private fun showFragment(fragment: Fragment) { // para que el fragmento no se vuevla a recrear
+        supportFragmentManager.beginTransaction().apply {
+            hide(currentFragment)
+            if (fragment.isAdded) {
+                show(fragment)
+            } else {
+                add(R.id.fragment_container, fragment)
+                show(fragment)
+            }
+            commit()
+        }
+        currentFragment = fragment
+    }
+
+    /*private fun replaceFragment(fragment: Fragment) {// para volver a recrear el fragmento
 
         supportFragmentManager.beginTransaction().apply {
 
@@ -72,5 +85,5 @@ class MainActivity : AppCompatActivity() {
             commit()
 
         }
-    }
+    }*/
 }
