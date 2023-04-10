@@ -1,6 +1,8 @@
 package com.kotlin.moneyconversionapp.ui.view.fragments.DashBoardModule
 
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -53,9 +55,16 @@ class DashBoardFragment : Fragment() {
             Toast.makeText(context,"No conexion", Toast.LENGTH_SHORT).show()
         }
 
+        swipeRefresh()
+
     }
 
     private fun observeLiveData() {
+
+        dollarViewModel.showRecycler.observe(viewLifecycleOwner, Observer {
+            binding.recyclerResumeFragment.isVisible = it
+        })
+
         dollarViewModel.casaResponse.observe(viewLifecycleOwner, Observer {
             initRecyler(it)
         })
@@ -63,6 +72,7 @@ class DashBoardFragment : Fragment() {
         activity?.let {
             dollarViewModel.isLoading.observe(it, Observer {
                 binding.progessService.isVisible = it
+                binding.swipeDash.isRefreshing = it
             })
         }
 
@@ -86,6 +96,15 @@ class DashBoardFragment : Fragment() {
         adapter = DashBoardAdapter(arrayList, requireContext())
         binding.recyclerResumeFragment.layoutManager = LinearLayoutManager(context)
         binding.recyclerResumeFragment.adapter = adapter
+    }
+
+    private fun swipeRefresh() {
+        binding.swipeDash.setOnRefreshListener {
+            binding.recyclerResumeFragment.isVisible = false
+            Handler(Looper.getMainLooper()).postDelayed({
+                dollarViewModel.callService()
+            },1000)
+        }
     }
 
 

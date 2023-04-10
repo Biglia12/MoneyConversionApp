@@ -21,6 +21,7 @@ class DollarViewModel (application: Application) : AndroidViewModel(application)
     val casaResponseCalculator = MutableLiveData<ArrayList<CasaResponse>>()
     val isLoading = MutableLiveData<Boolean>()
     val showError = MutableLiveData<Boolean>()
+    val showRecycler = MutableLiveData<Boolean>()
     val resultCalculateBuy = MutableLiveData<String>()
     val resultCalculateSell = MutableLiveData<String>()
     val calculator: Calculator = Calculator()
@@ -45,6 +46,8 @@ class DollarViewModel (application: Application) : AndroidViewModel(application)
 
             isLoading.postValue(true)
 
+            showRecycler.postValue(false)
+
             if (!result.isNullOrEmpty()) {
 
                 removeName(result)
@@ -52,6 +55,8 @@ class DollarViewModel (application: Application) : AndroidViewModel(application)
                 isLoading.postValue(false)
 
                 showError.postValue(false)
+
+                showRecycler.postValue(true)
 
                 setSpinner(result)
 

@@ -7,19 +7,19 @@ data class DollarCasaResponse(
 
     @SerializedName("compra")
     @Expose
-    val compra: String? = null,
+    var compra: String? = null,
 
     @SerializedName("venta")
     @Expose
-    val venta: String? = null,
+    var venta: String? = null,
 
     @SerializedName("agencia")
     @Expose
-    val agencia: String? = null,
+    var agencia: String? = null,
 
     @SerializedName("nombre")
     @Expose
-    val nombre: String? = null,
+    var nombre: String? = null,
 
     @SerializedName("variacion")
     @Expose
@@ -27,10 +27,10 @@ data class DollarCasaResponse(
 
     @SerializedName("ventaCero")
     @Expose
-    val ventaCero: String? = null,
+    var ventaCero: String? = null,
 
     @SerializedName("decimales")
     @Expose
-    val decimales: String? = null
+    var decimales: String? = null
 
 )
