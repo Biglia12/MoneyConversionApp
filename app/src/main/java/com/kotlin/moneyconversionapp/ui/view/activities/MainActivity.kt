@@ -65,7 +65,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun showFragment(fragment: Fragment) { // para que el fragmento no se vuevla a recrear
+    private fun showFragment(fragment: Fragment) { // para que el fragmento no se vuevla a recrear. (lo hgacemos para no volver a llamar varias veces a el servicio sin nesecidad)
         supportFragmentManager.beginTransaction().apply {
             hide(currentFragment)
             if (fragment.isAdded) {
