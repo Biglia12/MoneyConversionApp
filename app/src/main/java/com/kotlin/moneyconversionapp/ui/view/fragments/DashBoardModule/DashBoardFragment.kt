@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -27,7 +28,7 @@ class DashBoardFragment : Fragment() {
     private var dollarResponse = ArrayList<CasaResponse>()
     private lateinit var adapter: DashBoardAdapter
     private var position: Int = 0
-    private val dollarViewModel: DollarViewModel by viewModels {
+    private val dollarViewModel: DollarViewModel by activityViewModels() {
         DollarViewModelFactory(requireActivity().application)
     }
    // private val moneyApplication: MoneyApplication = MoneyApplication(requireActivity())
