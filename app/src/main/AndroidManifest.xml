@@ -15,7 +15,12 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.MoneyConversionApp">
         <activity
-            android:name="com.kotlin.moneyconversionapp.ui.view.activities.MainActivity"
+            android:name=".ui.view.activities.MainActivityCompose"
+            android:exported="false"
+            android:label="@string/title_activity_main_compose"
+            android:theme="@style/Theme.MoneyConversionApp" />
+        <activity
+            android:name=".ui.view.activities.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

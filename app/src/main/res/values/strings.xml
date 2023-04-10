@@ -5,4 +5,5 @@
 
     <string name="error_message">Error, vuelva a intentarlo</string>
     <string name="retry">Reintentar</string>
+    <string name="title_activity_main_compose">MainActivityCompose</string>
 </resources>
