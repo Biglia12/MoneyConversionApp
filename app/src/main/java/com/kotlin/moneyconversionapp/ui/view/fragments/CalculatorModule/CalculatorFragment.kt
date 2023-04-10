@@ -37,7 +37,6 @@ class CalculatorFragment : Fragment() {
     private  var priceWithDollarVenta : String = ""
     private  var priceWithDollarCompra : String = ""
     private lateinit var valueEtString : String
-    //rivate val moneyApplication: MoneyApplication = MoneyApplication(requireContext().applicationContext)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,

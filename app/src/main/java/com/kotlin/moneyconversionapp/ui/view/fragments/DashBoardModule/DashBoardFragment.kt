@@ -31,7 +31,6 @@ class DashBoardFragment : Fragment() {
     private val dollarViewModel: DollarViewModel by activityViewModels() {
         DollarViewModelFactory(requireActivity().application)
     }
-   // private val moneyApplication: MoneyApplication = MoneyApplication(requireActivity())
 
 
     override fun onCreateView(
@@ -45,10 +44,6 @@ class DashBoardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        //dollarViewModel.callService()
-
-        //dollarViewModel.ini
-
         if (dollarViewModel.moneyApplication.isConnected()){
             observeLiveData()
         }else{
@@ -56,7 +51,7 @@ class DashBoardFragment : Fragment() {
             Toast.makeText(context,"No conexion", Toast.LENGTH_SHORT).show()
         }
 
-        swipeRefresh()
+        swipeRefresh()//metodo para volver a llamar al servicio
 
     }
 
@@ -94,22 +89,19 @@ class DashBoardFragment : Fragment() {
 
 
     private fun initRecyler(arrayList: ArrayList<CasaResponse>) {
-        adapter = DashBoardAdapter(arrayList, requireContext())
+        adapter = DashBoardAdapter(arrayList, requireContext()) //le apsamos al adapter el listado de monedas
         binding.recyclerResumeFragment.layoutManager = LinearLayoutManager(context)
         binding.recyclerResumeFragment.adapter = adapter
     }
 
     private fun swipeRefresh() {
         binding.swipeDash.setOnRefreshListener {
-            binding.recyclerResumeFragment.isVisible = false
+            binding.recyclerResumeFragment.isVisible = false //lo hacemos invisble para que el usuario vea que se vuelve a recargar el lsitado de las monedas
             Handler(Looper.getMainLooper()).postDelayed({
                 dollarViewModel.callService()
-            },1000)
+            },1000)//le asginamos un tiempo al swipe para que no sea tan rapido.
         }
     }
-
-
-
 
     }
 

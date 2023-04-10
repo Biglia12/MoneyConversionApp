@@ -24,8 +24,6 @@ class DollarViewModel (application: Application) : AndroidViewModel(application)
     val showRecycler = MutableLiveData<Boolean>()
     val resultCalculateBuy = MutableLiveData<String>()
     val resultCalculateSell = MutableLiveData<String>()
-    val calculator: Calculator = Calculator()
-
 
     private val getDollarUseCases = DollarUseCases()
 
