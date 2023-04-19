@@ -7,10 +7,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
+import androidx.compose.material.rememberScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import com.kotlin.moneyconversionapp.ui.view.activities.ui.theme.ItemMenu
 import com.kotlin.moneyconversionapp.ui.view.activities.ui.theme.MoneyConversionAppTheme
+import com.kotlin.moneyconversionapp.ui.view.fragments.DashBoardModule.DashBoardFragment
 
 class MainActivityCompose : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -22,7 +27,7 @@ class MainActivityCompose : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Greeting("Android")
+                    DashBoard()
                 }
             }
         }
@@ -30,14 +35,22 @@ class MainActivityCompose : ComponentActivity() {
 }
 
 @Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
+fun DashBoard() {
+    val navController = rememberNavController()
+    val scaffoldState = rememberScaffoldState()
+    val scope = rememberCoroutineScope()
+
+    val navigtionItem = listOf(
+        ItemMenu.DashBoard,
+        ItemMenu.Calculator,
+        ItemMenu.Historic
+    )
 }
 
 @Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
+fun DashBoardPreview() {
     MoneyConversionAppTheme {
-        Greeting("Android")
+        DashBoard()
     }
 }
