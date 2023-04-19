@@ -1,17 +1,46 @@
 package com.kotlin.moneyconversionapp
 
+import android.app.Application
+import android.content.BroadcastReceiver
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
+import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
+import com.kotlin.moneyconversionapp.ui.view.activities.MainActivity
+import com.onesignal.OSNotification
+import com.onesignal.OneSignal
+import org.json.JSONObject
 
-class MoneyApplication(val context: Context) {
+class MoneyApplication() : Application() {
 
-    fun isConnected(): Boolean { // para la conexion a internet
+    override fun onCreate() {
+        super.onCreate()
+
+
+        OneSignal.setLogLevel(OneSignal.LOG_LEVEL.DEBUG, OneSignal.LOG_LEVEL.NONE)
+
+        // Inicializa OneSignal
+        OneSignal.initWithContext(this)
+        OneSignal.setAppId("1bb45290-8e29-4d83-b935-33be3bda582b")
+
+        // Maneja la apertura de notificaciones
+        OneSignal.setNotificationOpenedHandler { result ->
+            val intent = Intent(applicationContext, MainActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
+            startActivity(intent)
+        }
+
+
+    }
+
+
+    fun isConnected(context: Context): Boolean { // para la conexion a internet
         val connectivityManager =
             context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
@@ -50,7 +79,7 @@ class MoneyApplication(val context: Context) {
     }
 
     //Store in SharedPreference
-    fun setDollarValue(key: String?, value: ArrayList<CasaResponse>) {
+    fun setDollarValue(context:Context,key: String?, value: ArrayList<CasaResponse>) {
         val prefs: SharedPreferences = context.getSharedPreferences("APP", 0)
         val editor: SharedPreferences.Editor = prefs.edit()
         editor.putString(key, Gson().toJson(value))
@@ -58,22 +87,49 @@ class MoneyApplication(val context: Context) {
     }
 
     //Retrieve from SharedPreference
-    fun getDollarValue(key: String?): ArrayList<CasaResponse>? {
+    fun getDollarValue(context:Context,key: String?): ArrayList<CasaResponse>? {
         val prefs: SharedPreferences = context.getSharedPreferences("APP", 0)
         val gson = Gson()
-        val json = prefs.getString(key,null)
-        val type = object : TypeToken<ArrayList<CasaResponse>>(){}.type
+        val json = prefs.getString(key, null)
+        val type = object : TypeToken<ArrayList<CasaResponse>>() {}.type
         return gson.fromJson(json, type)
     }
 
-  /*  fun getList():ArrayList<String>{
-        val gson = Gson()
-        val json = preferences.getString("LIST",null)
-        val type = object :TypeToken<ArrayList<String>>(){}.type//converting the json to list
-        return gson.fromJson(json,type)//returning the list
-    }*/
+    /*  fun getList():ArrayList<String>{
+          val gson = Gson()
+          val json = preferences.getString("LIST",null)
+          val type = object :TypeToken<ArrayList<String>>(){}.type//converting the json to list
+          return gson.fromJson(json,type)//returning the list
+      }*/
 
+    class MyNotificationReceiver : BroadcastReceiver() {
+        override fun onReceive(context: Context, intent: Intent) {
+            if (intent.action == "com.onesignal.NotificationReceivedAction") {
+                val notificationData = intent.getStringExtra("data")
+                try {
+                    val json = JSONObject(notificationData)
+                    val notificationId = json.optString("notificationId")
+                    val message = json.optString("alert")
+                    Log.d("OneSignal", "Notificación recibida: $message")
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            } else if (intent.action == "com.onesignal.NotificationOpenedAction") {
+                val notificationData = intent.getStringExtra("data")
+                try {
+                    val json = JSONObject(notificationData)
+                    val notificationId = json.optString("notificationId")
+                    val message = json.optString("alert")
+                    Log.d("OneSignal", "Notificación abierta: $message")
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+        }
+    }
 }
+
+
 
 
 

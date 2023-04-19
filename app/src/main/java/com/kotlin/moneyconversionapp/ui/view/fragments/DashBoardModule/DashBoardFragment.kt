@@ -44,7 +44,7 @@ class DashBoardFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        if (dollarViewModel.moneyApplication.isConnected()){
+        if (dollarViewModel.moneyApplication.isConnected(requireContext())){
             observeLiveData()
         }else{
             //observeLiveData()

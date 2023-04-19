@@ -12,6 +12,7 @@ import com.kotlin.moneyconversionapp.databinding.ActivityMainBinding
 import com.kotlin.moneyconversionapp.ui.view.fragments.CalculatorModule.CalculatorFragment
 import com.kotlin.moneyconversionapp.ui.view.fragments.DashBoardModule.DashBoardFragment
 import com.kotlin.moneyconversionapp.ui.view.fragments.HistoricModule.HistoryFragment
+import com.onesignal.OneSignal
 
 //test
 class MainActivity : AppCompatActivity() {
@@ -21,7 +22,7 @@ class MainActivity : AppCompatActivity() {
     private val historyFragment = HistoryFragment()
     private val calculatorFragment = CalculatorFragment()
     private lateinit var currentFragment: Fragment
-    private val moneyApplication: MoneyApplication = MoneyApplication(this)
+    private val moneyApplication: MoneyApplication = MoneyApplication()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -31,12 +32,13 @@ class MainActivity : AppCompatActivity() {
         val actionBar: ActionBar? = supportActionBar // ocultamos el action bar
         actionBar!!.hide()
 
+
         checkConecction()
 
     }
 
     private fun checkConecction() {
-        if (moneyApplication.isConnected()) {
+        if (moneyApplication.isConnected(this)) {
             binding.constraintErrorInternet.visibility = GONE
             binding.navigationBottom.visibility = VISIBLE
             binding.fragmentContainer.visibility = VISIBLE

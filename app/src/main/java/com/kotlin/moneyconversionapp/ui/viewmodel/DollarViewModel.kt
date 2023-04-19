@@ -1,6 +1,7 @@
 package com.kotlin.moneyconversionapp.ui.viewmodel
 
 import android.app.Application
+import android.content.Context
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
@@ -16,7 +17,8 @@ import kotlinx.coroutines.launch
 
 class DollarViewModel (application: Application) : AndroidViewModel(application) {
 
-    val moneyApplication = MoneyApplication(application)
+    val context: Context = application
+    val moneyApplication = MoneyApplication()
     val casaResponse = MutableLiveData<ArrayList<CasaResponse>>()
     val casaResponseCalculator = MutableLiveData<ArrayList<CasaResponse>>()
     val isLoading = MutableLiveData<Boolean>()
@@ -58,7 +60,7 @@ class DollarViewModel (application: Application) : AndroidViewModel(application)
 
                 setSpinner(result)
 
-                moneyApplication.setDollarValue(Constants.DOLLAR_VALUE, result)
+                moneyApplication.setDollarValue(context,Constants.DOLLAR_VALUE, result)
 
                 Log.d("dada","dasdasd")
 

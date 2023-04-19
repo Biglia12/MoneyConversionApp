@@ -57,11 +57,11 @@ class CalculatorFragment : Fragment() {
 
 
     private fun setSpinner() {
-        if (dollarViewModel.moneyApplication.isConnected()) {
+        if (dollarViewModel.moneyApplication.isConnected(requireContext())) {
             spinner()
         }else {
-           if (dollarViewModel.moneyApplication.getDollarValue(Constants.DOLLAR_VALUE) != null){
-               dollarViewModel.setSpinner(dollarViewModel.moneyApplication.getDollarValue(Constants.DOLLAR_VALUE)!!)//le pasamos lo que tenemos almacenado al view model para poder seguir con la calculadora con los ultimos datos guardados
+           if (dollarViewModel.moneyApplication.getDollarValue(requireContext(),Constants.DOLLAR_VALUE) != null){
+               dollarViewModel.setSpinner(dollarViewModel.moneyApplication.getDollarValue(requireContext(),Constants.DOLLAR_VALUE)!!)//le pasamos lo que tenemos almacenado al view model para poder seguir con la calculadora con los ultimos datos guardados
                spinner()
            }
             Toast.makeText(activity,"No hay conexion",Toast.LENGTH_SHORT).show()
