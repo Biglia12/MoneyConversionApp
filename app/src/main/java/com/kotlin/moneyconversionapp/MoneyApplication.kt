@@ -9,6 +9,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.util.Log
+import android.widget.Toast
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
@@ -28,6 +29,23 @@ class MoneyApplication() : Application() {
         // Inicializa OneSignal
         OneSignal.initWithContext(this)
         OneSignal.setAppId("1bb45290-8e29-4d83-b935-33be3bda582b")
+
+        // Manejar la recepción de notificaciones cuando la app está en primer plano
+        OneSignal.setNotificationWillShowInForegroundHandler { notificationReceivedEvent -> // Obtener la notificación recibida
+            val notification = notificationReceivedEvent?.notification
+            notification?.let {
+
+                Log.d("notificaction","recibiaaa")
+
+                // Modificar la notificación a tu gusto
+                //it.androidNotificationId = 1 // Establecer un ID de notificación personalizado
+                //it.shownTimeStamp = System.currentTimeMillis() // Establecer una marca de tiempo personalizada
+            }
+
+            // Mostrar la notificación personalizada
+           // return OSNotificationDisplayedResult(notification)
+        }
+
 
         // Maneja la apertura de notificaciones
         OneSignal.setNotificationOpenedHandler { result ->
@@ -95,12 +113,6 @@ class MoneyApplication() : Application() {
         return gson.fromJson(json, type)
     }
 
-    /*  fun getList():ArrayList<String>{
-          val gson = Gson()
-          val json = preferences.getString("LIST",null)
-          val type = object :TypeToken<ArrayList<String>>(){}.type//converting the json to list
-          return gson.fromJson(json,type)//returning the list
-      }*/
 
     class MyNotificationReceiver : BroadcastReceiver() {
         override fun onReceive(context: Context, intent: Intent) {
