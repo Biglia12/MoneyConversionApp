@@ -23,27 +23,25 @@ class MoneyApplication() : Application() {
     override fun onCreate() {
         super.onCreate()
 
+        oneSignal()
 
-        OneSignal.setLogLevel(OneSignal.LOG_LEVEL.DEBUG, OneSignal.LOG_LEVEL.NONE)
 
+    }
+
+    private fun oneSignal() {
         // Inicializa OneSignal
         OneSignal.initWithContext(this)
-        OneSignal.setAppId("1bb45290-8e29-4d83-b935-33be3bda582b")
+        OneSignal.setAppId(BuildConfig.ONESIGNAL_APPID)
 
         // Manejar la recepción de notificaciones cuando la app está en primer plano
         OneSignal.setNotificationWillShowInForegroundHandler { notificationReceivedEvent -> // Obtener la notificación recibida
             val notification = notificationReceivedEvent?.notification
             notification?.let {
 
-                Log.d("notificaction","recibiaaa")
+                Log.d("notificaction","recibida")
 
-                // Modificar la notificación a tu gusto
-                //it.androidNotificationId = 1 // Establecer un ID de notificación personalizado
-                //it.shownTimeStamp = System.currentTimeMillis() // Establecer una marca de tiempo personalizada
             }
 
-            // Mostrar la notificación personalizada
-           // return OSNotificationDisplayedResult(notification)
         }
 
 
@@ -53,7 +51,6 @@ class MoneyApplication() : Application() {
             intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
             startActivity(intent)
         }
-
 
     }
 
