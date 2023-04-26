@@ -2,6 +2,11 @@ package com.kotlin.moneyconversionapp
 
 object Constants {
 
+     //Flavors
+     const val MONEYDEV = "MONEYCONVERSION_Development "
+     const val MONEYPROD = "MONEYCONVERSION_Production"
+
+     //BaseUrl
      const val BASE_URL_DOLARSI = "https://www.dolarsi.com/api/"
      const val BASE_URL_API_DOLLAR = "https://api-dolar-argentina.herokuapp.com/"
 

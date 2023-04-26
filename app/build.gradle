@@ -89,4 +89,7 @@ dependencies {
 
     //Graficos
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
+
+    //admbob(publicidad)
+    implementation 'com.google.android.gms:play-services-ads:22.0.0'
 }
