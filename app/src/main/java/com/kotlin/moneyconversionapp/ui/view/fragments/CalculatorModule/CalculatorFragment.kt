@@ -182,7 +182,10 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun screenShot(view: View): Bitmap? {
+        // Invalidar la vista para forzar la actualización del sistema de caché de Android
+        view.invalidate()
 
+        // Tomar la captura de pantalla actualizada
         val rootView: View = requireView().rootView
         val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
