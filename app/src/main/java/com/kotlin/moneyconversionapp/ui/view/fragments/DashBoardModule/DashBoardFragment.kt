@@ -3,6 +3,7 @@ package com.kotlin.moneyconversionapp.ui.view.fragments.DashBoardModule
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.View.VISIBLE
@@ -55,9 +56,9 @@ class DashBoardFragment : Fragment() {
         binding.toolbar.title = "DolarArg"
         binding.toolbar.setTitleTextColor(resources.getColor(R.color.white))
 
-        if (BuildConfig.FLAVOR == Constants.MONEYPROD) {
+        //if (BuildConfig.FLAVOR == Constants.MONEYPROD) {
             funAdView() //funcion para publicidad
-        }
+        //}
 
         if (dollarViewModel.moneyApplication.isConnected(requireContext())){
             observeLiveData()
@@ -75,7 +76,6 @@ class DashBoardFragment : Fragment() {
         MobileAds.initialize(requireActivity()) {}
 
         val adRequest = AdRequest.Builder().build()
-        binding.adView.visibility = VISIBLE
         binding.adView.loadAd(adRequest)
 
         binding.adView.adListener = object: AdListener() {
@@ -90,6 +90,7 @@ class DashBoardFragment : Fragment() {
 
             override fun onAdFailedToLoad(adError : LoadAdError) {
                 // Code to be executed when an ad request fails.
+                Log.e("onAdFailedToLoad",adError.toString())
             }
 
             override fun onAdImpression() {
@@ -99,6 +100,7 @@ class DashBoardFragment : Fragment() {
 
             override fun onAdLoaded() {
                 // Code to be executed when an ad finishes loading.
+                binding.adView.visibility = VISIBLE
             }
 
             override fun onAdOpened() {
