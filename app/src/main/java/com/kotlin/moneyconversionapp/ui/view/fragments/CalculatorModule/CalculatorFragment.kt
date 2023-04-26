@@ -31,7 +31,7 @@ class CalculatorFragment : Fragment() {
     private var _binding: FragmentCalculatorBinding? = null
     private val binding get() = _binding!!
 
-    private val dollarViewModel: DollarViewModel by activityViewModels {
+    private val dollarViewModel: DollarViewModel by activityViewModels { //utlizaremos este view model para los datos que nos trae la api y ahcer los calculos, este se compartira con el fragment Dashboard.
         DollarViewModelFactory(requireActivity().application)
     }
 
