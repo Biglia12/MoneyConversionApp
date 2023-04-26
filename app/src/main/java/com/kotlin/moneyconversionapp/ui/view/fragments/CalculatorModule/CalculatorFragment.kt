@@ -16,12 +16,12 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.kotlin.moneyconversionapp.Constants
 import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.databinding.FragmentCalculatorBinding
+import com.kotlin.moneyconversionapp.ui.viewmodel.Calculator.CalculatorViewModel
 import com.kotlin.moneyconversionapp.ui.viewmodel.DollarViewModel
 import com.kotlin.moneyconversionapp.ui.viewmodel.DollarViewModelFactory
 
@@ -34,6 +34,8 @@ class CalculatorFragment : Fragment() {
     private val dollarViewModel: DollarViewModel by activityViewModels { //utlizaremos este view model para los datos que nos trae la api y ahcer los calculos, este se compartira con el fragment Dashboard.
         DollarViewModelFactory(requireActivity().application)
     }
+
+    private val calculatorViewModel: CalculatorViewModel by activityViewModels()
 
     private  var priceWithDollarVenta : String = ""
     private  var priceWithDollarCompra : String = ""
@@ -177,7 +179,15 @@ class CalculatorFragment : Fragment() {
 
     private fun sharePrice() {
         binding.imgShare.setOnClickListener {
-            view?.let { it1 -> screenShot(it1)?.let { it1 -> share(it1) } }
+            calculatorViewModel.generateShareIntent(requireView(), priceWithDollarCompra, priceWithDollarVenta)
+            //view?.let { it1 -> screenShot(it1)?.let { it1 -> share(it1) } }
+        }
+
+        calculatorViewModel.shareIntent.observe(viewLifecycleOwner) { intent ->
+            if (intent != null) {
+                startActivity(Intent.createChooser(intent, "hello hello"))
+                //calculatorViewModel.shareIntent.value = null
+            }
         }
     }
 
