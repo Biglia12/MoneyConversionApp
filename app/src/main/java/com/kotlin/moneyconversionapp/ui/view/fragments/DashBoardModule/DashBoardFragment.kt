@@ -13,6 +13,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.adapters.DashBoardAdapter
 import com.kotlin.moneyconversionapp.databinding.FragmentDashBoardBinding
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
@@ -43,6 +44,9 @@ class DashBoardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.toolbar.title = "DolarArg"
+        binding.toolbar.setTitleTextColor(resources.getColor(R.color.white))
 
         if (dollarViewModel.moneyApplication.isConnected(requireContext())){
             observeLiveData()

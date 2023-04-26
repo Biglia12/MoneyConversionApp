@@ -4,11 +4,8 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.data.model.HistoricDollar.HistoricDollarModel
-import com.kotlin.moneyconversionapp.domain.DollarUseCases
 import com.kotlin.moneyconversionapp.domain.HistoricDollarUseCase
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
@@ -44,6 +41,7 @@ class HistoricDollarViewModel : ViewModel() {
     fun loadData() {
         /*if (!isLoadingData) {
             isLoadingData = true*/
+        graphicVisible.postValue(false)
             viewModelScope.launch() {
                 try {
                     loading.postValue(true)
@@ -86,8 +84,7 @@ class HistoricDollarViewModel : ViewModel() {
         viewModelScope.cancel() // Cancel all coroutines running in this ViewModel
     }
 
-    fun resetLoading() {
-        isLoadingData = false
+    fun reloadService() {
         loadData()
     }
 

@@ -11,9 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -21,10 +19,10 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
+import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.data.model.HistoricDollar.HistoricDollarModel
 import com.kotlin.moneyconversionapp.databinding.FragmentHistoryBinding
 import com.kotlin.moneyconversionapp.ui.viewmodel.Historic.HistoricDollarViewModel
-import kotlinx.coroutines.Job
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -44,6 +42,9 @@ class HistoryFragment : Fragment() {
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.toolbar.title = "Grafico Historio"
+        binding.toolbar.setTitleTextColor(resources.getColor(R.color.white))
 
         historicDollarViewModel.loadData()
 
@@ -65,7 +66,7 @@ class HistoryFragment : Fragment() {
         })
 
         binding.imgBtnRefresh.setOnClickListener {
-            historicDollarViewModel.resetLoading()
+            historicDollarViewModel.reloadService()
         }
 
         historicDollarViewModel.historicDollarBlueLiveData.observe(viewLifecycleOwner, Observer {
@@ -113,13 +114,13 @@ class HistoryFragment : Fragment() {
         lineChart.data = data
 
         // Obtener la posición de la última entrada en el conjunto de datos del gráfico
-        val ultimaPosicion = lineChart.data.entryCount - 1
+        val lastPosition = lineChart.data.entryCount - 1
 
         // Establecer el rango máximo visible en el eje X
         lineChart.setVisibleXRangeMaximum(5f)
 
         // Mover la vista del gráfico a la última entrada
-        lineChart.moveViewToX(ultimaPosicion.toFloat())
+        lineChart.moveViewToX(lastPosition.toFloat())
         //lineChart.zoom(50f,50f,50f,50f)
 
         lineChart.invalidate()
@@ -145,7 +146,7 @@ class HistoryFragment : Fragment() {
         val dataVals = mutableListOf<Entry>()
         for (i in 0 until historicDollarModels.size) {
             val date = historicDollarModels[i].date
-            val valueBuy = historicDollarModels[i].valueBuy!!.toFloat()
+            val valueBuy = historicDollarModels[i].valueSell!!.toFloat()
             dataVals.add(Entry(i.toFloat(), valueBuy))
         }
         return dataVals

@@ -19,6 +19,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.kotlin.moneyconversionapp.Constants
+import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.databinding.FragmentCalculatorBinding
 import com.kotlin.moneyconversionapp.ui.viewmodel.DollarViewModel
@@ -48,6 +49,9 @@ class CalculatorFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
+        binding.toolbar.title = "Calculadora"
+        binding.toolbar.setTitleTextColor(resources.getColor(R.color.white))
 
         setSpinner()
         btnCalculateListener()
