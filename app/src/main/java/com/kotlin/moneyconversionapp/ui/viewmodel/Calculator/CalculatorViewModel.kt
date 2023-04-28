@@ -25,7 +25,7 @@ class CalculatorViewModel : ViewModel() {
         val uri: Uri = Uri.parse(pathofBmp)
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.type = "image/*"
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Star App")
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "DolarArg")
         shareIntent.putExtra(Intent.EXTRA_TEXT, "Precio de compra:\$$priceWithDollarCompra\nPrecio de venta: \$$priceWithDollarVenta")
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
         _shareIntent.value = shareIntent
