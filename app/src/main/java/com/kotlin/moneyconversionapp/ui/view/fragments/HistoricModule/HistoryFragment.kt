@@ -3,6 +3,7 @@ package com.kotlin.moneyconversionapp.ui.view.fragments.HistoricModule
 import android.annotation.SuppressLint
 import android.os.Build
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -19,10 +20,15 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
+import com.google.android.gms.ads.AdListener
+import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.MobileAds
 import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.data.model.HistoricDollar.HistoricDollarModel
 import com.kotlin.moneyconversionapp.databinding.FragmentHistoryBinding
 import com.kotlin.moneyconversionapp.ui.viewmodel.Historic.HistoricDollarViewModel
+import kotlinx.android.synthetic.main.fragment_dash_board.*
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
 
@@ -43,14 +49,54 @@ class HistoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.toolbar.title = "Grafico Historio"
+        binding.toolbar.title = "Grafico Dólar"
         binding.toolbar.setTitleTextColor(resources.getColor(R.color.white))
 
         historicDollarViewModel.loadData()
 
+        funAdView() //funcion para publicidad
+
         observeLiveData()
 
 
+    }
+
+    private fun funAdView() {
+        MobileAds.initialize(requireActivity()) {}
+
+        val adRequest = AdRequest.Builder().build()
+        binding.adViewHistoric.loadAd(adRequest)
+
+        binding.adViewHistoric.adListener = object: AdListener() {
+            override fun onAdClicked() {
+                // Code to be executed when the user clicks on an ad.
+            }
+
+            override fun onAdClosed() {
+                // Code to be executed when the user is about to return
+                // to the app after tapping on an ad.
+            }
+
+            override fun onAdFailedToLoad(adError : LoadAdError) {
+                // Code to be executed when an ad request fails.
+                Log.e("onAdFailedToLoad",adError.toString())
+            }
+
+            override fun onAdImpression() {
+                // Code to be executed when an impression is recorded
+                // for an ad.
+            }
+
+            override fun onAdLoaded() {
+                // Code to be executed when an ad finishes loading.
+                binding.adViewHistoric.visibility = View.VISIBLE
+            }
+
+            override fun onAdOpened() {
+                // Code to be executed when an ad opens an overlay that
+                // covers the screen.
+            }
+        }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
