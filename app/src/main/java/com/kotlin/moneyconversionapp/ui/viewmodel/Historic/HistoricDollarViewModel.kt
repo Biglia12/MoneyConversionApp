@@ -5,7 +5,7 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kotlin.moneyconversionapp.data.model.HistoricDollar.HistoricDollarModel
-import com.kotlin.moneyconversionapp.domain.HistoricDollarUseCase
+import com.kotlin.moneyconversionapp.domain.usecases.HistoricDollarUseCase
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 

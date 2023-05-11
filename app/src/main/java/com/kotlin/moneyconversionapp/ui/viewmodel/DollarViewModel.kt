@@ -5,14 +5,12 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kotlin.moneyconversionapp.Constants
 import com.kotlin.moneyconversionapp.MoneyApplication
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
-import com.kotlin.moneyconversionapp.domain.Calculator
-import com.kotlin.moneyconversionapp.domain.CalculatorUseCase
-import com.kotlin.moneyconversionapp.domain.DollarUseCases
+import com.kotlin.moneyconversionapp.domain.usecases.CalculatorUseCase
+import com.kotlin.moneyconversionapp.domain.usecases.DollarUseCases
 import kotlinx.coroutines.launch
 
 class DollarViewModel (application: Application) : AndroidViewModel(application) {

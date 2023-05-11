@@ -1,4 +1,6 @@
-package com.kotlin.moneyconversionapp.domain
+package com.kotlin.moneyconversionapp.domain.usecases
+
+import com.kotlin.moneyconversionapp.domain.Calculator
 
 class CalculatorUseCase {
 

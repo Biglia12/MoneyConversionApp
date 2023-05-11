@@ -1,4 +1,4 @@
-package com.kotlin.moneyconversionapp.domain
+package com.kotlin.moneyconversionapp.domain.usecases
 
 import com.kotlin.moneyconversionapp.data.DollarRepository
 import com.kotlin.moneyconversionapp.data.HistoricDollarRepository
