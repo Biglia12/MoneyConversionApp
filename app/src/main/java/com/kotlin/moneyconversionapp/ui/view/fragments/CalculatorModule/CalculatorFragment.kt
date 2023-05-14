@@ -191,34 +191,6 @@ class CalculatorFragment : Fragment() {
         }
     }
 
-    private fun screenShot(view: View): Bitmap? {
-        // Invalidar la vista para forzar la actualización del sistema de caché de Android
-        view.invalidate()
-
-        // Tomar la captura de pantalla actualizada
-        val rootView: View = requireView().rootView
-        val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
-        val canvas = Canvas(bitmap)
-        view.draw(canvas)
-        rootView.isDrawingCacheEnabled = true
-        return rootView.drawingCache
-    }
-
-    private fun share(bitmap: Bitmap) {
-        val pathofBmp = MediaStore.Images.Media.insertImage(
-            requireActivity().contentResolver,
-            bitmap, "title", null
-        )
-        val uri: Uri = Uri.parse(pathofBmp)
-        val shareIntent = Intent(Intent.ACTION_SEND)
-        shareIntent.type = "image/*"
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "Star App")
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "Precio de compra:\$$priceWithDollarCompra\nPrecio de venta: \$$priceWithDollarVenta")
-        shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
-        requireActivity().startActivity(Intent.createChooser(shareIntent, "hello hello"))
-    }
-
-
 
     @SuppressLint("RestrictedApi")
     override fun onStart() {
