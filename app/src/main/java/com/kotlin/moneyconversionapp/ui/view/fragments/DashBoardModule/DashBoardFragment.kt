@@ -71,16 +71,9 @@ class DashBoardFragment : Fragment() {
 
     private fun funAdView() {
 
-        if (BuildConfig.FLAVOR == Constants.MONEYPROD) {
-            binding.adView.adUnitId = Constants.ADD_MOB_PROD
-        }else{
-            binding.adView.adUnitId = Constants.ADD_MOB_DEV
-        }
-
-        MobileAds.initialize(requireActivity()) {}
-
         val adRequest = AdRequest.Builder().build()
         binding.adView.loadAd(adRequest)
+
 
         binding.adView.adListener = object : AdListener() {
             override fun onAdClicked() {

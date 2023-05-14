@@ -10,6 +10,7 @@ import android.net.NetworkCapabilities
 import android.os.Build
 import android.util.Log
 import android.widget.Toast
+import com.google.android.gms.ads.MobileAds
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
@@ -22,6 +23,8 @@ class MoneyApplication() : Application() {
 
     override fun onCreate() {
         super.onCreate()
+
+        MobileAds.initialize(this)//publicidad
 
         oneSignal()
 

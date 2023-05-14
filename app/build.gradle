@@ -41,7 +41,6 @@ android {
                                     onesignal_google_project_number: 'REMOTE',
                                     admobAppId: "ca-app-pub-3940256099942544~3347511713"]
             buildConfigField "String", "ONESIGNAL_APPID", "\"1bb45290-8e29-4d83-b935-33be3bda582b\""
-
         }
     }
 

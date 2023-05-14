@@ -64,16 +64,10 @@ class HistoryFragment : Fragment() {
     }
 
     private fun funAdView() {
-        MobileAds.initialize(requireActivity()) {}
 
         val adRequest = AdRequest.Builder().build()
         binding.adViewHistoric.loadAd(adRequest)
 
-        if (BuildConfig.FLAVOR == Constants.MONEYPROD) {
-            binding.adViewHistoric.adUnitId = Constants.ADD_MOB_PROD
-        }else{
-            binding.adViewHistoric.adUnitId = Constants.ADD_MOB_DEV
-        }
 
         binding.adViewHistoric.adListener = object: AdListener() {
             override fun onAdClicked() {
