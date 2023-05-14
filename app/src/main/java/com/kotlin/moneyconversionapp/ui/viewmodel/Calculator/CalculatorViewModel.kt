@@ -36,11 +36,11 @@ class CalculatorViewModel : ViewModel() {
         view.invalidate()
 
         // Tomar la captura de pantalla actualizada
-        val rootView: View = view.rootView
+        //val rootView: View = view.rootView
         val bitmap = Bitmap.createBitmap(view.width, view.height, Bitmap.Config.ARGB_8888)
         val canvas = Canvas(bitmap)
         view.draw(canvas)
-        rootView.isDrawingCacheEnabled = true
-        return rootView.drawingCache
+        view.isDrawingCacheEnabled = true
+        return view.drawingCache
     }
 }

@@ -41,6 +41,7 @@ class CalculatorFragment : Fragment() {
     private  var priceWithDollarCompra : String = ""
     private lateinit var valueEtString : String
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -54,6 +55,7 @@ class CalculatorFragment : Fragment() {
 
         binding.toolbar.title = "Calculadora"
         binding.toolbar.setTitleTextColor(resources.getColor(R.color.white))
+
 
         setSpinner()
         btnCalculateListener()
@@ -178,8 +180,9 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun sharePrice() {
+        val rootView = view
         binding.imgShare.setOnClickListener {
-            calculatorViewModel.generateShareIntent(requireView(), priceWithDollarCompra, priceWithDollarVenta)
+            calculatorViewModel.generateShareIntent(binding.constraintCalculator, priceWithDollarCompra, priceWithDollarVenta)
             //view?.let { it1 -> screenShot(it1)?.let { it1 -> share(it1) } }
         }
 
