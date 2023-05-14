@@ -53,24 +53,12 @@ class DashBoardAdapter(private val dollarList: ArrayList<CasaResponse>, private 
                 binding.imageViewCountry.setImageResource(R.drawable.ic_dollar_icon)
             }
 
-            if (dollar.dollarCasa.nombre.isNullOrEmpty()) {
-                changeText(binding.txtTypeDollar)
-            }
-
-            if (dollar.dollarCasa.venta.isNullOrEmpty()) {
-                changeText(binding.txtSellMoney)
-            }
-
-            if (dollar.dollarCasa.compra.isNullOrEmpty()) {
-                changeText(binding.txtBuyMoney)
-            }
-
-            if (dollar.dollarCasa.variacion.isNullOrEmpty()) {
-                changeText(binding.textViewVariation)
-            }else{
-                if (dollar.dollarCasa.variacion.contains("-")){
-                    binding.textViewVariation.setTextColor(ContextCompat.getColor(context,R.color.red))
-                }
+            when {
+                dollar.dollarCasa.nombre.isNullOrEmpty() -> changeText(binding.txtTypeDollar)
+                dollar.dollarCasa.venta.isNullOrEmpty() -> changeText(binding.txtSellMoney)
+                dollar.dollarCasa.compra.isNullOrEmpty() -> changeText(binding.txtBuyMoney)
+                dollar.dollarCasa.variacion.isNullOrEmpty() -> changeText(binding.textViewVariation)
+                dollar.dollarCasa.variacion.contains("-") -> binding.textViewVariation.setTextColor(ContextCompat.getColor(context,R.color.red))
             }
 
         }
