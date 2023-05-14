@@ -30,14 +30,18 @@ android {
         MONEYCONVERSION_Production {
             applicationId = 'com.kotlin.moneyconversionapp'
             manifestPlaceholders = [onesignal_app_id               : '1bb45290-8e29-4d83-b935-33be3bda582b',
-                                    onesignal_google_project_number: 'REMOTE']
+                                    onesignal_google_project_number: 'REMOTE',
+                                    admobAppId: "ca-app-pub-8711522994433469~4563512991"]
             buildConfigField "String", "ONESIGNAL_APPID", "\"1bb45290-8e29-4d83-b935-33be3bda582b\""
         }
+        
         MONEYCONVERSION_Development {
             applicationId = 'com.kotlin.moneyconversionapp'
             manifestPlaceholders = [onesignal_app_id               : '1bb45290-8e29-4d83-b935-33be3bda582b',
-                                    onesignal_google_project_number: 'REMOTE']
+                                    onesignal_google_project_number: 'REMOTE',
+                                    admobAppId: "ca-app-pub-3940256099942544~3347511713"]
             buildConfigField "String", "ONESIGNAL_APPID", "\"1bb45290-8e29-4d83-b935-33be3bda582b\""
+
         }
     }
 

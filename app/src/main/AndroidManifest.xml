@@ -22,7 +22,7 @@
         <!-- Sample AdMob app ID: ca-app-pub-8711522994433469~4563512991 este es el de prod -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="ca-app-pub-3940256099942544~3347511713"/>
+            android:value="${admobAppId}"/>
 
         <receiver
             android:name=".MoneyApplication$MyNotificationReceiver"

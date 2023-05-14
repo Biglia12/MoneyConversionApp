@@ -24,6 +24,8 @@ import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
+import com.kotlin.moneyconversionapp.BuildConfig
+import com.kotlin.moneyconversionapp.Constants
 import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.data.model.HistoricDollar.HistoricDollarModel
 import com.kotlin.moneyconversionapp.databinding.FragmentHistoryBinding
@@ -66,6 +68,12 @@ class HistoryFragment : Fragment() {
 
         val adRequest = AdRequest.Builder().build()
         binding.adViewHistoric.loadAd(adRequest)
+
+        if (BuildConfig.FLAVOR == Constants.MONEYPROD) {
+            binding.adViewHistoric.adUnitId = Constants.ADD_MOB_PROD
+        }else{
+            binding.adViewHistoric.adUnitId = Constants.ADD_MOB_DEV
+        }
 
         binding.adViewHistoric.adListener = object: AdListener() {
             override fun onAdClicked() {

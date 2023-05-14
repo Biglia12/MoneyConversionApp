@@ -56,15 +56,13 @@ class DashBoardFragment : Fragment() {
         binding.toolbar.title = "DolarArg"
         binding.toolbar.setTitleTextColor(resources.getColor(R.color.white))
 
-        //if (BuildConfig.FLAVOR == Constants.MONEYPROD) {
-            funAdView() //funcion para publicidad
-        //}
+        funAdView() //funcion para publicidad
 
-        if (dollarViewModel.moneyApplication.isConnected(requireContext())){
+        if (dollarViewModel.moneyApplication.isConnected(requireContext())) {
             observeLiveData()
-        }else{
+        } else {
             //observeLiveData()
-            Toast.makeText(context,"No conexion", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, "No conexion", Toast.LENGTH_SHORT).show()
         }
 
         swipeRefresh()//metodo para volver a llamar al servicio
@@ -73,12 +71,18 @@ class DashBoardFragment : Fragment() {
 
     private fun funAdView() {
 
+        if (BuildConfig.FLAVOR == Constants.MONEYPROD) {
+            binding.adView.adUnitId = Constants.ADD_MOB_PROD
+        }else{
+            binding.adView.adUnitId = Constants.ADD_MOB_DEV
+        }
+
         MobileAds.initialize(requireActivity()) {}
 
         val adRequest = AdRequest.Builder().build()
         binding.adView.loadAd(adRequest)
 
-        binding.adView.adListener = object: AdListener() {
+        binding.adView.adListener = object : AdListener() {
             override fun onAdClicked() {
                 // Code to be executed when the user clicks on an ad.
             }
@@ -88,9 +92,9 @@ class DashBoardFragment : Fragment() {
                 // to the app after tapping on an ad.
             }
 
-            override fun onAdFailedToLoad(adError : LoadAdError) {
+            override fun onAdFailedToLoad(adError: LoadAdError) {
                 // Code to be executed when an ad request fails.
-                Log.e("onAdFailedToLoad",adError.toString())
+                Log.e("onAdFailedToLoad", adError.toString())
             }
 
             override fun onAdImpression() {
@@ -144,19 +148,23 @@ class DashBoardFragment : Fragment() {
 
 
     private fun initRecyler(arrayList: ArrayList<CasaResponse>) {
-        adapter = DashBoardAdapter(arrayList, requireContext()) //le apsamos al adapter el listado de monedas
+        adapter = DashBoardAdapter(
+            arrayList,
+            requireContext()
+        ) //le apsamos al adapter el listado de monedas
         binding.recyclerResumeFragment.layoutManager = LinearLayoutManager(context)
         binding.recyclerResumeFragment.adapter = adapter
     }
 
     private fun swipeRefresh() {
         binding.swipeDash.setOnRefreshListener {
-            binding.recyclerResumeFragment.isVisible = false //lo hacemos invisble para que el usuario vea que se vuelve a recargar el lsitado de las monedas
+            binding.recyclerResumeFragment.isVisible =
+                false //lo hacemos invisble para que el usuario vea que se vuelve a recargar el lsitado de las monedas
             Handler(Looper.getMainLooper()).postDelayed({
                 dollarViewModel.callService()
-            },1000)//le asginamos un tiempo al swipe para que no sea tan rapido.
+            }, 1000)//le asginamos un tiempo al swipe para que no sea tan rapido.
         }
     }
 
-    }
+}
 
