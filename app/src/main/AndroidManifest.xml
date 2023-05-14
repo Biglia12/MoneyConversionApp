@@ -18,11 +18,21 @@
         android:theme="@style/Theme.MoneyConversionApp"
         tools:ignore="Instantiatable">
 
+        <activity
+            android:name=".ui.view.activities.splash.SplashActivity"
+            android:theme="@style/Theme.App.Starting"
+            android:exported="true" >
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+        </activity>
+
         <!-- Sample AdMob app ID: ca-app-pub-3940256099942544~3347511713 de prueba -->
         <!-- Sample AdMob app ID: ca-app-pub-8711522994433469~4563512991 este es el de prod -->
         <meta-data
             android:name="com.google.android.gms.ads.APPLICATION_ID"
-            android:value="${admobAppId}"/>
+            android:value="${admobAppId}" />
 
         <receiver
             android:name=".MoneyApplication$MyNotificationReceiver"
@@ -30,6 +40,7 @@
             <intent-filter>
                 <action android:name="com.onesignal.NotificationReceivedAction" />
                 <action android:name="com.onesignal.NotificationOpenedAction" />
+
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </receiver>
@@ -37,11 +48,6 @@
         <activity
             android:name="com.kotlin.moneyconversionapp.ui.view.activities.MainActivity"
             android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
     </application>
 

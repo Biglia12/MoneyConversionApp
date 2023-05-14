@@ -5,6 +5,7 @@ import android.view.View.GONE
 import android.view.View.VISIBLE
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
 import com.kotlin.moneyconversionapp.MoneyApplication
 import com.kotlin.moneyconversionapp.R
@@ -25,6 +26,7 @@ class MainActivity : AppCompatActivity() {
     private val moneyApplication: MoneyApplication = MoneyApplication()
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
