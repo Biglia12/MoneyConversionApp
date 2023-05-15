@@ -58,10 +58,11 @@
         android:layout_width="match_parent"
         android:layout_height="250dp"
         android:visibility="gone"
-        tools:visibility="visible"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@+id/adViewHistoric"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/line_chart_oficial" />
+        app:layout_constraintTop_toBottomOf="@+id/line_chart_oficial"
+        tools:visibility="visible" />
 
     <com.google.android.gms.ads.AdView
         android:id="@+id/adViewHistoric"
@@ -70,10 +71,10 @@
         android:visibility="gone"
         app:adSize="BANNER"
         app:adUnitId="@string/ad_unit_id"
-        tools:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        tools:visibility="visible" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
