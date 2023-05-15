@@ -2,11 +2,7 @@ package com.kotlin.moneyconversionapp.ui.view.fragments.CalculatorModule
 
 import android.annotation.SuppressLint
 import android.content.Intent
-import android.graphics.Bitmap
-import android.graphics.Canvas
-import android.net.Uri
 import android.os.Bundle
-import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -180,9 +176,10 @@ class CalculatorFragment : Fragment() {
     }
 
     private fun sharePrice() {
-        val rootView = view
+        val priceBuy = resources.getString(R.string.price_buy)
+        val priceSell = resources.getString(R.string.price_sell)
         binding.imgShare.setOnClickListener {
-            calculatorViewModel.generateShareIntent(binding.constraintCalculator, priceWithDollarCompra, priceWithDollarVenta)
+            calculatorViewModel.generateShareIntent(binding.constraintCalculator, priceWithDollarCompra, priceWithDollarVenta, priceBuy, priceSell)
             //view?.let { it1 -> screenShot(it1)?.let { it1 -> share(it1) } }
         }
 

@@ -9,6 +9,7 @@ import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.kotlin.moneyconversionapp.R
 
 class CalculatorViewModel : ViewModel() {
 
@@ -16,7 +17,8 @@ class CalculatorViewModel : ViewModel() {
     val shareIntent: LiveData<Intent?>
         get() = _shareIntent
 
-    fun generateShareIntent(view: View, priceWithDollarCompra: String, priceWithDollarVenta: String) {
+    fun generateShareIntent(view: View, priceWithDollarCompra: String, priceWithDollarVenta: String, priceBuy: String, priceSell: String) {
+
         val bitmap = screenShot(view)
         val pathofBmp = MediaStore.Images.Media.insertImage(
             view.context.contentResolver,
@@ -25,8 +27,8 @@ class CalculatorViewModel : ViewModel() {
         val uri: Uri = Uri.parse(pathofBmp)
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.type = "image/*"
-        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "DolarArg")
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "Precio de compra:\$$priceWithDollarCompra\nPrecio de venta: \$$priceWithDollarVenta")
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "DólarArg")
+        shareIntent.putExtra(Intent.EXTRA_TEXT, "$priceBuy\$$priceWithDollarCompra\n$priceSell \$$priceWithDollarVenta")
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
         _shareIntent.value = shareIntent
     }
