@@ -6,6 +6,8 @@
     <string name="error_message">Error, vuelva a intentarlo</string>
     <string name="retry">Reintentar</string>
 
+    <string name="error_graphic">Ha ocurrido un error</string>
+
     <string name="price_buy">Precio de compra: </string>
     <string name="price_sell">Precio de venta: </string>
 

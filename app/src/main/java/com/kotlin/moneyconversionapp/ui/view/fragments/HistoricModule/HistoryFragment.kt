@@ -1,12 +1,14 @@
 package com.kotlin.moneyconversionapp.ui.view.fragments.HistoricModule
 
 import android.annotation.SuppressLint
+import android.opengl.Visibility
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
@@ -23,9 +25,7 @@ import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.MobileAds
-import com.kotlin.moneyconversionapp.BuildConfig
-import com.kotlin.moneyconversionapp.Constants
+import com.kotlin.moneyconversionapp.MoneyApplication
 import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.data.model.HistoricDollar.HistoricDollarModel
 import com.kotlin.moneyconversionapp.databinding.FragmentHistoryBinding
@@ -38,6 +38,7 @@ class HistoryFragment : Fragment() {
     private var _binding: FragmentHistoryBinding? = null
     private val binding get() = _binding!!
     private val historicDollarViewModel: HistoricDollarViewModel by activityViewModels()
+    private val moneyApplication: MoneyApplication = MoneyApplication()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -54,12 +55,15 @@ class HistoryFragment : Fragment() {
         binding.toolbar.title = "Grafico Dólar"
         binding.toolbar.setTitleTextColor(resources.getColor(R.color.white))
 
-        historicDollarViewModel.loadData()
+        //historicDollarViewModel.loadData()
 
         funAdView() //funcion para publicidad
 
-        observeLiveData()
-
+        if (moneyApplication.isConnected(requireContext())) {
+            observeLiveData()
+        } else {
+            binding.constraintErrorServiceHistoric.visibility = View.VISIBLE
+        }
 
     }
 
@@ -69,7 +73,7 @@ class HistoryFragment : Fragment() {
         binding.adViewHistoric.loadAd(adRequest)
 
 
-        binding.adViewHistoric.adListener = object: AdListener() {
+        binding.adViewHistoric.adListener = object : AdListener() {
             override fun onAdClicked() {
                 // Code to be executed when the user clicks on an ad.
             }
@@ -79,9 +83,9 @@ class HistoryFragment : Fragment() {
                 // to the app after tapping on an ad.
             }
 
-            override fun onAdFailedToLoad(adError : LoadAdError) {
+            override fun onAdFailedToLoad(adError: LoadAdError) {
                 // Code to be executed when an ad request fails.
-                Log.e("onAdFailedToLoad",adError.toString())
+                Log.e("onAdFailedToLoad", adError.toString())
             }
 
             override fun onAdImpression() {
@@ -108,6 +112,10 @@ class HistoryFragment : Fragment() {
             binding.progressHistory.isVisible = it
         })
 
+        historicDollarViewModel.error.observe(viewLifecycleOwner, Observer {
+            binding.constraintErrorServiceHistoric.isVisible = it
+        })
+
         historicDollarViewModel.graphicVisible.observe(viewLifecycleOwner, Observer {
             binding.lineChartBlue.isVisible = it
             binding.lineChartOficial.isVisible = it
@@ -131,14 +139,17 @@ class HistoryFragment : Fragment() {
     private fun graphic(historicDollarModels: ArrayList<HistoricDollarModel>) {
 
         if (historicDollarModels[0].source == "Blue") {
-            datesBlueOrOfical(historicDollarModels,binding.lineChartBlue)
-        }else{
-            datesBlueOrOfical(historicDollarModels,binding.lineChartOficial)
+            datesBlueOrOfical(historicDollarModels, binding.lineChartBlue)
+        } else {
+            datesBlueOrOfical(historicDollarModels, binding.lineChartOficial)
         }
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
-    private fun datesBlueOrOfical(historicDollarModels: ArrayList<HistoricDollarModel>, lineChart: LineChart) {
+    private fun datesBlueOrOfical(
+        historicDollarModels: ArrayList<HistoricDollarModel>,
+        lineChart: LineChart
+    ) {
         val lineDataSet: LineDataSet =
             LineDataSet(datavlues(historicDollarModels), historicDollarModels[0].source)
 
@@ -147,7 +158,7 @@ class HistoryFragment : Fragment() {
 
         val data = LineData(dataSet)
 
-        val xAxis =lineChart.xAxis
+        val xAxis = lineChart.xAxis
         xAxis.valueFormatter = datesForm(historicDollarModels)
         xAxis.position = XAxis.XAxisPosition.BOTTOM
         xAxis.labelRotationAngle = 45f
@@ -174,7 +185,6 @@ class HistoryFragment : Fragment() {
         lineChart.invalidate()
 
     }
-
 
 
     private fun datesForm(historicDollarModels: ArrayList<HistoricDollarModel>): ValueFormatter? {

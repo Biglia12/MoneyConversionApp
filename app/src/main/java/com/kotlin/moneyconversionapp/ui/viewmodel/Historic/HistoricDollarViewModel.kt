@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.kotlin.moneyconversionapp.MoneyApplication
 import com.kotlin.moneyconversionapp.data.model.HistoricDollar.HistoricDollarModel
 import com.kotlin.moneyconversionapp.domain.usecases.HistoricDollarUseCase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
@@ -26,6 +27,7 @@ class HistoricDollarViewModel : ViewModel() {
     private val getDollarHistoricUseCases = HistoricDollarUseCase()
     val loading = MutableLiveData<Boolean>()
     val graphicVisible = MutableLiveData<Boolean>()
+    val error = MutableLiveData<Boolean>()
 
     private var isLoadingData = false
 
@@ -36,20 +38,23 @@ class HistoricDollarViewModel : ViewModel() {
     private var valueBuy: Int = 0
 
     init {
+
         loadData()
+
     }
 
     fun loadData() {
         graphicVisible.postValue(false)
 
-            viewModelScope.launch() {
-                try {
-                    loading.postValue(true)
+        viewModelScope.launch {
+            try {
+                loading.postValue(true)
 
                 val result = getDollarHistoricUseCases()
                 //isLoadingData = false
 
-                if (result != null) {
+                if (!result.isNullOrEmpty()) {
+                    error.postValue(false)
                     loading.postValue(false)
                     graphicVisible.postValue(true)
 
@@ -69,13 +74,14 @@ class HistoricDollarViewModel : ViewModel() {
                     historicDollarBlueLiveData.postValue(blueDollarModels)
                     historicDollarOficialLiveData.postValue(oficialDollarModels)
 
-                }else{
-
+                } else {
+                    error.postValue(true)
                     loading.postValue(false)
                 }
-            } catch (e:Exception){
-                    loading.postValue(false)
-                    Log.i("Error", e.toString())
+            } catch (e: Exception) {
+                error.postValue(true)
+                loading.postValue(false)
+                Log.i("Error", e.toString())
             }
         }
     }
