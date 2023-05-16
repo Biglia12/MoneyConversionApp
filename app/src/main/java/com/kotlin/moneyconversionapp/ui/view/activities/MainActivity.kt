@@ -1,18 +1,23 @@
 package com.kotlin.moneyconversionapp.ui.view.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import com.kotlin.moneyconversionapp.MoneyApplication
 import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.databinding.ActivityMainBinding
 import com.kotlin.moneyconversionapp.ui.view.fragments.CalculatorModule.CalculatorFragment
 import com.kotlin.moneyconversionapp.ui.view.fragments.DashBoardModule.DashBoardFragment
 import com.kotlin.moneyconversionapp.ui.view.fragments.HistoricModule.HistoryFragment
+import com.kotlin.moneyconversionapp.ui.viewmodel.Historic.HistoricDollarViewModel
+import com.kotlin.moneyconversionapp.ui.viewmodel.Main.MainViewModel
 import com.onesignal.OneSignal
 
 //test
@@ -24,6 +29,7 @@ class MainActivity : AppCompatActivity() {
     private val calculatorFragment = CalculatorFragment()
     private lateinit var currentFragment: Fragment
     private val moneyApplication: MoneyApplication = MoneyApplication()
+    private val mainViewModel: MainViewModel by viewModels()
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -37,6 +43,11 @@ class MainActivity : AppCompatActivity() {
 
         checkConecction()
 
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        mainViewModel.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun checkConecction() {
