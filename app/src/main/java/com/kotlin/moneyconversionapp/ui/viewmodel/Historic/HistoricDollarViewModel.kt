@@ -11,14 +11,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 
-/**
- * Se utiliza una variable isLoadingData
- * para indicar si hay una corutina en ejecución.
- * Si el valor es true, significa que hay una corutina en ejecución y la
- * función no inicia una nueva.
- * De lo contrario, se inicia una nueva corutina para obtener los datos y
- * se actualiza el valor de isLoadingData en consecuencia.
- */
 
 class HistoricDollarViewModel : ViewModel() {
 
@@ -29,13 +21,6 @@ class HistoricDollarViewModel : ViewModel() {
     val graphicVisible = MutableLiveData<Boolean>()
     val error = MutableLiveData<Boolean>()
 
-    private var isLoadingData = false
-
-
-    private var source: String = ""
-    private var date: String = ""
-    private var valueSell: Int = 0
-    private var valueBuy: Int = 0
 
     init {
 
