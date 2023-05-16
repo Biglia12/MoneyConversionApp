@@ -97,8 +97,9 @@
 
         <Button
             android:id="@+id/retry_error_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
             style="@style/button_retry"
-            android:layout_gravity="bottom"
             android:background="@color/colorPrimary"
             android:foreground="?android:attr/selectableItemBackground"
             android:text="@string/retry"
