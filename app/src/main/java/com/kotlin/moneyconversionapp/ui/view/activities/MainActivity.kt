@@ -10,6 +10,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import com.google.android.material.snackbar.Snackbar
 import com.kotlin.moneyconversionapp.MoneyApplication
 import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.databinding.ActivityMainBinding
@@ -47,12 +48,41 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.checkAppUpdate()
 
         checkConecction()
+        observeLiveData()
 
+    }
+
+    private fun observeLiveData() {
+        mainViewModel.showSnackbarEvent.observe(this) {
+            showSnackbar()
+        }
+    }
+
+    private fun showSnackbar() {
+        Snackbar.make(
+            findViewById(R.id.main_activity),
+            "An update has just been downloaded.",
+            Snackbar.LENGTH_INDEFINITE
+        ).apply {
+            setAction("Intalacación") { mainViewModel.appUpdateManager.completeUpdate() }
+            setActionTextColor(resources.getColor(R.color.colorPrimary))
+            show()
+        }
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
         mainViewModel.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onStop() {
+        super.onStop()
+        mainViewModel.onStop()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        mainViewModel.onResume()
     }
 
     private fun checkConecction() {
@@ -69,6 +99,7 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
 
     private fun bottomNavigation() {
 
