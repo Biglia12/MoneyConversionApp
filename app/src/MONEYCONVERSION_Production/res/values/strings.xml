@@ -1,0 +1,11 @@
+<resources>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <string name="error_message">Error, vuelva a intentarlo</string>
+    <string name="retry">Reintentar</string>
+
+    <!-- AddMob (publicidad) -->
+    <string name="ad_unit_id">ca-app-pub-8711522994433469/8971044757</string>
+
+</resources>

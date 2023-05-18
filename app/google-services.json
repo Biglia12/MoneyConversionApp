@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "76008476248",
+    "project_id": "moneyconversion-db496",
+    "storage_bucket": "moneyconversion-db496.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:76008476248:android:01b9c443fc6130e5be042d",
+        "android_client_info": {
+          "package_name": "com.kotlin.moneyconversionapp"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "76008476248-8ansmmqfu9sd58b6o6sn097hv5hj3uk3.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kotlin.moneyconversionapp",
+            "certificate_hash": "18f94bf8a69df38b93dece4e4714f68c8553e82e"
+          }
+        },
+        {
+          "client_id": "76008476248-eiv55h3jjj32nrqokmh4vhlif67ce06u.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.kotlin.moneyconversionapp",
+            "certificate_hash": "d98b6bb79234904945132c613fb5609d547d9b75"
+          }
+        },
+        {
+          "client_id": "76008476248-9qjb17s6ejnr2hmvdj4cc1duggmvmtvt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDbBcazMUlY6fGx0kEqCNhg0Q53BLxyMHI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "76008476248-9qjb17s6ejnr2hmvdj4cc1duggmvmtvt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
