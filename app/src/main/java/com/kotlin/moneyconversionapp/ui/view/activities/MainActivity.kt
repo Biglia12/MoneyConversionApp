@@ -16,8 +16,10 @@ import com.kotlin.moneyconversionapp.databinding.ActivityMainBinding
 import com.kotlin.moneyconversionapp.ui.view.fragments.CalculatorModule.CalculatorFragment
 import com.kotlin.moneyconversionapp.ui.view.fragments.DashBoardModule.DashBoardFragment
 import com.kotlin.moneyconversionapp.ui.view.fragments.HistoricModule.HistoryFragment
+import com.kotlin.moneyconversionapp.ui.viewmodel.DollarViewModelFactory
 import com.kotlin.moneyconversionapp.ui.viewmodel.Historic.HistoricDollarViewModel
 import com.kotlin.moneyconversionapp.ui.viewmodel.Main.MainViewModel
+import com.kotlin.moneyconversionapp.ui.viewmodel.Main.MainViewModelFactory
 import com.onesignal.OneSignal
 
 //test
@@ -29,7 +31,9 @@ class MainActivity : AppCompatActivity() {
     private val calculatorFragment = CalculatorFragment()
     private lateinit var currentFragment: Fragment
     private val moneyApplication: MoneyApplication = MoneyApplication()
-    private val mainViewModel: MainViewModel by viewModels()
+    private val mainViewModel: MainViewModel by viewModels {
+        MainViewModelFactory(this)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -40,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         val actionBar: ActionBar? = supportActionBar // ocultamos el action bar
         actionBar!!.hide()
 
+        mainViewModel.checkAppUpdate()
 
         checkConecction()
 

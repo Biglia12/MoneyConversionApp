@@ -270,6 +270,29 @@
 
         </androidx.cardview.widget.CardView>
 
+        <TextView
+            android:id="@+id/version_tittle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:text="Version:"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/version_app"
+            app:layout_constraintTop_toBottomOf="@+id/cardViewMount"
+            app:layout_constraintVertical_bias="1.0" />
+
+        <TextView
+            android:id="@+id/version_app"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:layout_marginBottom="8dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/cardViewMount"
+            app:layout_constraintVertical_bias="1.0"
+            tools:text="1.0" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 

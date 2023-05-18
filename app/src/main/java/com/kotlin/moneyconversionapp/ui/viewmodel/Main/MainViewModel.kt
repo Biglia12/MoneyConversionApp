@@ -9,7 +9,7 @@ import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.google.android.play.core.install.model.AppUpdateType
 import com.google.android.play.core.install.model.UpdateAvailability
 
-class MainViewModel(private val activity: Activity) : ViewModel() {
+class MainViewModel(val activity: Activity) : ViewModel() {
 
     val appUpdateManager = AppUpdateManagerFactory.create(activity)
     private val MY_REQUEST_CODE: Int = 100

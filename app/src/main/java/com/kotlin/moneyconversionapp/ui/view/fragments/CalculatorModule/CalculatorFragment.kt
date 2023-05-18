@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import com.kotlin.moneyconversionapp.BuildConfig
 import com.kotlin.moneyconversionapp.Constants
 import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
@@ -51,6 +52,7 @@ class CalculatorFragment : Fragment() {
 
         binding.toolbar.title = "Calculadora"
         binding.toolbar.setTitleTextColor(resources.getColor(R.color.white))
+        binding.versionApp.text = BuildConfig.VERSION_NAME
 
 
         setSpinner()
