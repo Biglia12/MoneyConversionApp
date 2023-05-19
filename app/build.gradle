@@ -108,5 +108,6 @@ dependencies {
     implementation 'com.google.android.gms:play-services-ads:22.0.0'
 
     //appUpdate (update app)
+    implementation("com.google.android.play:app-update:2.0.1")
     implementation 'com.google.android.play:app-update-ktx:2.0.1'
 }
