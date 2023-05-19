@@ -64,7 +64,7 @@ class MainActivity : AppCompatActivity() {
             "An update has just been downloaded.",
             Snackbar.LENGTH_INDEFINITE
         ).apply {
-            setAction("Intalacación") { mainViewModel.appUpdateManager.completeUpdate() }
+            setAction("INSTALAR") { mainViewModel.appUpdateManager.completeUpdate() }
             setActionTextColor(resources.getColor(R.color.colorPrimary))
             show()
         }
