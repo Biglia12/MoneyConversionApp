@@ -37,7 +37,7 @@ class MainViewModel(val activity: Activity) : ViewModel() {
         if (state.installStatus() == InstallStatus.DOWNLOADED) {
             //downloadToast.value = "Descarga exitosa. Reiniciando app en 5 segundos."
             viewModelScope.launch {
-                delay(5000)
+                delay(2000)
                 appUpdateManager.completeUpdate()
                 downloadSuccessLiveData.postValue(true)
             }
