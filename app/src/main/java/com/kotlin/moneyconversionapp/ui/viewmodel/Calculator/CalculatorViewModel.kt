@@ -1,10 +1,14 @@
 package com.kotlin.moneyconversionapp.ui.viewmodel.Calculator
 
+import android.content.Context
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
 import android.net.Uri
 import android.provider.MediaStore
+import android.text.Spannable
+import android.text.SpannableString
+import android.text.style.URLSpan
 import android.view.View
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
@@ -17,18 +21,27 @@ class CalculatorViewModel : ViewModel() {
     val shareIntent: LiveData<Intent?>
         get() = _shareIntent
 
-    fun generateShareIntent(view: View, priceWithDollarCompra: String, priceWithDollarVenta: String, priceBuy: String, priceSell: String) {
+    fun generateShareIntent( view: View, priceWithDollarCompra: String, priceWithDollarVenta: String, priceBuy: String, priceSell: String) {
 
         val bitmap = screenShot(view)
         val pathofBmp = MediaStore.Images.Media.insertImage(
             view.context.contentResolver,
             bitmap, "title", null
         )
+
         val uri: Uri = Uri.parse(pathofBmp)
+
+        val appPackageName = view.context.packageName
+        val playStoreUrl = "https://play.google.com/store/apps/details?id=$appPackageName"
+
         val shareIntent = Intent(Intent.ACTION_SEND)
         shareIntent.type = "image/*"
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, "DólarArg")
-        shareIntent.putExtra(Intent.EXTRA_TEXT, "$priceBuy\$$priceWithDollarCompra\n$priceSell \$$priceWithDollarVenta")
+
+        // Create a SpannableString with a clickable URL
+        val message ="$priceBuy\$$priceWithDollarCompra\n$priceSell \$$priceWithDollarVenta\n\nDescarga nuestra app: $playStoreUrl"
+
+        shareIntent.putExtra(Intent.EXTRA_TEXT, message)
         shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
         _shareIntent.value = shareIntent
     }
