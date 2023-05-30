@@ -2,7 +2,6 @@ package com.kotlin.moneyconversionapp.data.services
 
 import android.util.Log
 import com.kotlin.moneyconversionapp.Constants
-import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.data.model.HistoricDollar.HistoricDollarModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -10,7 +9,7 @@ import retrofit2.Retrofit
 
 class DollarHistoricService {
 
-    private val retrofit : Retrofit = RetrofitHelper.getRetrofitHistoricDollar()
+    private val retrofit : Retrofit = RetrofitHelper.getRetrofit(Constants.BASE_URL_HISTORIC)
 
     suspend fun historicDollar () : ArrayList<HistoricDollarModel> {
         return withContext(Dispatchers.IO){

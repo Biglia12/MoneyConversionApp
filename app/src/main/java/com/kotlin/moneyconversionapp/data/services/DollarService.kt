@@ -11,7 +11,7 @@ import java.lang.Exception
 
 class DollarService {
 
-    private val retrofit : Retrofit = RetrofitHelper.getRetrofitDollarSi()
+    private val retrofit : Retrofit = RetrofitHelper.getRetrofit(Constants.BASE_URL_DOLARSI)
     //https://api.bluelytics.com.ar/v2/evolution.json
 
     suspend fun getDollar () : ArrayList<CasaResponse> {
