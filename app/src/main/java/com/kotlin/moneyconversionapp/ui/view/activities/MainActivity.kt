@@ -1,7 +1,10 @@
 package com.kotlin.moneyconversionapp.ui.view.activities
 
+import android.R
 import android.content.Intent
 import android.os.Bundle
+import android.text.TextUtils.replace
+import android.view.View
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
@@ -10,12 +13,11 @@ import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
+import androidx.navigation.NavController
+import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.NavigationUI.setupWithNavController
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import com.google.android.play.core.install.model.AppUpdateType
-import com.google.android.play.core.install.model.UpdateAvailability
-import com.google.android.play.core.ktx.isFlexibleUpdateAllowed
-import com.google.android.play.core.ktx.isImmediateUpdateAllowed
 import com.kotlin.moneyconversionapp.MoneyApplication
 import com.kotlin.moneyconversionapp.databinding.ActivityMainBinding
 import com.kotlin.moneyconversionapp.ui.view.fragments.CalculatorModule.CalculatorFragment
@@ -34,6 +36,7 @@ class MainActivity : AppCompatActivity() {
     private val calculatorFragment = CalculatorFragment()
     private lateinit var currentFragment: Fragment
     private val moneyApplication: MoneyApplication = MoneyApplication()
+    private lateinit var navController: NavController
 
     private val mainViewModel: MainViewModel by viewModels {
         MainViewModelFactory(this)
@@ -47,8 +50,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val actionBar: ActionBar? = supportActionBar // ocultamos el action bar
-        actionBar!!.hide()
+        //val actionBar: ActionBar? = supportActionBar // ocultamos el action bar
+        //actionBar!!.hide()
+
+
 
         appUpdateManager = AppUpdateManagerFactory.create(applicationContext)
 
@@ -64,7 +69,7 @@ class MainActivity : AppCompatActivity() {
         mainViewModel.updateType()
         mainViewModel.checkForAppUpdate(this)
 
-        mainViewModel.downloadSuccessLiveData.observe(this, Observer {isSuccess ->
+        mainViewModel.downloadSuccessLiveData.observe(this, Observer { isSuccess ->
             if (isSuccess) {
                 Toast.makeText(
                     applicationContext,
@@ -76,6 +81,7 @@ class MainActivity : AppCompatActivity() {
 
 
     }
+
     override fun onResume() {
         super.onResume()
         mainViewModel.onResume(this)
@@ -94,12 +100,11 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-
     private fun checkConecction() {
         if (moneyApplication.isConnected(this)) {
             binding.constraintErrorInternet.visibility = GONE
             binding.navigationBottom.visibility = VISIBLE
-            binding.fragmentContainer.visibility = VISIBLE
+            binding.fragmentContainerLinear.visibility = VISIBLE
             bottomNavigation()
         } else {
             binding.constraintErrorInternet.visibility = VISIBLE
@@ -110,8 +115,15 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-
     private fun bottomNavigation() {
+        val navHosFragment =
+            supportFragmentManager.findFragmentById(com.kotlin.moneyconversionapp.R.id.fragment_container) as NavHostFragment
+        navController = navHosFragment.navController
+
+        setupWithNavController(binding.navigationBottom, navController)
+    }
+
+   /* private fun bottomNavigation() {
 
         currentFragment = dashBoardFragment
         showFragment(currentFragment)//init first fragment when app run the first time
@@ -140,7 +152,8 @@ class MainActivity : AppCompatActivity() {
         currentFragment = fragment
     }
 
-    /*private fun replaceFragment(fragment: Fragment) {// para volver a recrear el fragmento
+
+        private fun replaceFragment(fragment: Fragment) {// para volver a recrear el fragmento
 
         supportFragmentManager.beginTransaction().apply {
 
@@ -150,3 +163,4 @@ class MainActivity : AppCompatActivity() {
         }
     }*/
 }
+

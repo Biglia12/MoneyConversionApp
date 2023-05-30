@@ -18,9 +18,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.MobileAds
-import com.kotlin.moneyconversionapp.BuildConfig
-import com.kotlin.moneyconversionapp.Constants
 import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.adapters.DashBoardAdapter
 import com.kotlin.moneyconversionapp.databinding.FragmentDashBoardBinding
@@ -33,10 +30,7 @@ class DashBoardFragment : Fragment() {
     private var _binding: FragmentDashBoardBinding? = null
     private val binding get() = _binding!!
 
-    //private var dollarResponse = listOf<DollarCasaResponse>()
-    private var dollarResponse = ArrayList<CasaResponse>()
     private lateinit var adapter: DashBoardAdapter
-    private var position: Int = 0
     private val dollarViewModel: DollarViewModel by activityViewModels() {
         DollarViewModelFactory(requireActivity().application)
     }
@@ -52,9 +46,6 @@ class DashBoardFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
-        binding.toolbar.title = "DolarArg"
-        binding.toolbar.setTitleTextColor(resources.getColor(R.color.white))
 
         funAdView() //funcion para publicidad
 

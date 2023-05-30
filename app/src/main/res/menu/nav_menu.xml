@@ -2,19 +2,19 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:id="@+id/item_resume"
+        android:id="@+id/dashBoardFragment"
         android:icon="@drawable/ic_baseline_dashboard"
         android:visible="true"
         android:title="Lista" />
 
     <item
-        android:id="@+id/item_conversor"
+        android:id="@+id/calculatorFragment"
         android:icon="@drawable/ic_baseline_calculate_24"
         android:visible="true"
         android:title="Calculadora" />
 
     <item
-        android:id="@+id/item_history"
+        android:id="@+id/historyFragment"
         android:icon="@drawable/ic_baseline_show_chart_24"
         android:visible="true"
         android:title="Gráfico" />
