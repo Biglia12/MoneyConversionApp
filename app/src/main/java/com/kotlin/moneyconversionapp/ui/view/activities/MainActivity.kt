@@ -20,29 +20,23 @@ import com.google.android.play.core.appupdate.AppUpdateManager
 import com.google.android.play.core.appupdate.AppUpdateManagerFactory
 import com.kotlin.moneyconversionapp.MoneyApplication
 import com.kotlin.moneyconversionapp.databinding.ActivityMainBinding
-import com.kotlin.moneyconversionapp.ui.view.fragments.CalculatorModule.CalculatorFragment
-import com.kotlin.moneyconversionapp.ui.view.fragments.DashBoardModule.DashBoardFragment
-import com.kotlin.moneyconversionapp.ui.view.fragments.HistoricModule.HistoryFragment
 import com.kotlin.moneyconversionapp.ui.viewmodel.Main.MainViewModel
 import com.kotlin.moneyconversionapp.ui.viewmodel.Main.MainViewModelFactory
+import com.kotlin.moneyconversionapp.utils.AppUpdate
+import com.kotlin.moneyconversionapp.utils.InterfaceAppUpdate
 
 
 //test
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), InterfaceAppUpdate.view {
 
     private lateinit var binding: ActivityMainBinding
-    private val dashBoardFragment = DashBoardFragment()
-    private val historyFragment = HistoryFragment()
-    private val calculatorFragment = CalculatorFragment()
-    private lateinit var currentFragment: Fragment
     private val moneyApplication: MoneyApplication = MoneyApplication()
     private lateinit var navController: NavController
+    private lateinit var appUpdate: AppUpdate
 
     private val mainViewModel: MainViewModel by viewModels {
         MainViewModelFactory(this)
     }
-
-    private lateinit var appUpdateManager: AppUpdateManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -50,49 +44,14 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        appUpdateManager = AppUpdateManagerFactory.create(applicationContext)//parra la actualizacion del playstore
+        appUpdate = AppUpdate(this)
+
 
         checkConecction()
 
-        observableLive()
 
     }
 
-    private fun observableLive() {
-
-        mainViewModel.setAppUpdateManager(appUpdateManager)
-        mainViewModel.updateType()
-        mainViewModel.checkForAppUpdate()
-
-        mainViewModel.downloadSuccessLiveData.observe(this, Observer { isSuccess ->
-            if (isSuccess) {
-                Toast.makeText(
-                    applicationContext,
-                    "Descarga exitosa. Reiniciando app en breve.",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        })
-
-
-    }
-
-    override fun onResume() {
-        super.onResume()
-        mainViewModel.onResume()
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode != RESULT_OK) {
-            println("Something Error")
-        }
-    }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        mainViewModel.onDestroy()
-    }
 
 
     private fun checkConecction() {
@@ -118,44 +77,26 @@ class MainActivity : AppCompatActivity() {
         setupWithNavController(binding.navigationBottom, navController)
     }
 
-   /* private fun bottomNavigation() {
-
-        currentFragment = dashBoardFragment
-        showFragment(currentFragment)//init first fragment when app run the first time
-
-        binding.navigationBottom.setOnItemSelectedListener {
-            when (it.itemId) {
-                com.kotlin.moneyconversionapp.R.id.item_resume -> showFragment(dashBoardFragment)
-                com.kotlin.moneyconversionapp.R.id.item_history -> showFragment(historyFragment)
-                com.kotlin.moneyconversionapp.R.id.item_conversor -> showFragment(calculatorFragment)
-            }
-            true
-        }
+    override fun onResume() {
+        super.onResume()
+        appUpdate.onResume()
     }
 
-    private fun showFragment(fragment: Fragment) { // para que el fragmento no se vuevla a recrear. (lo hgacemos para no volver a llamar varias veces a el servicio sin nesecidad)
-        supportFragmentManager.beginTransaction().apply {
-            hide(currentFragment)
-            if (fragment.isAdded) {
-                show(fragment)
-            } else {
-                add(com.kotlin.moneyconversionapp.R.id.fragment_container, fragment)
-                show(fragment)
-            }
-            commit()
-        }
-        currentFragment = fragment
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        appUpdate.onActivityResult(requestCode,resultCode,data)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        appUpdate.onDestroy()
+    }
+
+    override fun getDownloadToast(download: String) {
+        Toast.makeText(this,download,Toast.LENGTH_SHORT).show()
     }
 
 
-        private fun replaceFragment(fragment: Fragment) {// para volver a recrear el fragmento
 
-        supportFragmentManager.beginTransaction().apply {
-
-            replace(R.id.fragment_container, fragment)
-            commit()
-
-        }
-    }*/
 }
 

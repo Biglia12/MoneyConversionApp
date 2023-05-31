@@ -19,10 +19,8 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(private val context: Activity) : ViewModel() {
 
-    val checkForAppUpdateLiveData = MutableLiveData<AppUpdateInfo?>()
-    private val updateType = AppUpdateType.FLEXIBLE
+  /*  private val updateType = AppUpdateType.IMMEDIATE
     private lateinit var appUpdateManager: AppUpdateManager
-    var downloadToast  = MutableLiveData<String>()
     private val MY_REQUEST_CODE: Int = 100
     val downloadSuccessLiveData = MutableLiveData<Boolean>()
 
@@ -45,7 +43,7 @@ class MainViewModel(private val context: Activity) : ViewModel() {
         }
     }
     fun updateType(){
-        if (updateType == AppUpdateType.FLEXIBLE){
+        if (updateType == AppUpdateType.IMMEDIATE){
             appUpdateManager.registerListener(installStateUpdateListener)
         }
     }
@@ -84,9 +82,9 @@ class MainViewModel(private val context: Activity) : ViewModel() {
     }
 
      fun onDestroy() {
-        if (updateType == AppUpdateType.FLEXIBLE){
+        if (updateType == AppUpdateType.IMMEDIATE){
             appUpdateManager.unregisterListener(installStateUpdateListener)
         }
     }
-
+*/
 }
