@@ -1,6 +1,7 @@
 package com.kotlin.moneyconversionapp.ui.viewmodel.Main
 
 import android.app.Activity
+import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -16,7 +17,7 @@ import com.kotlin.moneyconversionapp.ui.view.activities.MainActivity
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
-class MainViewModel(val activity: Activity) : ViewModel() {
+class MainViewModel(private val context: Activity) : ViewModel() {
 
     val checkForAppUpdateLiveData = MutableLiveData<AppUpdateInfo?>()
     private val updateType = AppUpdateType.FLEXIBLE
@@ -48,7 +49,7 @@ class MainViewModel(val activity: Activity) : ViewModel() {
             appUpdateManager.registerListener(installStateUpdateListener)
         }
     }
-    fun checkForAppUpdate(mainActivity: MainActivity) {
+    fun checkForAppUpdate() {
         appUpdateManager.appUpdateInfo.addOnSuccessListener { info ->
             val isUpdateAvailable = info.updateAvailability() == UpdateAvailability.UPDATE_AVAILABLE
             val isUpdateAllowed = when (updateType) {
@@ -60,21 +61,21 @@ class MainViewModel(val activity: Activity) : ViewModel() {
                 appUpdateManager.startUpdateFlowForResult(
                     info,
                     updateType,
-                    mainActivity,
+                    context,
                     MY_REQUEST_CODE
                 )
             }
         }
     }
 
-    fun onResume(mainActivity: MainActivity) {
+    fun onResume() {
         if (updateType == AppUpdateType.IMMEDIATE) {
             appUpdateManager.appUpdateInfo.addOnSuccessListener { info ->
                 if (info.updateAvailability() == UpdateAvailability.DEVELOPER_TRIGGERED_UPDATE_IN_PROGRESS) {
                     appUpdateManager.startUpdateFlowForResult(
                         info,
                         updateType,
-                        mainActivity,
+                        context,
                         MY_REQUEST_CODE
                     )
                 }

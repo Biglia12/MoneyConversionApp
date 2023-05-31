@@ -50,12 +50,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        //val actionBar: ActionBar? = supportActionBar // ocultamos el action bar
-        //actionBar!!.hide()
-
-
-
-        appUpdateManager = AppUpdateManagerFactory.create(applicationContext)
+        appUpdateManager = AppUpdateManagerFactory.create(applicationContext)//parra la actualizacion del playstore
 
         checkConecction()
 
@@ -67,7 +62,7 @@ class MainActivity : AppCompatActivity() {
 
         mainViewModel.setAppUpdateManager(appUpdateManager)
         mainViewModel.updateType()
-        mainViewModel.checkForAppUpdate(this)
+        mainViewModel.checkForAppUpdate()
 
         mainViewModel.downloadSuccessLiveData.observe(this, Observer { isSuccess ->
             if (isSuccess) {
@@ -84,7 +79,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
-        mainViewModel.onResume(this)
+        mainViewModel.onResume()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
