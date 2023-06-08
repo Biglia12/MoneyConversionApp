@@ -18,7 +18,7 @@ import kotlinx.coroutines.launch
 
 class MainViewModel(val activity: Activity) : ViewModel() {
 
-    val checkForAppUpdateLiveData = MutableLiveData<AppUpdateInfo?>()
+   /* val checkForAppUpdateLiveData = MutableLiveData<AppUpdateInfo?>()
     private val updateType = AppUpdateType.FLEXIBLE
     private lateinit var appUpdateManager: AppUpdateManager
     var downloadToast  = MutableLiveData<String>()
@@ -86,6 +86,6 @@ class MainViewModel(val activity: Activity) : ViewModel() {
         if (updateType == AppUpdateType.FLEXIBLE){
             appUpdateManager.unregisterListener(installStateUpdateListener)
         }
-    }
+    }*/
 
 }
