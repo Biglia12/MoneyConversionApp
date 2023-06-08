@@ -106,15 +106,16 @@ class CalculatorFragment : Fragment() {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val names = arrayNames[position]
+                val selectedCasaResponse = casaResponses[position]
                 when (names) {
-                    "Dolar Oficial" -> setPrices(casaResponses[position]) //Al ser un servicio de terceros puede haber problemas con esto, pero no encuentro otra manera por el momento
-                    "Dolar Blue" -> setPrices(casaResponses[position])
-                    "Dolar Soja" -> setPrices(casaResponses[position])
-                    "Dolar Contado con Liqui" -> setPrices(casaResponses[position])
-                    "Dolar Bolsa" -> setPrices(casaResponses[position])
-                    "Bitcoin" -> setPrices(casaResponses[position])
-                    "Dolar turista" -> setPrices(casaResponses[position])
-                    "Dolar" -> setPrices(casaResponses[position])
+                    Constants.DOLLAR_OFICIAL,
+                    Constants.DOLLAR_BLUE,
+                    Constants.DOLLAR_SOJA,
+                    Constants.DOLLAR_CONTADO_LIQUI,
+                    Constants.DOLLAR_BOLSA,
+                    Constants.BITCOIN,
+                    Constants.DOLLAR_TRUISTA,
+                    Constants.DOLLAR -> setPrices(selectedCasaResponse)
                     else -> setWithoutPrices("$0")
                 }
             }

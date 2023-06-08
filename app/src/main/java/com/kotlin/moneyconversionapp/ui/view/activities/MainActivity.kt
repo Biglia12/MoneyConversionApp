@@ -9,13 +9,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import com.google.android.play.core.appupdate.AppUpdateManager
-import com.google.android.play.core.appupdate.AppUpdateManagerFactory
-import com.google.android.play.core.install.model.AppUpdateType
-import com.google.android.play.core.install.model.UpdateAvailability
-import com.google.android.play.core.ktx.isFlexibleUpdateAllowed
-import com.google.android.play.core.ktx.isImmediateUpdateAllowed
 import com.kotlin.moneyconversionapp.MoneyApplication
 import com.kotlin.moneyconversionapp.databinding.ActivityMainBinding
 import com.kotlin.moneyconversionapp.ui.view.fragments.CalculatorModule.CalculatorFragment
@@ -23,10 +17,12 @@ import com.kotlin.moneyconversionapp.ui.view.fragments.DashBoardModule.DashBoard
 import com.kotlin.moneyconversionapp.ui.view.fragments.HistoricModule.HistoryFragment
 import com.kotlin.moneyconversionapp.ui.viewmodel.Main.MainViewModel
 import com.kotlin.moneyconversionapp.ui.viewmodel.Main.MainViewModelFactory
+import com.kotlin.moneyconversionapp.utils.AppUpdate
+import com.kotlin.moneyconversionapp.utils.InterfaceAppUpdate
 
 
 //test
-class MainActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity(), InterfaceAppUpdate.view {
 
     private lateinit var binding: ActivityMainBinding
     private val dashBoardFragment = DashBoardFragment()
@@ -40,6 +36,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private lateinit var appUpdateManager: AppUpdateManager
+    private lateinit var appUpdate: AppUpdate
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -50,47 +47,26 @@ class MainActivity : AppCompatActivity() {
         val actionBar: ActionBar? = supportActionBar // ocultamos el action bar
         actionBar!!.hide()
 
-        appUpdateManager = AppUpdateManagerFactory.create(applicationContext)
+
+        appUpdate = AppUpdate(this)
 
         checkConecction()
 
-        observableLive()
-
     }
 
-    private fun observableLive() {
-
-        mainViewModel.setAppUpdateManager(appUpdateManager)
-        mainViewModel.updateType()
-        mainViewModel.checkForAppUpdate(this)
-
-        mainViewModel.downloadSuccessLiveData.observe(this, Observer {isSuccess ->
-            if (isSuccess) {
-                Toast.makeText(
-                    applicationContext,
-                    "Descarga exitosa. Reiniciando app en breve.",
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        })
-
-
-    }
     override fun onResume() {
         super.onResume()
-        mainViewModel.onResume(this)
+        appUpdate.onResume()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        if (resultCode != RESULT_OK) {
-            println("Something Error")
-        }
+        appUpdate.onActivityResult(requestCode,resultCode,data)
     }
 
     override fun onDestroy() {
         super.onDestroy()
-        mainViewModel.onDestroy()
+        appUpdate.onDestroy()
     }
 
 
@@ -140,13 +116,9 @@ class MainActivity : AppCompatActivity() {
         currentFragment = fragment
     }
 
-    /*private fun replaceFragment(fragment: Fragment) {// para volver a recrear el fragmento
+    override fun getDownloadToast(download: String) {
+        Toast.makeText(this,download,Toast.LENGTH_SHORT).show()
+    }
 
-        supportFragmentManager.beginTransaction().apply {
 
-            replace(R.id.fragment_container, fragment)
-            commit()
-
-        }
-    }*/
 }
