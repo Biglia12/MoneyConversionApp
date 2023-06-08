@@ -107,14 +107,14 @@ class CalculatorFragment : Fragment() {
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val names = arrayNames[position]
                 when (names) {
-                    "Dolar Oficial" -> setPrices(casaResponses[position]) //Al ser un servicio de terceros puede haber problemas con esto, pero no encuentro otra manera por el momento
-                    "Dolar Blue" -> setPrices(casaResponses[position])
-                    "Dolar Soja" -> setPrices(casaResponses[position])
-                    "Dolar Contado con Liqui" -> setPrices(casaResponses[position])
-                    "Dolar Bolsa" -> setPrices(casaResponses[position])
-                    "Bitcoin" -> setPrices(casaResponses[position])
-                    "Dolar turista" -> setPrices(casaResponses[position])
-                    "Dolar" -> setPrices(casaResponses[position])
+                    Constants.DOLLAR_OFICIAL -> setPrices(casaResponses[position]) //Al ser un servicio de terceros puede haber problemas con esto, pero no encuentro otra manera por el momento
+                    Constants.DOLLAR_BLUE -> setPrices(casaResponses[position])
+                    Constants.DOLLAR_SOJA -> setPrices(casaResponses[position])
+                    Constants.DOLLAR_CONTADO_LIQUI -> setPrices(casaResponses[position])
+                    Constants.DOLLAR_BOLSA -> setPrices(casaResponses[position])
+                    Constants.BITCOIN -> setPrices(casaResponses[position])
+                    Constants.DOLLAR_TRUISTA -> setPrices(casaResponses[position])
+                    Constants.DOLLAR -> setPrices(casaResponses[position])
                     else -> setWithoutPrices("$0")
                 }
             }
@@ -133,7 +133,6 @@ class CalculatorFragment : Fragment() {
                 dollarViewModel.setCalculate(valueEtString, priceWithDollarCompra, priceWithDollarVenta) // se pasan los parametro para poder hacer la cuenta
             }
         })
-        //callViewModelCalculate()//el viewModel nos pasara el calculo de la cuenta(lo hicmos en una funcion por q lo llamaremos  cuando selecionamos el spinner y cuando tocamos el boton calcular)
     }
 
 
