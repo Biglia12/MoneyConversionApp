@@ -2,8 +2,11 @@ package com.kotlin.moneyconversionapp.ui.viewmodel
 
 import android.app.Application
 import android.content.Context
+import android.os.Handler
+import android.os.Looper
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import com.kotlin.moneyconversionapp.Constants
@@ -89,6 +92,13 @@ class DollarViewModel (application: Application) : AndroidViewModel(application)
         }
         casaResponseCalculator.postValue(arrayNames)
     }
+
+    fun swipeRefresh () {
+            Handler(Looper.getMainLooper()).postDelayed({
+                callService()
+            }, 1000)//le asginamos un tiempo al swipe para que no sea tan rapido.
+        }
+
 
 
     fun setCalculate(

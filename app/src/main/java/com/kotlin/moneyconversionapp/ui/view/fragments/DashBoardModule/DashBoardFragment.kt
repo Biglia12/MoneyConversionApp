@@ -60,6 +60,12 @@ class DashBoardFragment : Fragment() {
 
     }
 
+    override fun onResume() {
+        super.onResume()
+        Log.d("onResume","DashBoard")
+        binding.swipeDash.isRefreshing = dollarViewModel.isLoading.value == true // nos fijaremos para que no quede el swipe al volver y entrar al fragmento.
+    }
+
     private fun funAdView() {
 
         val adRequest = AdRequest.Builder().build()
@@ -142,11 +148,8 @@ class DashBoardFragment : Fragment() {
 
     private fun swipeRefresh() {
         binding.swipeDash.setOnRefreshListener {
-            binding.recyclerResumeFragment.isVisible =
-                false //lo hacemos invisble para que el usuario vea que se vuelve a recargar el lsitado de las monedas
-            Handler(Looper.getMainLooper()).postDelayed({
-                dollarViewModel.callService()
-            }, 1000)//le asginamos un tiempo al swipe para que no sea tan rapido.
+            binding.recyclerResumeFragment.isVisible = false //lo hacemos invisble para que el usuario vea que se vuelve a recargar el lsitado de las monedas
+            dollarViewModel.swipeRefresh()
         }
     }
 
