@@ -2,8 +2,9 @@ package com.kotlin.moneyconversionapp.domain.usecases
 
 import com.kotlin.moneyconversionapp.data.DollarRepository
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
+import javax.inject.Inject
 
-class DollarUseCases {
+class DollarUseCases @Inject constructor() {
 
     private val repository = DollarRepository()
 

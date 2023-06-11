@@ -12,6 +12,7 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.kotlin.moneyconversionapp.BuildConfig
 import com.kotlin.moneyconversionapp.Constants
@@ -28,10 +29,7 @@ class CalculatorFragment : Fragment() {
     private var _binding: FragmentCalculatorBinding? = null
     private val binding get() = _binding!!
 
-    private val dollarViewModel: DollarViewModel by activityViewModels { //utlizaremos este view model para los datos que nos trae la api y ahcer los calculos, este se compartira con el fragment Dashboard.
-        DollarViewModelFactory(requireActivity().application)
-    }
-
+    private val dollarViewModel: DollarViewModel by viewModels()
     private val calculatorViewModel: CalculatorViewModel by activityViewModels()
 
     private  var priceWithDollarVenta : String = ""
@@ -66,8 +64,8 @@ class CalculatorFragment : Fragment() {
         if (dollarViewModel.moneyApplication.isConnected(requireContext())) {
             spinner()
         }else {
-           if (dollarViewModel.moneyApplication.getDollarValue(requireContext(),Constants.DOLLAR_VALUE) != null){
-               dollarViewModel.setSpinner(dollarViewModel.moneyApplication.getDollarValue(requireContext(),Constants.DOLLAR_VALUE)!!)//le pasamos lo que tenemos almacenado al view model para poder seguir con la calculadora con los ultimos datos guardados
+           if (dollarViewModel.moneyApplication.getDollarValue(Constants.DOLLAR_VALUE) != null){
+               dollarViewModel.setSpinner(dollarViewModel.moneyApplication.getDollarValue(Constants.DOLLAR_VALUE)!!)//le pasamos lo que tenemos almacenado al view model para poder seguir con la calculadora con los ultimos datos guardados
                spinner()
            }
             Toast.makeText(activity,"No hay conexion",Toast.LENGTH_SHORT).show()

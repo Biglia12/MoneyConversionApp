@@ -19,9 +19,9 @@ import com.kotlin.moneyconversionapp.ui.viewmodel.Main.MainViewModel
 import com.kotlin.moneyconversionapp.ui.viewmodel.Main.MainViewModelFactory
 import com.kotlin.moneyconversionapp.utils.AppUpdate
 import com.kotlin.moneyconversionapp.utils.InterfaceAppUpdate
+import dagger.hilt.android.AndroidEntryPoint
 
 
-//test
 class MainActivity : AppCompatActivity(), InterfaceAppUpdate.view {
 
     private lateinit var binding: ActivityMainBinding

@@ -27,7 +27,9 @@ import com.kotlin.moneyconversionapp.databinding.FragmentDashBoardBinding
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.ui.viewmodel.DollarViewModel
 import com.kotlin.moneyconversionapp.ui.viewmodel.DollarViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DashBoardFragment : Fragment() {
 
     private var _binding: FragmentDashBoardBinding? = null
@@ -37,9 +39,7 @@ class DashBoardFragment : Fragment() {
     private var dollarResponse = ArrayList<CasaResponse>()
     private lateinit var adapter: DashBoardAdapter
     private var position: Int = 0
-    private val dollarViewModel: DollarViewModel by activityViewModels() {
-        DollarViewModelFactory(requireActivity().application)
-    }
+    private val dollarViewModel: DollarViewModel by activityViewModels()
 
 
     override fun onCreateView(

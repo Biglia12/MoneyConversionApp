@@ -5,17 +5,25 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.mikephil.charting.utils.Utils.init
 import com.kotlin.moneyconversionapp.Constants
 import com.kotlin.moneyconversionapp.MoneyApplication
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.domain.usecases.CalculatorUseCase
 import com.kotlin.moneyconversionapp.domain.usecases.DollarUseCases
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DollarViewModel (application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class DollarViewModel @Inject constructor (
+   // private val getDollarUseCases: DollarUseCases,
+   // private val calculatorUseCase: CalculatorUseCase,
+   /* application: Application*/) : ViewModel() {
 
-    val context: Context = application
+    //val context: Context = application
     val moneyApplication = MoneyApplication()
     val casaResponse = MutableLiveData<ArrayList<CasaResponse>>()
     val casaResponseCalculator = MutableLiveData<ArrayList<CasaResponse>>()
@@ -25,9 +33,8 @@ class DollarViewModel (application: Application) : AndroidViewModel(application)
     val resultCalculateBuy = MutableLiveData<String>()
     val resultCalculateSell = MutableLiveData<String>()
 
-    private val getDollarUseCases = DollarUseCases()
-
-    private val calculatorUseCase = CalculatorUseCase()
+    private val getDollarUseCases: DollarUseCases = DollarUseCases()
+    private val calculatorUseCase: CalculatorUseCase = CalculatorUseCase()
 
 
     init {
@@ -58,7 +65,7 @@ class DollarViewModel (application: Application) : AndroidViewModel(application)
 
                 setSpinner(result)
 
-                moneyApplication.setDollarValue(context,Constants.DOLLAR_VALUE, result)
+                moneyApplication.setDollarValue(Constants.DOLLAR_VALUE, result)
 
                 Log.d("dada","dasdasd")
 
