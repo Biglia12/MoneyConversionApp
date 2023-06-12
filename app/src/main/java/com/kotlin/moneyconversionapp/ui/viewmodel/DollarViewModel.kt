@@ -19,13 +19,14 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DollarViewModel @Inject constructor (
-   // private val getDollarUseCases: DollarUseCases,
-   // private val calculatorUseCase: CalculatorUseCase,
+    private val getDollarUseCases: DollarUseCases,
+    private val calculatorUseCase: CalculatorUseCase,
    /* application: Application*/) : ViewModel() {
 
     //val context: Context = application
     val moneyApplication = MoneyApplication()
     val casaResponse = MutableLiveData<ArrayList<CasaResponse>>()
+    val casaResponseShared = MutableLiveData<ArrayList<CasaResponse>>()
     val casaResponseCalculator = MutableLiveData<ArrayList<CasaResponse>>()
     val isLoading = MutableLiveData<Boolean>()
     val showError = MutableLiveData<Boolean>()
@@ -33,8 +34,8 @@ class DollarViewModel @Inject constructor (
     val resultCalculateBuy = MutableLiveData<String>()
     val resultCalculateSell = MutableLiveData<String>()
 
-    private val getDollarUseCases: DollarUseCases = DollarUseCases()
-    private val calculatorUseCase: CalculatorUseCase = CalculatorUseCase()
+    //private val getDollarUseCases: DollarUseCases = DollarUseCases()
+    //private val calculatorUseCase: CalculatorUseCase = CalculatorUseCase()
 
 
     init {
@@ -65,7 +66,9 @@ class DollarViewModel @Inject constructor (
 
                 setSpinner(result)
 
-                moneyApplication.setDollarValue(Constants.DOLLAR_VALUE, result)
+                casaResponseShared.postValue(result)
+
+               // moneyApplication.setDollarValue(Constants.DOLLAR_VALUE, result)
 
                 Log.d("dada","dasdasd")
 

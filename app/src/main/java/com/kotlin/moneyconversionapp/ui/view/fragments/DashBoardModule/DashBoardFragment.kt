@@ -21,6 +21,7 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
 import com.kotlin.moneyconversionapp.BuildConfig
 import com.kotlin.moneyconversionapp.Constants
+import com.kotlin.moneyconversionapp.MoneyApplication
 import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.adapters.DashBoardAdapter
 import com.kotlin.moneyconversionapp.databinding.FragmentDashBoardBinding
@@ -35,10 +36,9 @@ class DashBoardFragment : Fragment() {
     private var _binding: FragmentDashBoardBinding? = null
     private val binding get() = _binding!!
 
-    //private var dollarResponse = listOf<DollarCasaResponse>()
-    private var dollarResponse = ArrayList<CasaResponse>()
     private lateinit var adapter: DashBoardAdapter
     private var position: Int = 0
+
     private val dollarViewModel: DollarViewModel by activityViewModels()
 
 
@@ -108,6 +108,10 @@ class DashBoardFragment : Fragment() {
     }
 
     private fun observeLiveData() {
+
+        dollarViewModel.casaResponseShared.observe(viewLifecycleOwner, Observer {
+            dollarViewModel.moneyApplication.setDollarValue(Constants.DOLLAR_VALUE, it)
+        })
 
         dollarViewModel.showRecycler.observe(viewLifecycleOwner, Observer {
             binding.recyclerResumeFragment.isVisible = it
