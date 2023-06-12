@@ -17,8 +17,10 @@ import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.ui.view.activities.MainActivity
 import com.onesignal.OSNotification
 import com.onesignal.OneSignal
+import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.HiltAndroidApp
 import org.json.JSONObject
+import javax.inject.Inject
 
 @HiltAndroidApp
 class MoneyApplication : Application() {
@@ -99,16 +101,16 @@ class MoneyApplication : Application() {
     }
 
     //Store in SharedPreference
-    fun setDollarValue(key: String?, value: ArrayList<CasaResponse>) {
-        val prefs: SharedPreferences = getSharedPreferences("APP", 0)
+    fun setDollarValue(context: Context,key: String?, value: ArrayList<CasaResponse>) {
+        val prefs: SharedPreferences = context.getSharedPreferences("APP", 0)
         val editor: SharedPreferences.Editor = prefs.edit()
         editor.putString(key, Gson().toJson(value))
         editor.apply()
     }
 
     //Retrieve from SharedPreference
-    fun getDollarValue(key: String?): ArrayList<CasaResponse>? {
-        val prefs: SharedPreferences = getSharedPreferences("APP", 0)
+    fun getDollarValue(context: Context,key: String?): ArrayList<CasaResponse>? {
+        val prefs: SharedPreferences = context.getSharedPreferences("APP", 0)
         val gson = Gson()
         val json = prefs.getString(key, null)
         val type = object : TypeToken<ArrayList<CasaResponse>>() {}.type

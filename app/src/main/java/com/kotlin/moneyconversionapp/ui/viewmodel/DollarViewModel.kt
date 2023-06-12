@@ -24,7 +24,7 @@ class DollarViewModel @Inject constructor (
    /* application: Application*/) : ViewModel() {
 
     //val context: Context = application
-    val moneyApplication = MoneyApplication()
+    //val moneyApplication = MoneyApplication()
     val casaResponse = MutableLiveData<ArrayList<CasaResponse>>()
     val casaResponseShared = MutableLiveData<ArrayList<CasaResponse>>()
     val casaResponseCalculator = MutableLiveData<ArrayList<CasaResponse>>()

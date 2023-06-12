@@ -21,7 +21,7 @@ import com.kotlin.moneyconversionapp.utils.AppUpdate
 import com.kotlin.moneyconversionapp.utils.InterfaceAppUpdate
 import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class MainActivity : AppCompatActivity(), InterfaceAppUpdate.view {
 
     private lateinit var binding: ActivityMainBinding

@@ -16,14 +16,16 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.kotlin.moneyconversionapp.BuildConfig
 import com.kotlin.moneyconversionapp.Constants
+import com.kotlin.moneyconversionapp.MoneyApplication
 import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.databinding.FragmentCalculatorBinding
 import com.kotlin.moneyconversionapp.ui.viewmodel.Calculator.CalculatorViewModel
 import com.kotlin.moneyconversionapp.ui.viewmodel.DollarViewModel
 import com.kotlin.moneyconversionapp.ui.viewmodel.DollarViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class CalculatorFragment : Fragment() {
 
     private var _binding: FragmentCalculatorBinding? = null
@@ -35,6 +37,8 @@ class CalculatorFragment : Fragment() {
     private  var priceWithDollarVenta : String = ""
     private  var priceWithDollarCompra : String = ""
     private lateinit var valueEtString : String
+
+    private val moneyApplication: MoneyApplication = MoneyApplication()
 
 
     override fun onCreateView(
@@ -61,11 +65,11 @@ class CalculatorFragment : Fragment() {
 
 
     private fun setSpinner() {
-        if (dollarViewModel.moneyApplication.isConnected(requireContext())) {
+        if (moneyApplication.isConnected(requireContext())) {
             spinner()
         }else {
-           if (dollarViewModel.moneyApplication.getDollarValue(Constants.DOLLAR_VALUE) != null){
-               dollarViewModel.setSpinner(dollarViewModel.moneyApplication.getDollarValue(Constants.DOLLAR_VALUE)!!)//le pasamos lo que tenemos almacenado al view model para poder seguir con la calculadora con los ultimos datos guardados
+           if (moneyApplication.getDollarValue(requireContext(),Constants.DOLLAR_VALUE) != null){
+               dollarViewModel.setSpinner(moneyApplication.getDollarValue(requireContext(),Constants.DOLLAR_VALUE)!!)//le pasamos lo que tenemos almacenado al view model para poder seguir con la calculadora con los ultimos datos guardados
                spinner()
            }
             Toast.makeText(activity,"No hay conexion",Toast.LENGTH_SHORT).show()

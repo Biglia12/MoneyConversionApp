@@ -1,9 +1,9 @@
 package com.kotlin.moneyconversionapp.data.model
 
-class DollarProvider {
-        companion object {
+import javax.inject.Inject
+import javax.inject.Singleton
 
-            var dollars:ArrayList<CasaResponse> = arrayListOf()
-
-    }
+@Singleton
+class DollarProvider @Inject constructor() {
+    var dollars: ArrayList<CasaResponse> = arrayListOf()
 }

@@ -40,6 +40,7 @@ class DashBoardFragment : Fragment() {
     private var position: Int = 0
 
     private val dollarViewModel: DollarViewModel by activityViewModels()
+    private val moneyApplication: MoneyApplication = MoneyApplication()
 
 
     override fun onCreateView(
@@ -58,7 +59,7 @@ class DashBoardFragment : Fragment() {
 
         funAdView() //funcion para publicidad
 
-        if (dollarViewModel.moneyApplication.isConnected(requireContext())) {
+        if (moneyApplication.isConnected(requireContext())) {
             observeLiveData()
         } else {
             //observeLiveData()
@@ -110,7 +111,7 @@ class DashBoardFragment : Fragment() {
     private fun observeLiveData() {
 
         dollarViewModel.casaResponseShared.observe(viewLifecycleOwner, Observer {
-            dollarViewModel.moneyApplication.setDollarValue(Constants.DOLLAR_VALUE, it)
+            moneyApplication.setDollarValue(requireContext(),Constants.DOLLAR_VALUE, it)
         })
 
         dollarViewModel.showRecycler.observe(viewLifecycleOwner, Observer {
