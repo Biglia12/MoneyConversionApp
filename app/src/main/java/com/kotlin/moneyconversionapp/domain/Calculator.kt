@@ -2,7 +2,7 @@ package com.kotlin.moneyconversionapp.domain
 
 import javax.inject.Inject
 
-class Calculator  @Inject constructor(){
+class Calculator @Inject constructor(){
 
     private var result :Double = 0.0
     private var resultToString : String = ""

@@ -4,19 +4,22 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.mikephil.charting.utils.Utils.init
 import com.kotlin.moneyconversionapp.MoneyApplication
 import com.kotlin.moneyconversionapp.data.model.HistoricDollar.HistoricDollarModel
 import com.kotlin.moneyconversionapp.domain.usecases.HistoricDollarUseCase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-
-class HistoricDollarViewModel : ViewModel() {
+@HiltViewModel
+class HistoricDollarViewModel  @Inject constructor(private val getDollarHistoricUseCases: HistoricDollarUseCase) : ViewModel() {
 
     val historicDollarBlueLiveData = MutableLiveData<ArrayList<HistoricDollarModel>>()
     val historicDollarOficialLiveData = MutableLiveData<ArrayList<HistoricDollarModel>>()
-    private val getDollarHistoricUseCases = HistoricDollarUseCase()
+   // private val getDollarHistoricUseCases = HistoricDollarUseCase()
     val loading = MutableLiveData<Boolean>()
     val graphicVisible = MutableLiveData<Boolean>()
     val error = MutableLiveData<Boolean>()

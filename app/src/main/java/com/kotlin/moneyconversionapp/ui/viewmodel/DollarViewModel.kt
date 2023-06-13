@@ -18,10 +18,11 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class DollarViewModel @Inject constructor (
+class DollarViewModel @Inject constructor(
     private val getDollarUseCases: DollarUseCases,
     private val calculatorUseCase: CalculatorUseCase,
-   /* application: Application*/) : ViewModel() {
+    /* application: Application*/
+) : ViewModel() {
 
     //val context: Context = application
     //val moneyApplication = MoneyApplication()
@@ -68,9 +69,9 @@ class DollarViewModel @Inject constructor (
 
                 casaResponseShared.postValue(result)
 
-               // moneyApplication.setDollarValue(Constants.DOLLAR_VALUE, result)
+                // moneyApplication.setDollarValue(Constants.DOLLAR_VALUE, result)
 
-                Log.d("dada","dasdasd")
+                Log.d("dada", "dasdasd")
 
 
             } else {
@@ -102,12 +103,11 @@ class DollarViewModel @Inject constructor (
 
 
     fun setCalculate(
-        dataEditText: String,
-        dataValue: String,
-        valueVentaWithPoint: String
+        dataEditText: String, dataValue: String, valueVentaWithPoint: String
     ) { //pasar parametros para hacer el calculo de la cuenta
         resultCalculateBuy.value = calculatorUseCase.calculateResult(dataEditText, dataValue)
-        resultCalculateSell.value = calculatorUseCase.calculateResult(dataEditText, valueVentaWithPoint)
+        resultCalculateSell.value =
+            calculatorUseCase.calculateResult(dataEditText, valueVentaWithPoint)
     }
 
 }

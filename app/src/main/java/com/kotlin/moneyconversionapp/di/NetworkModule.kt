@@ -15,22 +15,10 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
 
-   /* @Singleton
-    @Provides
-    @Named(Constants.BASE_URL_DOLARSI)
-    fun provideBaseUrlDolarSi(): String {
-        return Constants.BASE_URL_DOLARSI
-    }
 
     @Singleton
     @Provides
-    @Named(Constants.BASE_URL_HISTORIC)
-    fun provideBaseUrlOtroServicio(): String {
-        return Constants.BASE_URL_HISTORIC
-    }*/
-
-    @Singleton
-    @Provides
+    @Named("baseUrlDolarSi")
     fun provideRetrofit(): Retrofit{
         return Retrofit.Builder()
             .baseUrl(Constants.BASE_URL_DOLARSI)
@@ -40,7 +28,25 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideServices(retrofit: Retrofit): Services{
+    @Named("baseurlHistoric")
+    fun provideRetrofitHistoric(): Retrofit{
+        return Retrofit.Builder()
+            .baseUrl(Constants.BASE_URL_HISTORIC)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+    }
+
+    @Singleton
+    @Provides
+    @Named("baseUrlDolarSi")
+    fun provideServices(@Named("baseUrlDolarSi")retrofit: Retrofit): Services{
+        return retrofit.create(Services::class.java)
+    }
+
+    @Singleton
+    @Provides
+    @Named("baseurlHistoric")
+    fun provideServicesHistoric(@Named("baseurlHistoric")retrofit: Retrofit): Services{
         return retrofit.create(Services::class.java)
     }
 

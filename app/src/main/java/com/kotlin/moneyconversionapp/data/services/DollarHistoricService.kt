@@ -7,14 +7,16 @@ import com.kotlin.moneyconversionapp.data.model.HistoricDollar.HistoricDollarMod
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import retrofit2.Retrofit
+import javax.inject.Inject
+import javax.inject.Named
 
-class DollarHistoricService {
+class DollarHistoricService @Inject constructor(@Named("baseurlHistoric")private val api: Services) {
 
-    private val retrofit : Retrofit = RetrofitHelper.getRetrofit(Constants.BASE_URL_HISTORIC)
+   // private val retrofit : Retrofit = RetrofitHelper.getRetrofit(Constants.BASE_URL_HISTORIC)
 
     suspend fun historicDollar () : ArrayList<HistoricDollarModel> {
         return withContext(Dispatchers.IO){
-            val response = retrofit.create(Services::class.java).callApiHistoricDollar() // servicio sin funcionar cambiar
+            val response = api.callApiHistoricDollar() // servicio sin funcionar cambiar
             Log.i("Response", response.toString())
             response.body() ?: ArrayList() // llamada en un hilo secundario para no saturar la interfaz del usuario
 

@@ -12,7 +12,7 @@ import java.lang.Exception
 import javax.inject.Inject
 import javax.inject.Named
 
-class DollarService @Inject constructor(private val api: Services) {
+class DollarService @Inject constructor(@Named("baseUrlDolarSi")private val api: Services) {
 
     //private val retrofit : Retrofit = RetrofitHelper.getRetrofit(Constants.BASE_URL_DOLARSI)
     //https://api.bluelytics.com.ar/v2/evolution.json
