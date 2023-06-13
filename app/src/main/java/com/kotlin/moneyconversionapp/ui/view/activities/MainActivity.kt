@@ -20,22 +20,30 @@ import com.kotlin.moneyconversionapp.ui.viewmodel.Main.MainViewModelFactory
 import com.kotlin.moneyconversionapp.utils.AppUpdate
 import com.kotlin.moneyconversionapp.utils.InterfaceAppUpdate
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), InterfaceAppUpdate.view {
 
     private lateinit var binding: ActivityMainBinding
-    private val dashBoardFragment = DashBoardFragment()
-    private val historyFragment = HistoryFragment()
-    private val calculatorFragment = CalculatorFragment()
+
+    @Inject
+    lateinit var dashBoardFragment: DashBoardFragment
+
+    @Inject
+    lateinit var historyFragment: HistoryFragment
+
+    @Inject
+    lateinit var calculatorFragment: CalculatorFragment
+
     private lateinit var currentFragment: Fragment
+
     private val moneyApplication: MoneyApplication = MoneyApplication()
 
     private val mainViewModel: MainViewModel by viewModels {
         MainViewModelFactory(this)
     }
 
-    private lateinit var appUpdateManager: AppUpdateManager
     private lateinit var appUpdate: AppUpdate
 
     override fun onCreate(savedInstanceState: Bundle?) {

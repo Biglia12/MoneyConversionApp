@@ -6,7 +6,7 @@ import com.kotlin.moneyconversionapp.data.services.DollarHistoricService
 import com.kotlin.moneyconversionapp.domain.usecases.HistoricDollarUseCase
 import javax.inject.Inject
 
-class HistoricDollarRepository  @Inject constructor(private val api: DollarHistoricService, private val historicDollarProvider: HistoricDollarProvider) {
+class HistoricDollarRepository @Inject constructor(private val api: DollarHistoricService, private val historicDollarProvider: HistoricDollarProvider) {
 
     //private val api = DollarHistoricService()
 

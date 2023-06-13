@@ -29,15 +29,15 @@ import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.ui.viewmodel.DollarViewModel
 import com.kotlin.moneyconversionapp.ui.viewmodel.DollarViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
-class DashBoardFragment : Fragment() {
+class DashBoardFragment @Inject constructor() : Fragment() {
 
     private var _binding: FragmentDashBoardBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var adapter: DashBoardAdapter
-    private var position: Int = 0
 
     private val dollarViewModel: DollarViewModel by activityViewModels()
     private val moneyApplication: MoneyApplication = MoneyApplication()

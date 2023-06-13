@@ -15,7 +15,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HistoricDollarViewModel  @Inject constructor(private val getDollarHistoricUseCases: HistoricDollarUseCase) : ViewModel() {
+class HistoricDollarViewModel @Inject constructor(private val getDollarHistoricUseCases: HistoricDollarUseCase) : ViewModel() {
 
     val historicDollarBlueLiveData = MutableLiveData<ArrayList<HistoricDollarModel>>()
     val historicDollarOficialLiveData = MutableLiveData<ArrayList<HistoricDollarModel>>()
@@ -39,7 +39,6 @@ class HistoricDollarViewModel  @Inject constructor(private val getDollarHistoric
                 loading.postValue(true)
 
                 val result = getDollarHistoricUseCases()
-                //isLoadingData = false
 
                 if (!result.isNullOrEmpty()) {
                     error.postValue(false)
@@ -73,11 +72,6 @@ class HistoricDollarViewModel  @Inject constructor(private val getDollarHistoric
             }
         }
     }
-
-    /*override fun onCleared() {
-        super.onCleared()
-        viewModelScope.cancel() // Cancel all coroutines running in this ViewModel
-    }*/
 
     fun reloadService() {
         loadData()

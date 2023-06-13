@@ -10,15 +10,16 @@ import retrofit2.Retrofit
 import javax.inject.Inject
 import javax.inject.Named
 
-class DollarHistoricService @Inject constructor(@Named("baseurlHistoric")private val api: Services) {
+class DollarHistoricService @Inject constructor(@Named("baseurlHistoric") private val api: Services) {
 
-   // private val retrofit : Retrofit = RetrofitHelper.getRetrofit(Constants.BASE_URL_HISTORIC)
+    // private val retrofit : Retrofit = RetrofitHelper.getRetrofit(Constants.BASE_URL_HISTORIC)
 
-    suspend fun historicDollar () : ArrayList<HistoricDollarModel> {
-        return withContext(Dispatchers.IO){
+    suspend fun historicDollar(): ArrayList<HistoricDollarModel> {
+        return withContext(Dispatchers.IO) {
             val response = api.callApiHistoricDollar() // servicio sin funcionar cambiar
             Log.i("Response", response.toString())
-            response.body() ?: ArrayList() // llamada en un hilo secundario para no saturar la interfaz del usuario
+            response.body()
+                ?: ArrayList() // llamada en un hilo secundario para no saturar la interfaz del usuario
 
         }
 
