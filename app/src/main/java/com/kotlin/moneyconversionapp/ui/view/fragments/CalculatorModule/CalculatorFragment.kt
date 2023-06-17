@@ -2,7 +2,11 @@ package com.kotlin.moneyconversionapp.ui.view.fragments.CalculatorModule
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,6 +14,7 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
@@ -22,8 +27,8 @@ import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.databinding.FragmentCalculatorBinding
 import com.kotlin.moneyconversionapp.ui.viewmodel.Calculator.CalculatorViewModel
 import com.kotlin.moneyconversionapp.ui.viewmodel.DollarViewModel
-import com.kotlin.moneyconversionapp.ui.viewmodel.DollarViewModelFactory
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_calculator.constraint_calculator
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -33,7 +38,7 @@ class CalculatorFragment @Inject constructor() : Fragment() {
     private val binding get() = _binding!!
 
     private val dollarViewModel: DollarViewModel by viewModels()
-    private val calculatorViewModel: CalculatorViewModel by activityViewModels()
+   // private val calculatorViewModel: CalculatorViewModel by activityViewModels()
 
     private  var priceWithDollarVenta : String = ""
     private  var priceWithDollarCompra : String = ""
@@ -56,7 +61,6 @@ class CalculatorFragment @Inject constructor() : Fragment() {
         binding.toolbar.title = "Calculadora"
         binding.toolbar.setTitleTextColor(resources.getColor(R.color.white))
         binding.versionApp.text = BuildConfig.VERSION_NAME
-
 
         setSpinner()
         btnCalculateListener()
@@ -185,16 +189,49 @@ class CalculatorFragment @Inject constructor() : Fragment() {
         val priceBuy = resources.getString(R.string.price_buy)
         val priceSell = resources.getString(R.string.price_sell)
         binding.imgShare.setOnClickListener {
-            calculatorViewModel.generateShareIntent(binding.constraintCalculator, priceWithDollarCompra, priceWithDollarVenta, priceBuy, priceSell)
-            //view?.let { it1 -> screenShot(it1)?.let { it1 -> share(it1) } }
+            generateShareIntent(priceBuy, priceSell)
         }
+    }
 
-        calculatorViewModel.shareIntent.observe(viewLifecycleOwner) { intent ->
-            if (intent != null) {
-                startActivity(Intent.createChooser(intent, "hello hello"))
-                //calculatorViewModel.shareIntent.value = null
-            }
-        }
+    private fun generateShareIntent(priceBuy: String, priceSell: String) {
+        val bitmap = screenShot()
+
+        val timestamp = System.currentTimeMillis()
+        val fileName = "capture_$timestamp.jpg"
+
+        val pathOfBmp = MediaStore.Images.Media.insertImage(
+            requireContext().contentResolver,
+            bitmap, fileName, null
+        )
+
+        val uri: Uri = Uri.parse(pathOfBmp)
+
+        val appPackageName = requireActivity().packageName
+        val playStoreUrl = "https://play.google.com/store/apps/details?id=$appPackageName"
+
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.type = "image/*"
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "DólarArg")
+
+        // Create a SpannableString with a clickable URL
+        val message ="$priceBuy\$$priceWithDollarCompra\n$priceSell \$$priceWithDollarVenta\n\nDescarga nuestra app: $playStoreUrl"
+
+        shareIntent.putExtra(Intent.EXTRA_TEXT, message)
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+        startActivity(Intent.createChooser(shareIntent, "hello hello"))
+    }
+
+    private fun screenShot(): Bitmap {
+        // Invalidar la vista para forzar la actualización del sistema de caché de Android
+        binding.constraintCalculator.invalidate()
+
+        // Tomar la captura de pantalla actualizada
+        //val rootView: View = view.rootView
+        val bitmap = Bitmap.createBitmap(binding.constraintCalculator.width, binding.constraintCalculator.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        binding.constraintCalculator.draw(canvas)
+        binding.constraintCalculator.isDrawingCacheEnabled = true
+        return binding.constraintCalculator.drawingCache
     }
 
 
