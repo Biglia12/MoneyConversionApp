@@ -9,6 +9,7 @@ object Constants {
      //BaseUrl
      const val BASE_URL_DOLARSI = "https://www.dolarsi.com/api/"
      const val BASE_URL_API_DOLLAR = "https://api-dolar-argentina.herokuapp.com/"
+     const val BASE_URL_HISTORIC = "https:api.bluelytics.com.ar/v2/"
 
      const val PARAMETER_DOLARSI = "valoresprincipales"
      const val DOLLAR_SIGN = "$"

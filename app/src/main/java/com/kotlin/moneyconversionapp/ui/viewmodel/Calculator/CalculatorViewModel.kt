@@ -24,12 +24,12 @@ class CalculatorViewModel : ViewModel() {
     fun generateShareIntent( view: View, priceWithDollarCompra: String, priceWithDollarVenta: String, priceBuy: String, priceSell: String) {
 
         val bitmap = screenShot(view)
-        val pathofBmp = MediaStore.Images.Media.insertImage(
+        val pathOfBmp = MediaStore.Images.Media.insertImage(
             view.context.contentResolver,
             bitmap, "title", null
         )
 
-        val uri: Uri = Uri.parse(pathofBmp)
+        val uri: Uri = Uri.parse(pathOfBmp)
 
         val appPackageName = view.context.packageName
         val playStoreUrl = "https://play.google.com/store/apps/details?id=$appPackageName"

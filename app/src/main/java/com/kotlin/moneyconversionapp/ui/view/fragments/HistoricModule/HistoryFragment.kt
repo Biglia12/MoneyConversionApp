@@ -30,11 +30,14 @@ import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.data.model.HistoricDollar.HistoricDollarModel
 import com.kotlin.moneyconversionapp.databinding.FragmentHistoryBinding
 import com.kotlin.moneyconversionapp.ui.viewmodel.Historic.HistoricDollarViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.fragment_dash_board.*
 import java.time.LocalDate
 import java.time.format.DateTimeFormatter
+import javax.inject.Inject
 
-class HistoryFragment : Fragment() {
+@AndroidEntryPoint
+class HistoryFragment @Inject constructor() : Fragment() {
     private var _binding: FragmentHistoryBinding? = null
     private val binding get() = _binding!!
     private val historicDollarViewModel: HistoricDollarViewModel by activityViewModels()
@@ -55,7 +58,6 @@ class HistoryFragment : Fragment() {
         binding.toolbar.title = "Grafico Dólar"
         binding.toolbar.setTitleTextColor(resources.getColor(R.color.white))
 
-        //historicDollarViewModel.loadData()
 
         funAdView() //funcion para publicidad
 

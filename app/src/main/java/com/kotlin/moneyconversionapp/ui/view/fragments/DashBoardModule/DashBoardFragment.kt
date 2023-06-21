@@ -21,25 +21,26 @@ import com.google.android.gms.ads.LoadAdError
 import com.google.android.gms.ads.MobileAds
 import com.kotlin.moneyconversionapp.BuildConfig
 import com.kotlin.moneyconversionapp.Constants
+import com.kotlin.moneyconversionapp.MoneyApplication
 import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.adapters.DashBoardAdapter
 import com.kotlin.moneyconversionapp.databinding.FragmentDashBoardBinding
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.ui.viewmodel.DollarViewModel
 import com.kotlin.moneyconversionapp.ui.viewmodel.DollarViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-class DashBoardFragment : Fragment() {
+@AndroidEntryPoint
+class DashBoardFragment @Inject constructor() : Fragment() {
 
     private var _binding: FragmentDashBoardBinding? = null
     private val binding get() = _binding!!
 
-    //private var dollarResponse = listOf<DollarCasaResponse>()
-    private var dollarResponse = ArrayList<CasaResponse>()
     private lateinit var adapter: DashBoardAdapter
-    private var position: Int = 0
-    private val dollarViewModel: DollarViewModel by activityViewModels() {
-        DollarViewModelFactory(requireActivity().application)
-    }
+
+    private val dollarViewModel: DollarViewModel by activityViewModels()
+    private val moneyApplication: MoneyApplication = MoneyApplication()
 
 
     override fun onCreateView(
@@ -58,7 +59,7 @@ class DashBoardFragment : Fragment() {
 
         funAdView() //funcion para publicidad
 
-        if (dollarViewModel.moneyApplication.isConnected(requireContext())) {
+        if (moneyApplication.isConnected(requireContext())) {
             observeLiveData()
         } else {
             //observeLiveData()
@@ -108,6 +109,10 @@ class DashBoardFragment : Fragment() {
     }
 
     private fun observeLiveData() {
+
+        dollarViewModel.casaResponseShared.observe(viewLifecycleOwner, Observer {
+            moneyApplication.setDollarValue(requireContext(),Constants.DOLLAR_VALUE, it)
+        })
 
         dollarViewModel.showRecycler.observe(viewLifecycleOwner, Observer {
             binding.recyclerResumeFragment.isVisible = it
