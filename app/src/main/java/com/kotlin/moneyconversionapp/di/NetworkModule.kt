@@ -20,18 +20,19 @@ object NetworkModule {
     @Provides
     @Named("baseUrlDolarSi")
     fun provideRetrofit(): Retrofit{
-        return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL_DOLARSI)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+        return createRetrofit(Constants.BASE_URL_DOLARSI)
     }
 
     @Singleton
     @Provides
     @Named("baseurlHistoric")
     fun provideRetrofitHistoric(): Retrofit{
+        return createRetrofit(Constants.BASE_URL_HISTORIC)
+    }
+
+    private fun createRetrofit(baseUrl: String): Retrofit {
         return Retrofit.Builder()
-            .baseUrl(Constants.BASE_URL_HISTORIC)
+            .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
