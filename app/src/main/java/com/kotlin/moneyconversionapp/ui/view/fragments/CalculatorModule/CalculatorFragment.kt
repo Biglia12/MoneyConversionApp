@@ -213,7 +213,6 @@ class CalculatorFragment @Inject constructor() : Fragment() {
         shareIntent.type = "image/*"
         shareIntent.putExtra(Intent.EXTRA_SUBJECT, "DólarArg")
 
-        // Create a SpannableString with a clickable URL
         val message ="$priceBuy\$$priceWithDollarCompra\n$priceSell \$$priceWithDollarVenta\n\nDescarga nuestra app: $playStoreUrl"
 
         shareIntent.putExtra(Intent.EXTRA_TEXT, message)
