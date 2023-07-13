@@ -2,7 +2,11 @@ package com.kotlin.moneyconversionapp.ui.view.fragments.CalculatorModule
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.Canvas
+import android.net.Uri
 import android.os.Bundle
+import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,32 +14,37 @@ import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import com.kotlin.moneyconversionapp.BuildConfig
 import com.kotlin.moneyconversionapp.Constants
+import com.kotlin.moneyconversionapp.MoneyApplication
 import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.databinding.FragmentCalculatorBinding
 import com.kotlin.moneyconversionapp.ui.viewmodel.Calculator.CalculatorViewModel
 import com.kotlin.moneyconversionapp.ui.viewmodel.DollarViewModel
-import com.kotlin.moneyconversionapp.ui.viewmodel.DollarViewModelFactory
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.android.synthetic.main.fragment_calculator.constraint_calculator
+import javax.inject.Inject
 
-
-class CalculatorFragment : Fragment() {
+@AndroidEntryPoint
+class CalculatorFragment @Inject constructor() : Fragment() {
 
     private var _binding: FragmentCalculatorBinding? = null
     private val binding get() = _binding!!
 
-    private val dollarViewModel: DollarViewModel by activityViewModels { //utlizaremos este view model para los datos que nos trae la api y ahcer los calculos, este se compartira con el fragment Dashboard.
-        DollarViewModelFactory(requireActivity().application)
-    }
-
-    private val calculatorViewModel: CalculatorViewModel by activityViewModels()
+    private val dollarViewModel: DollarViewModel by viewModels()
+   // private val calculatorViewModel: CalculatorViewModel by activityViewModels()
 
     private  var priceWithDollarVenta : String = ""
     private  var priceWithDollarCompra : String = ""
     private lateinit var valueEtString : String
+
+    private val moneyApplication: MoneyApplication = MoneyApplication()
 
 
     override fun onCreateView(
@@ -51,7 +60,7 @@ class CalculatorFragment : Fragment() {
 
         binding.toolbar.title = "Calculadora"
         binding.toolbar.setTitleTextColor(resources.getColor(R.color.white))
-
+        binding.versionApp.text = BuildConfig.VERSION_NAME
 
         setSpinner()
         btnCalculateListener()
@@ -61,11 +70,11 @@ class CalculatorFragment : Fragment() {
 
 
     private fun setSpinner() {
-        if (dollarViewModel.moneyApplication.isConnected(requireContext())) {
+        if (moneyApplication.isConnected(requireContext())) {
             spinner()
         }else {
-           if (dollarViewModel.moneyApplication.getDollarValue(requireContext(),Constants.DOLLAR_VALUE) != null){
-               dollarViewModel.setSpinner(dollarViewModel.moneyApplication.getDollarValue(requireContext(),Constants.DOLLAR_VALUE)!!)//le pasamos lo que tenemos almacenado al view model para poder seguir con la calculadora con los ultimos datos guardados
+           if (moneyApplication.getDollarValue(requireContext(),Constants.DOLLAR_VALUE) != null){
+               dollarViewModel.setSpinner(moneyApplication.getDollarValue(requireContext(),Constants.DOLLAR_VALUE)!!)//le pasamos lo que tenemos almacenado al view model para poder seguir con la calculadora con los ultimos datos guardados
                spinner()
            }
             Toast.makeText(activity,"No hay conexion",Toast.LENGTH_SHORT).show()
@@ -104,15 +113,16 @@ class CalculatorFragment : Fragment() {
 
             override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                 val names = arrayNames[position]
+                val selectedCasaResponse = casaResponses[position]
                 when (names) {
-                    "Dolar Oficial" -> setPrices(casaResponses[position]) //Al ser un servicio de terceros puede haber problemas con esto, pero no encuentro otra manera por el momento
-                    "Dolar Blue" -> setPrices(casaResponses[position])
-                    "Dolar Soja" -> setPrices(casaResponses[position])
-                    "Dolar Contado con Liqui" -> setPrices(casaResponses[position])
-                    "Dolar Bolsa" -> setPrices(casaResponses[position])
-                    "Bitcoin" -> setPrices(casaResponses[position])
-                    "Dolar turista" -> setPrices(casaResponses[position])
-                    "Dolar" -> setPrices(casaResponses[position])
+                    Constants.DOLLAR_OFICIAL,
+                    Constants.DOLLAR_BLUE,
+                    Constants.DOLLAR_SOJA,
+                    Constants.DOLLAR_CONTADO_LIQUI,
+                    Constants.DOLLAR_BOLSA,
+                    Constants.BITCOIN,
+                    Constants.DOLLAR_TRUISTA,
+                    Constants.DOLLAR -> setPrices(selectedCasaResponse)
                     else -> setWithoutPrices("$0")
                 }
             }
@@ -179,16 +189,48 @@ class CalculatorFragment : Fragment() {
         val priceBuy = resources.getString(R.string.price_buy)
         val priceSell = resources.getString(R.string.price_sell)
         binding.imgShare.setOnClickListener {
-            calculatorViewModel.generateShareIntent(binding.constraintCalculator, priceWithDollarCompra, priceWithDollarVenta, priceBuy, priceSell)
-            //view?.let { it1 -> screenShot(it1)?.let { it1 -> share(it1) } }
+            generateShareIntent(priceBuy, priceSell)
         }
+    }
 
-        calculatorViewModel.shareIntent.observe(viewLifecycleOwner) { intent ->
-            if (intent != null) {
-                startActivity(Intent.createChooser(intent, "hello hello"))
-                //calculatorViewModel.shareIntent.value = null
-            }
-        }
+    private fun generateShareIntent(priceBuy: String, priceSell: String) {
+        val bitmap = screenShot()
+
+        val timestamp = System.currentTimeMillis()
+        val fileName = "capture_$timestamp.jpg"
+
+        val pathOfBmp = MediaStore.Images.Media.insertImage(
+            requireContext().contentResolver,
+            bitmap, fileName, null
+        )
+
+        val uri: Uri = Uri.parse(pathOfBmp)
+
+        val appPackageName = requireActivity().packageName
+        val playStoreUrl = "https://play.google.com/store/apps/details?id=$appPackageName"
+
+        val shareIntent = Intent(Intent.ACTION_SEND)
+        shareIntent.type = "image/*"
+        shareIntent.putExtra(Intent.EXTRA_SUBJECT, "DólarArg")
+
+        val message ="$priceBuy\$$priceWithDollarCompra\n$priceSell \$$priceWithDollarVenta\n\nDescarga nuestra app: $playStoreUrl"
+
+        shareIntent.putExtra(Intent.EXTRA_TEXT, message)
+        shareIntent.putExtra(Intent.EXTRA_STREAM, uri)
+        startActivity(Intent.createChooser(shareIntent, "hello hello"))
+    }
+
+    private fun screenShot(): Bitmap {
+        // Invalidar la vista para forzar la actualización del sistema de caché de Android
+        binding.constraintCalculator.invalidate()
+
+        // Tomar la captura de pantalla actualizada
+        //val rootView: View = view.rootView
+        val bitmap = Bitmap.createBitmap(binding.constraintCalculator.width, binding.constraintCalculator.height, Bitmap.Config.ARGB_8888)
+        val canvas = Canvas(bitmap)
+        binding.constraintCalculator.draw(canvas)
+        binding.constraintCalculator.isDrawingCacheEnabled = true
+        return binding.constraintCalculator.drawingCache
     }
 
 

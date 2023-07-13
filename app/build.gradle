@@ -4,6 +4,8 @@ plugins {
     id 'kotlin-android-extensions'
     id 'com.google.gms.google-services'
     id 'com.google.firebase.crashlytics'
+    id 'kotlin-kapt'
+    id 'dagger.hilt.android.plugin'
 }
 
 android {
@@ -13,8 +15,8 @@ android {
         applicationId "com.kotlin.moneyconversionapp"
         minSdk 24
         targetSdk 31
-        versionCode 2
-        versionName "1.0"
+        versionCode 5
+        versionName "1.1"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -63,7 +65,7 @@ dependencies {
 
     implementation fileTree(dir: "libs", include: [])
 
-    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.6.0"
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.7.0"
     implementation 'androidx.core:core-ktx:1.7.0'
     implementation 'androidx.appcompat:appcompat:1.4.1'
     implementation 'com.google.android.material:material:1.5.0'
@@ -106,4 +108,12 @@ dependencies {
 
     //admbob(publicidad)
     implementation 'com.google.android.gms:play-services-ads:22.0.0'
+
+    //appUpdate (update app)
+    implementation("com.google.android.play:app-update:2.0.1")
+    implementation 'com.google.android.play:app-update-ktx:2.0.1'
+
+    //dagger hilt
+    implementation "com.google.dagger:hilt-android:$hilt_version"
+    kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
 }

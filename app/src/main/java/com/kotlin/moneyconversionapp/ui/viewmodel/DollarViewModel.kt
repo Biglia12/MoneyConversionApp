@@ -5,19 +5,29 @@ import android.content.Context
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.github.mikephil.charting.utils.Utils.init
 import com.kotlin.moneyconversionapp.Constants
 import com.kotlin.moneyconversionapp.MoneyApplication
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.domain.usecases.CalculatorUseCase
 import com.kotlin.moneyconversionapp.domain.usecases.DollarUseCases
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class DollarViewModel (application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class DollarViewModel @Inject constructor(
+    private val getDollarUseCases: DollarUseCases,
+    private val calculatorUseCase: CalculatorUseCase,
+    /* application: Application*/
+) : ViewModel() {
 
-    val context: Context = application
-    val moneyApplication = MoneyApplication()
+    //val context: Context = application
+    //val moneyApplication = MoneyApplication()
     val casaResponse = MutableLiveData<ArrayList<CasaResponse>>()
+    val casaResponseShared = MutableLiveData<ArrayList<CasaResponse>>()
     val casaResponseCalculator = MutableLiveData<ArrayList<CasaResponse>>()
     val isLoading = MutableLiveData<Boolean>()
     val showError = MutableLiveData<Boolean>()
@@ -25,9 +35,8 @@ class DollarViewModel (application: Application) : AndroidViewModel(application)
     val resultCalculateBuy = MutableLiveData<String>()
     val resultCalculateSell = MutableLiveData<String>()
 
-    private val getDollarUseCases = DollarUseCases()
-
-    private val calculatorUseCase = CalculatorUseCase()
+    //private val getDollarUseCases: DollarUseCases = DollarUseCases()
+    //private val calculatorUseCase: CalculatorUseCase = CalculatorUseCase()
 
 
     init {
@@ -58,9 +67,11 @@ class DollarViewModel (application: Application) : AndroidViewModel(application)
 
                 setSpinner(result)
 
-                moneyApplication.setDollarValue(context,Constants.DOLLAR_VALUE, result)
+                casaResponseShared.postValue(result)
 
-                Log.d("dada","dasdasd")
+                // moneyApplication.setDollarValue(Constants.DOLLAR_VALUE, result)
+
+                Log.d("dada", "dasdasd")
 
 
             } else {
@@ -92,12 +103,11 @@ class DollarViewModel (application: Application) : AndroidViewModel(application)
 
 
     fun setCalculate(
-        dataEditText: String,
-        dataValue: String,
-        valueVentaWithPoint: String
+        dataEditText: String, dataValue: String, valueVentaWithPoint: String
     ) { //pasar parametros para hacer el calculo de la cuenta
         resultCalculateBuy.value = calculatorUseCase.calculateResult(dataEditText, dataValue)
-        resultCalculateSell.value = calculatorUseCase.calculateResult(dataEditText, valueVentaWithPoint)
+        resultCalculateSell.value =
+            calculatorUseCase.calculateResult(dataEditText, valueVentaWithPoint)
     }
 
 }

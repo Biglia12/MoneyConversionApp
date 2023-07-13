@@ -1,29 +1,50 @@
 package com.kotlin.moneyconversionapp.ui.view.activities
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View.GONE
 import android.view.View.VISIBLE
+import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.fragment.app.Fragment
+import com.google.android.play.core.appupdate.AppUpdateManager
 import com.kotlin.moneyconversionapp.MoneyApplication
-import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.databinding.ActivityMainBinding
 import com.kotlin.moneyconversionapp.ui.view.fragments.CalculatorModule.CalculatorFragment
 import com.kotlin.moneyconversionapp.ui.view.fragments.DashBoardModule.DashBoardFragment
 import com.kotlin.moneyconversionapp.ui.view.fragments.HistoricModule.HistoryFragment
-import com.onesignal.OneSignal
+import com.kotlin.moneyconversionapp.ui.viewmodel.Main.MainViewModel
+import com.kotlin.moneyconversionapp.ui.viewmodel.Main.MainViewModelFactory
+import com.kotlin.moneyconversionapp.utils.AppUpdate
+import com.kotlin.moneyconversionapp.utils.InterfaceAppUpdate
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
-//test
-class MainActivity : AppCompatActivity() {
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity(), InterfaceAppUpdate.view {
 
     private lateinit var binding: ActivityMainBinding
-    private val dashBoardFragment = DashBoardFragment()
-    private val historyFragment = HistoryFragment()
-    private val calculatorFragment = CalculatorFragment()
+
+    @Inject
+    lateinit var dashBoardFragment: DashBoardFragment
+
+    @Inject
+    lateinit var historyFragment: HistoryFragment
+
+    @Inject
+    lateinit var calculatorFragment: CalculatorFragment
+
     private lateinit var currentFragment: Fragment
+
     private val moneyApplication: MoneyApplication = MoneyApplication()
+
+    private val mainViewModel: MainViewModel by viewModels {
+        MainViewModelFactory(this)
+    }
+
+    private lateinit var appUpdate: AppUpdate
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -35,9 +56,28 @@ class MainActivity : AppCompatActivity() {
         actionBar!!.hide()
 
 
+        appUpdate = AppUpdate(this)
+
         checkConecction()
 
     }
+
+    override fun onResume() {
+        super.onResume()
+        appUpdate.onResume()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        appUpdate.onActivityResult(requestCode,resultCode,data)
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        appUpdate.onDestroy()
+    }
+
+
 
     private fun checkConecction() {
         if (moneyApplication.isConnected(this)) {
@@ -54,6 +94,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+
     private fun bottomNavigation() {
 
         currentFragment = dashBoardFragment
@@ -61,9 +102,9 @@ class MainActivity : AppCompatActivity() {
 
         binding.navigationBottom.setOnItemSelectedListener {
             when (it.itemId) {
-                R.id.item_resume -> showFragment(dashBoardFragment)
-                R.id.item_history -> showFragment(historyFragment)
-                R.id.item_conversor -> showFragment(calculatorFragment)
+                com.kotlin.moneyconversionapp.R.id.item_resume -> showFragment(dashBoardFragment)
+                com.kotlin.moneyconversionapp.R.id.item_history -> showFragment(historyFragment)
+                com.kotlin.moneyconversionapp.R.id.item_conversor -> showFragment(calculatorFragment)
             }
             true
         }
@@ -75,7 +116,7 @@ class MainActivity : AppCompatActivity() {
             if (fragment.isAdded) {
                 show(fragment)
             } else {
-                add(R.id.fragment_container, fragment)
+                add(com.kotlin.moneyconversionapp.R.id.fragment_container, fragment)
                 show(fragment)
             }
             commit()
@@ -83,13 +124,9 @@ class MainActivity : AppCompatActivity() {
         currentFragment = fragment
     }
 
-    /*private fun replaceFragment(fragment: Fragment) {// para volver a recrear el fragmento
+    override fun getDownloadToast(download: String) {
+        Toast.makeText(this,download,Toast.LENGTH_SHORT).show()
+    }
 
-        supportFragmentManager.beginTransaction().apply {
 
-            replace(R.id.fragment_container, fragment)
-            commit()
-
-        }
-    }*/
 }

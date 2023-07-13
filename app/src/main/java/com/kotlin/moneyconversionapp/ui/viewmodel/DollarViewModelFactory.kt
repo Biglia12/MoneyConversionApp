@@ -19,10 +19,10 @@ import androidx.lifecycle.ViewModelProvider
  */
 
 class DollarViewModelFactory(private val application: Application) : ViewModelProvider.Factory {
-    override fun <T : ViewModel> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(DollarViewModel::class.java)) {
-            return DollarViewModel(application) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
-    }
+//    override fun <T : ViewModel> create(modelClass: Class<T>): T {
+//        if (modelClass.isAssignableFrom(DollarViewModel::class.java)) {
+//            return DollarViewModel(application) as T
+//        }
+//        throw IllegalArgumentException("Unknown ViewModel class")
+//    }
 }

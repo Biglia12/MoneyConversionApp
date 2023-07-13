@@ -4,10 +4,11 @@ import com.kotlin.moneyconversionapp.data.DollarRepository
 import com.kotlin.moneyconversionapp.data.HistoricDollarRepository
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.data.model.HistoricDollar.HistoricDollarModel
+import javax.inject.Inject
 
-class HistoricDollarUseCase {
+class HistoricDollarUseCase  @Inject constructor(private val repository: HistoricDollarRepository) {
 
-        private val repository = HistoricDollarRepository()
+        //private val repository = HistoricDollarRepository()
 
         suspend operator fun invoke(): ArrayList<HistoricDollarModel> = repository.getAllDollar()
 
