@@ -22,9 +22,10 @@ class DollarService @Inject constructor(@Named("baseUrlDolarSi")private val api:
             var response : Response<ArrayList<CasaResponse>>? = null
             try {
                 response = api.callApiDollar(Constants.PARAMETER_DOLARSI)
-                Log.i("Response", response.toString())
+                Log.i("ResponseApiDollar", response.toString())
                 response.body() ?: arrayListOf()
             }catch (e:Exception){
+                Log.e("ExceptionbaseUrlDolarSi", e.toString())
                 response?.body() ?: arrayListOf()
             }
          /*   val response = retrofit.create(Services::class.java).callApiDollar(Constants.PARAMETER_DOLARSI)

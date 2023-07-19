@@ -9,21 +9,31 @@ plugins {
 }
 
 android {
-    compileSdk 31
+    signingConfigs {
+        config {
+            keyAlias 'key0'
+            keyPassword '42987502'
+            storeFile file("$rootDir/key/keystore.jks")
+            storePassword '42987502'
+        }
+    }
 
+    compileSdk 31
     defaultConfig {
         applicationId "com.kotlin.moneyconversionapp"
         minSdk 24
         targetSdk 31
-        versionCode 5
+        versionCode 9
         versionName "1.1"
-
+        signingConfig signingConfigs.config
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
             minifyEnabled false
+            signingConfig signingConfigs.config
+            debuggable false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -79,6 +89,8 @@ dependencies {
     //Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+    implementation 'com.squareup.okhttp3:logging-interceptor:4.9.1'
+
     implementation "androidx.fragment:fragment-ktx:1.5.1"
 
     //splash
