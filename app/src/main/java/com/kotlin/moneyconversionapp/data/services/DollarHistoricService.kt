@@ -18,8 +18,7 @@ class DollarHistoricService @Inject constructor(@Named("baseurlHistoric") privat
         return withContext(Dispatchers.IO) {
             val response = api.callApiHistoricDollar() // servicio sin funcionar cambiar
             Log.i("Response", response.toString())
-            response.body()
-                ?: ArrayList() // llamada en un hilo secundario para no saturar la interfaz del usuario
+            response.body() ?: ArrayList() // llamada en un hilo secundario para no saturar la interfaz del usuario
 
         }
 

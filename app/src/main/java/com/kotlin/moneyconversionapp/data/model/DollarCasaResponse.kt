@@ -23,7 +23,7 @@ data class DollarCasaResponse(
 
     @SerializedName("variacion")
     @Expose
-    val variacion: String? = null,
+    var variacion: Any? = null,  //lo tuvimos que pasar a Any ya que a veces el servicio nos devuelve  otro tipo de valor y no un string como esperabamos
 
     @SerializedName("ventaCero")
     @Expose
