@@ -52,8 +52,8 @@ class MainActivity : AppCompatActivity(), InterfaceAppUpdate.view {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val actionBar: ActionBar? = supportActionBar // ocultamos el action bar
-        actionBar!!.hide()
+     /*   val actionBar: ActionBar? = supportActionBar // ocultamos el action bar
+        actionBar!!.hide()*/
 
 
         appUpdate = AppUpdate(this)

@@ -215,7 +215,7 @@ class HistoryFragment @Inject constructor() : Fragment() {
     }
 
 
-    @SuppressLint("RestrictedApi")
+  /*  @SuppressLint("RestrictedApi")
     override fun onStart() {
         super.onStart()
         (activity as AppCompatActivity).supportActionBar!!.setShowHideAnimationEnabled(false) // esto no permitira cuando el action bar se oculte haga una animacion
@@ -235,6 +235,6 @@ class HistoryFragment @Inject constructor() : Fragment() {
         super.onResume()
         (activity as AppCompatActivity).supportActionBar!!.setShowHideAnimationEnabled(false)
         (activity as AppCompatActivity).supportActionBar!!.hide()
-    }
+    }*/
 
 }
