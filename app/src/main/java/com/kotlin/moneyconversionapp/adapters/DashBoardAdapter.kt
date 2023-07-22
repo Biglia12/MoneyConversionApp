@@ -39,9 +39,17 @@ class DashBoardAdapter(private val dollarList: ArrayList<CasaResponse>, private 
         private val binding = ItemDashboardBinding.bind(view)
 
         fun bind(dollar: CasaResponse, context: Context) {
-            val sellMoney = "$" + dollar.dollarCasa.venta
-            val buyMoney = "$" + dollar.dollarCasa.compra
+            var sellMoney = "$" + dollar.dollarCasa.venta
+            var buyMoney = "$" + dollar.dollarCasa.compra
 
+
+            if (buyMoney.contains("No Cotiza")) {
+                buyMoney = removeSignDolla(buyMoney)
+            }
+
+            if (sellMoney.contains("No Cotiza")){
+                sellMoney = removeSignDolla(sellMoney)
+            }
 
             binding.txtTypeDollar.text = dollar.dollarCasa.nombre
             binding.txtSellMoney.text = sellMoney
@@ -57,10 +65,14 @@ class DashBoardAdapter(private val dollarList: ArrayList<CasaResponse>, private 
                 dollar.dollarCasa.nombre.isNullOrEmpty() -> changeText(binding.txtTypeDollar)
                 dollar.dollarCasa.venta.isNullOrEmpty() -> changeText(binding.txtSellMoney)
                 dollar.dollarCasa.compra.isNullOrEmpty() -> changeText(binding.txtBuyMoney)
-                dollar.dollarCasa.variacion.toString().isNullOrEmpty() || dollar.dollarCasa.variacion.toString() == "null" -> changeText(binding.textViewVariation) // lo se es horrible esto pero al ser un servicio de terceros no hay muchas formas de solucionarlo ya que yo que a veces el json viende con diferentes tipos de valores y no siempre es un string
+                dollar.dollarCasa.variacion.toString().isNullOrEmpty() || dollar.dollarCasa.variacion.toString() == "null" -> changeText(binding.textViewVariation) // lo se es horrible esto pero al ser un servicio de terceros no hay muchas formas de solucionarlo ya que a veces el json viene con diferentes tipos de valores y no siempre es un string
                 dollar.dollarCasa.variacion.toString().contains("-") -> binding.textViewVariation.setTextColor(ContextCompat.getColor(context,R.color.red))
             }
 
+        }
+
+        private fun removeSignDolla(text: String): String {
+            return text.replace("$", "")
         }
 
         private fun changeText(text: TextView) {
