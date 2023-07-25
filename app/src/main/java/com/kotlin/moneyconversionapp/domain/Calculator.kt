@@ -15,7 +15,7 @@ class Calculator @Inject constructor(){
             return dataValue
         }else{
             result = value.toLong() * valueWithPoint.toDouble()
-            resultToString = "%.2f".format(result)
+            resultToString = "%,.2f".format(result)
         }
 
         return (resultToString)
