@@ -10,6 +10,7 @@
 
     <string name="price_buy">Precio de compra: </string>
     <string name="price_sell">Precio de venta: </string>
+    <string name="title_activity_gaming_calculator">GamingCalculator</string>
 
 
 </resources>

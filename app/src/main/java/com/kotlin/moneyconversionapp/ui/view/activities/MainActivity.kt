@@ -6,24 +6,19 @@ import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
-import androidx.activity.viewModels
-import androidx.appcompat.app.ActionBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
-import com.google.android.play.core.appupdate.AppUpdateManager
 import com.kotlin.moneyconversionapp.MoneyApplication
 import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.databinding.ActivityMainBinding
+import com.kotlin.moneyconversionapp.ui.view.fragments.CalculatorGamingModule.CalculatorGamingFragment
 import com.kotlin.moneyconversionapp.ui.view.fragments.CalculatorModule.CalculatorFragment
 import com.kotlin.moneyconversionapp.ui.view.fragments.DashBoardModule.DashBoardFragment
 import com.kotlin.moneyconversionapp.ui.view.fragments.HistoricModule.HistoryFragment
-import com.kotlin.moneyconversionapp.ui.viewmodel.Main.MainViewModel
-import com.kotlin.moneyconversionapp.ui.viewmodel.Main.MainViewModelFactory
 import com.kotlin.moneyconversionapp.utils.AppUpdate
 import com.kotlin.moneyconversionapp.utils.InterfaceAppUpdate
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
-import kotlin.math.log
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), InterfaceAppUpdate.view {
@@ -39,13 +34,16 @@ class MainActivity : AppCompatActivity(), InterfaceAppUpdate.view {
     @Inject
     lateinit var calculatorFragment: CalculatorFragment
 
+    @Inject
+    lateinit var gamingCalculator: CalculatorGamingFragment
+
     private lateinit var currentFragment: Fragment
 
     private val moneyApplication: MoneyApplication = MoneyApplication()
 
- /*   private val mainViewModel: MainViewModel by viewModels {
-        MainViewModelFactory(this)
-    }*/
+    /*   private val mainViewModel: MainViewModel by viewModels {
+           MainViewModelFactory(this)
+       }*/
 
     private lateinit var appUpdate: AppUpdate
 
@@ -68,7 +66,7 @@ class MainActivity : AppCompatActivity(), InterfaceAppUpdate.view {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        appUpdate.onActivityResult(requestCode,resultCode,data)
+        appUpdate.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onDestroy() {
@@ -102,8 +100,9 @@ class MainActivity : AppCompatActivity(), InterfaceAppUpdate.view {
         binding.navigationBottom.setOnItemSelectedListener {
             when (it.itemId) {
                 R.id.item_resume -> showFragment(dashBoardFragment)
-                R.id.item_history -> showFragment(historyFragment)
                 R.id.item_conversor -> showFragment(calculatorFragment)
+                R.id.item_gaming -> showFragment(gamingCalculator)
+                R.id.item_history -> showFragment(historyFragment)
             }
             true
         }
@@ -124,7 +123,7 @@ class MainActivity : AppCompatActivity(), InterfaceAppUpdate.view {
     }
 
     override fun getDownloadToast(download: String) {
-        Toast.makeText(this,download,Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, download, Toast.LENGTH_SHORT).show()
     }
 
 
