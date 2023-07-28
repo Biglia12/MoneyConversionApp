@@ -17,6 +17,7 @@ import com.kotlin.moneyconversionapp.databinding.ActivityMainBinding
 import com.kotlin.moneyconversionapp.ui.view.fragments.CalculatorModule.CalculatorFragment
 import com.kotlin.moneyconversionapp.ui.view.fragments.DashBoardModule.DashBoardFragment
 import com.kotlin.moneyconversionapp.ui.view.fragments.HistoricModule.HistoryFragment
+import com.kotlin.moneyconversionapp.ui.view.fragments.SettingsModule.SettingsFragment
 import com.kotlin.moneyconversionapp.ui.viewmodel.Main.MainViewModel
 import com.kotlin.moneyconversionapp.ui.viewmodel.Main.MainViewModelFactory
 import com.kotlin.moneyconversionapp.utils.AppUpdate
@@ -38,6 +39,9 @@ class MainActivity : AppCompatActivity(), InterfaceAppUpdate.view {
 
     @Inject
     lateinit var calculatorFragment: CalculatorFragment
+
+    @Inject
+    lateinit var settingsFragment: SettingsFragment
 
     private lateinit var currentFragment: Fragment
 
@@ -104,6 +108,7 @@ class MainActivity : AppCompatActivity(), InterfaceAppUpdate.view {
                 R.id.item_resume -> showFragment(dashBoardFragment)
                 R.id.item_history -> showFragment(historyFragment)
                 R.id.item_conversor -> showFragment(calculatorFragment)
+                R.id.item_settings -> showFragment(settingsFragment)
             }
             true
         }
