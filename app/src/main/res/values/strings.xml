@@ -11,6 +11,7 @@
     <string name="price_buy">Precio de compra: </string>
     <string name="price_sell">Precio de venta: </string>
     <string name="calculator">Calculadora</string>
+    <string name="compra">buy</string>
 
 
 </resources>
