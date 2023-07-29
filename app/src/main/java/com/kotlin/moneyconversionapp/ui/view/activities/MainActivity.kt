@@ -2,6 +2,7 @@ package com.kotlin.moneyconversionapp.ui.view.activities
 
 import android.content.Intent
 import android.os.Bundle
+import android.util.Log
 import android.view.View.GONE
 import android.view.View.VISIBLE
 import android.widget.Toast
@@ -11,6 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import com.google.android.play.core.appupdate.AppUpdateManager
 import com.kotlin.moneyconversionapp.MoneyApplication
+import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.databinding.ActivityMainBinding
 import com.kotlin.moneyconversionapp.ui.view.fragments.CalculatorModule.CalculatorFragment
 import com.kotlin.moneyconversionapp.ui.view.fragments.DashBoardModule.DashBoardFragment
@@ -21,6 +23,7 @@ import com.kotlin.moneyconversionapp.utils.AppUpdate
 import com.kotlin.moneyconversionapp.utils.InterfaceAppUpdate
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
+import kotlin.math.log
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity(), InterfaceAppUpdate.view {
@@ -40,9 +43,9 @@ class MainActivity : AppCompatActivity(), InterfaceAppUpdate.view {
 
     private val moneyApplication: MoneyApplication = MoneyApplication()
 
-    private val mainViewModel: MainViewModel by viewModels {
+ /*   private val mainViewModel: MainViewModel by viewModels {
         MainViewModelFactory(this)
-    }
+    }*/
 
     private lateinit var appUpdate: AppUpdate
 
@@ -51,10 +54,6 @@ class MainActivity : AppCompatActivity(), InterfaceAppUpdate.view {
         super.onCreate(savedInstanceState)
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
-
-     /*   val actionBar: ActionBar? = supportActionBar // ocultamos el action bar
-        actionBar!!.hide()*/
-
 
         appUpdate = AppUpdate(this)
 
@@ -75,8 +74,8 @@ class MainActivity : AppCompatActivity(), InterfaceAppUpdate.view {
     override fun onDestroy() {
         super.onDestroy()
         appUpdate.onDestroy()
+        Log.i("onDestroyMainActivity", "main destroyed")
     }
-
 
 
     private fun checkConecction() {
@@ -102,9 +101,9 @@ class MainActivity : AppCompatActivity(), InterfaceAppUpdate.view {
 
         binding.navigationBottom.setOnItemSelectedListener {
             when (it.itemId) {
-                com.kotlin.moneyconversionapp.R.id.item_resume -> showFragment(dashBoardFragment)
-                com.kotlin.moneyconversionapp.R.id.item_history -> showFragment(historyFragment)
-                com.kotlin.moneyconversionapp.R.id.item_conversor -> showFragment(calculatorFragment)
+                R.id.item_resume -> showFragment(dashBoardFragment)
+                R.id.item_history -> showFragment(historyFragment)
+                R.id.item_conversor -> showFragment(calculatorFragment)
             }
             true
         }
@@ -116,7 +115,7 @@ class MainActivity : AppCompatActivity(), InterfaceAppUpdate.view {
             if (fragment.isAdded) {
                 show(fragment)
             } else {
-                add(com.kotlin.moneyconversionapp.R.id.fragment_container, fragment)
+                add(R.id.fragment_container, fragment)
                 show(fragment)
             }
             commit()
