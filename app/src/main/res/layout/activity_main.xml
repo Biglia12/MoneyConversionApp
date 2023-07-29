@@ -37,7 +37,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="16dp"
             android:gravity="center"
-            android:text="No tiene conexion, vuelva a intentarlo"
+            android:text="@string/connection_Error"
             android:textSize="20sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

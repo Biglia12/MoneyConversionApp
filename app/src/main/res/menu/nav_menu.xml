@@ -5,19 +5,19 @@
         android:id="@+id/item_resume"
         android:icon="@drawable/ic_baseline_dashboard"
         android:visible="true"
-        android:title="Lista" />
+        android:title="@string/itemList" />
 
     <item
         android:id="@+id/item_conversor"
         android:icon="@drawable/ic_baseline_calculate_24"
         android:visible="true"
-        android:title="Calculadora" />
+        android:title="@string/calculator" />
 
     <item
         android:id="@+id/item_history"
         android:icon="@drawable/ic_baseline_show_chart_24"
         android:visible="true"
-        android:title="Gráfico" />
+        android:title="@string/ItemGraphic" />
 
    <!-- <item
         android:id="@+id/item_moneys"// ver que ira mas adelante

@@ -11,7 +11,19 @@
     <string name="price_buy">Precio de compra: </string>
     <string name="price_sell">Precio de venta: </string>
     <string name="calculator">Calculadora</string>
-    <string name="compra">buy</string>
+    <string name="buy">compra</string>
+    <string name="sell">venta</string>
+    <string name="select_currency">Seleccione una moneda</string>
+    <string name="amount_calculate">Ingrese monto a calcular</string>
+    <string name="text_calculate">$0</string>
+    <string name="btn_calculator">CALCULAR</string>
+    <string name="version_tittle">Version:</string>
+    <string name="connection_Error">No tiene conexion, vuelva a intentarlo</string>
+    <string name="CountryText">USA</string>
+    <string name="TextVariation">Variacion</string>
+    <string name="NumVaration">0.00</string>
+    <string name="itemList">Lista</string>
+    <string name="ItemGraphic">Gráfico</string>
 
 
 </resources>
