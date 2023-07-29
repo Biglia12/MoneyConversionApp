@@ -2,6 +2,7 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/white"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.view.fragments.CalculatorModule.CalculatorFragment">
@@ -53,7 +54,7 @@
             android:id="@+id/linearSpinner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
+            android:layout_marginTop="16dp"
             android:gravity="center"
             android:orientation="vertical"
             app:layout_constraintEnd_toEndOf="parent"
@@ -71,8 +72,7 @@
                 style="@style/spinner"
                 android:layout_width="300dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="@string/hello_blank_fragment" />
+                android:layout_marginTop="8dp" />
         </LinearLayout>
 
         <androidx.cardview.widget.CardView
@@ -152,7 +152,7 @@
             android:id="@+id/textView2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="80dp"
+            android:layout_marginTop="32dp"
             android:text="Ingrese monto a calcular"
             android:textSize="18sp"
             app:layout_constraintEnd_toEndOf="parent"
@@ -164,7 +164,9 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginEnd="8dp"
+            android:backgroundTint="@color/colorPrimary"
             android:hint="$0"
+            android:textColor="@color/black"
             android:inputType="number"
             android:maxLength="15"
             app:layout_constraintEnd_toStartOf="@+id/btnCalculate"
@@ -187,7 +189,7 @@
         <androidx.cardview.widget.CardView
             android:id="@+id/cardViewMount"
             android:layout_width="match_parent"
-            android:layout_height="80dp"
+            android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:layout_marginTop="24dp"
             android:layout_marginEnd="8dp"

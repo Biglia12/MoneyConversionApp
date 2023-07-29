@@ -1,6 +1,7 @@
 package com.kotlin.moneyconversionapp.ui.view.fragments.CalculatorModule
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Canvas
@@ -10,13 +11,12 @@ import android.provider.MediaStore
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.fragment.app.Fragment
-import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.kotlin.moneyconversionapp.BuildConfig
@@ -25,11 +25,10 @@ import com.kotlin.moneyconversionapp.MoneyApplication
 import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.databinding.FragmentCalculatorBinding
-import com.kotlin.moneyconversionapp.ui.viewmodel.Calculator.CalculatorViewModel
 import com.kotlin.moneyconversionapp.ui.viewmodel.DollarViewModel
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.android.synthetic.main.fragment_calculator.constraint_calculator
 import javax.inject.Inject
+
 
 @AndroidEntryPoint
 class CalculatorFragment @Inject constructor() : Fragment() {
@@ -139,9 +138,15 @@ class CalculatorFragment @Inject constructor() : Fragment() {
             override fun onClick(v: View?) {
                 valueEtString = binding.editTextCalculate.text.toString()
                 dollarViewModel.setCalculate(valueEtString, priceWithDollarCompra, priceWithDollarVenta) // se pasan los parametro para poder hacer la cuenta
+                hideKeyboard()
             }
         })
         //callViewModelCalculate()//el viewModel nos pasara el calculo de la cuenta(lo hicmos en una funcion por q lo llamaremos  cuando selecionamos el spinner y cuando tocamos el boton calcular)
+    }
+
+    private fun hideKeyboard() {
+        val imm = requireContext().getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(requireView().windowToken, 0)
     }
 
 
@@ -231,29 +236,6 @@ class CalculatorFragment @Inject constructor() : Fragment() {
         binding.constraintCalculator.draw(canvas)
         binding.constraintCalculator.isDrawingCacheEnabled = true
         return binding.constraintCalculator.drawingCache
-    }
-
-
-    @SuppressLint("RestrictedApi")
-    override fun onStart() {
-        super.onStart()
-        (activity as AppCompatActivity).supportActionBar!!.setShowHideAnimationEnabled(false) // esto no permitira cuando el action bar se oculte haga una animacion
-        (activity as AppCompatActivity).supportActionBar!!.hide() // se oculta el action bar
-    }
-
-    @SuppressLint("RestrictedApi")
-    override fun onStop() {
-        super.onStop()
-        (activity as AppCompatActivity).supportActionBar!!.setShowHideAnimationEnabled(false)
-        (activity as AppCompatActivity).supportActionBar!!.show()
-    }
-
-
-    @SuppressLint("RestrictedApi")
-    override fun onResume() {
-        super.onResume()
-        (activity as AppCompatActivity).supportActionBar!!.setShowHideAnimationEnabled(false)
-        (activity as AppCompatActivity).supportActionBar!!.hide()
     }
 
 }

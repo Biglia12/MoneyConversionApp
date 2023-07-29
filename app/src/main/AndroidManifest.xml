@@ -47,6 +47,9 @@
 
         <activity
             android:name="com.kotlin.moneyconversionapp.ui.view.activities.MainActivity"
+            android:windowSoftInputMode="adjustPan"
+            android:theme="@style/Theme.AppCompat.Light.NoActionBar"
+            android:screenOrientation="portrait"
             android:exported="true">
         </activity>
     </application>

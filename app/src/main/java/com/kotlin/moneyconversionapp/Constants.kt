@@ -31,4 +31,7 @@ object Constants {
      const val DOLLAR_TRUISTA = "Dolar turista"
      const val DOLLAR = "Dolar"
 
+     //Format
+     const val PRICE_FORMAT = "%,.2f"
+
 }
