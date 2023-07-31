@@ -17,17 +17,20 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/imageViewSettings"
             android:layout_width="40dp"
             android:layout_height="40dp"
-            android:src="@drawable/ic_calculator_icon" />
+            tools:src="@drawable/ic_calculator_icon" />
 
         <TextView
+            android:id="@+id/TextViewSettings"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
-            android:text="Compartir"
-            android:textSize="20sp" />
+            android:layout_marginStart="10dp"
+            android:textColor="@color/black"
+            tools:text="Compartir"
+            android:textSize="18sp" />
 
     </LinearLayout>
 

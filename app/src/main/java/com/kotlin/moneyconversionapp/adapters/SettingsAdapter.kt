@@ -7,6 +7,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.data.model.settings.SettingsModel
+import com.kotlin.moneyconversionapp.databinding.ItemDashboardBinding
+import com.kotlin.moneyconversionapp.databinding.SettingsAdapterBinding
+import com.kotlin.moneyconversionapp.utils.InterfaceAppUpdate
 
 class SettingsAdapter(
     private val listSettings: List<SettingsModel>,
@@ -31,14 +34,17 @@ class SettingsAdapter(
 
     override fun onBindViewHolder(holder: SettingHolder, position: Int) {
         val item = listSettings[position]
-        holder.bind(item, context)
+        holder.bind(item)
     }
 
     override fun getItemCount(): Int = listSettings.size
 
     class SettingHolder(view: View) : RecyclerView.ViewHolder(view) {
+        private val binding = SettingsAdapterBinding.bind(view)
+        fun bind(dollar: SettingsModel) {
 
-        fun bind(dollar: SettingsModel, context: Context) {
+            binding.imageViewSettings.setImageDrawable(dollar.image)
+            binding.TextViewSettings.text = dollar.title
 
         }
 
