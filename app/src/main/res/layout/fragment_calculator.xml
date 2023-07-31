@@ -23,7 +23,7 @@
                android:id="@+id/img_share"
                android:layout_width="50dp"
                android:layout_height="50dp"
-               android:background="@color/colorPrimary"
+               android:background="@color/colorPrimaryTransparent"
                app:srcCompat="@drawable/ic_baseline_share_24" />
 
        </LinearLayout>

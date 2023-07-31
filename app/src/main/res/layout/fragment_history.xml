@@ -24,7 +24,7 @@
         android:id="@+id/img_btn_refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorPrimaryTransparent"
         app:srcCompat="@drawable/ic_baseline_refresh_24" />
 
     </LinearLayout>

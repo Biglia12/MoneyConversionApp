@@ -23,6 +23,6 @@
         android:id="@+id/item_settings"
         android:icon="@drawable/baseline_settings_24"
         android:visible="true"
-        android:title="Configuración" />
+        android:title="Ajustes" />
 
 </menu>
