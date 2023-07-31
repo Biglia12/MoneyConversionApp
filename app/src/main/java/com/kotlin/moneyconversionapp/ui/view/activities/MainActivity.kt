@@ -1,5 +1,6 @@
 package com.kotlin.moneyconversionapp.ui.view.activities
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -47,9 +48,9 @@ class MainActivity : AppCompatActivity(), InterfaceAppUpdate.view {
 
     private val moneyApplication: MoneyApplication = MoneyApplication()
 
- /*   private val mainViewModel: MainViewModel by viewModels {
-        MainViewModelFactory(this)
-    }*/
+    /*   private val mainViewModel: MainViewModel by viewModels {
+           MainViewModelFactory(this)
+       }*/
 
     private lateinit var appUpdate: AppUpdate
 
@@ -59,10 +60,17 @@ class MainActivity : AppCompatActivity(), InterfaceAppUpdate.view {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        setStatusBar()
+
         appUpdate = AppUpdate(this)
 
         checkConecction()
 
+    }
+
+    private fun setStatusBar() {
+        val window = this.window
+        window.statusBarColor = resources.getColor(R.color.colorPrimary)
     }
 
     override fun onResume() {
@@ -72,7 +80,7 @@ class MainActivity : AppCompatActivity(), InterfaceAppUpdate.view {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        appUpdate.onActivityResult(requestCode,resultCode,data)
+        appUpdate.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onDestroy() {
@@ -129,7 +137,7 @@ class MainActivity : AppCompatActivity(), InterfaceAppUpdate.view {
     }
 
     override fun getDownloadToast(download: String) {
-        Toast.makeText(this,download,Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, download, Toast.LENGTH_SHORT).show()
     }
 
 
