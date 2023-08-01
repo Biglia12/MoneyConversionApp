@@ -1,4 +1,4 @@
-package com.kotlin.moneyconversionapp.domain.usecases
+package com.kotlin.moneyconversionapp.domain.usecases.calculator
 
 import com.kotlin.moneyconversionapp.Constants
 import javax.inject.Inject
@@ -23,4 +23,5 @@ class CalculatorUseCase @Inject constructor() {
 
         return resultToString
     }
+
 }
