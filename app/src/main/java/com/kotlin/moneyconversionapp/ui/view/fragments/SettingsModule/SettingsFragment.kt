@@ -48,7 +48,7 @@ class SettingsFragment @Inject constructor() : Fragment() {
     private fun initRecyclerView() {
 
         val settingShareApp = SettingsModel(R.drawable.ic_baseline_share_24, "compartir app")
-        val settingTheme = SettingsModel(R.drawable.ic_dollar_icon, "elegir tema")
+        val settingTheme = SettingsModel(R.drawable.ic_bitcoin_color, "elegir tema")
         val settingContact = SettingsModel(R.drawable.ic_email, "Contactar")
         val settingReview = SettingsModel(R.drawable.ic_rate_review, "Dejar Reseña")
 

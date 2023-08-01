@@ -44,17 +44,10 @@ class SettingsAdapter(
         private val binding = SettingsAdapterBinding.bind(view)
         fun bind(context: Context, dollar: SettingsModel) {
 
-
-            binding.imageViewSettings.setImageDrawable(changeIconColor(context,dollar.image, R.color.black))
+            binding.imageViewSettings.setImageResource(dollar.image)
+            binding.imageViewSettings.setColorFilter(context.resources.getColor(R.color.red))
             binding.TextViewSettings.text = dollar.title
 
-        }
-
-        private fun changeIconColor(context: Context, drawableResource: Int, color: Int): Drawable? {
-            val drawable = ContextCompat.getDrawable(context, drawableResource) ?: return null
-            val wrappedDrawable = DrawableCompat.wrap(drawable)
-            DrawableCompat.setTint(wrappedDrawable, color)
-            return wrappedDrawable
         }
 
     }
