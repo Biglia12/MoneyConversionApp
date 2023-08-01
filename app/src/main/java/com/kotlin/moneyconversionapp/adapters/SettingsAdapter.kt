@@ -1,15 +1,16 @@
 package com.kotlin.moneyconversionapp.adapters
 
 import android.content.Context
+import android.graphics.drawable.Drawable
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
+import androidx.core.graphics.drawable.DrawableCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.data.model.settings.SettingsModel
-import com.kotlin.moneyconversionapp.databinding.ItemDashboardBinding
 import com.kotlin.moneyconversionapp.databinding.SettingsAdapterBinding
-import com.kotlin.moneyconversionapp.utils.InterfaceAppUpdate
 
 class SettingsAdapter(
     private val listSettings: List<SettingsModel>,
@@ -34,18 +35,26 @@ class SettingsAdapter(
 
     override fun onBindViewHolder(holder: SettingHolder, position: Int) {
         val item = listSettings[position]
-        holder.bind(item)
+        holder.bind(context,item)
     }
 
     override fun getItemCount(): Int = listSettings.size
 
     class SettingHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = SettingsAdapterBinding.bind(view)
-        fun bind(dollar: SettingsModel) {
+        fun bind(context: Context, dollar: SettingsModel) {
 
-            binding.imageViewSettings.setImageDrawable(dollar.image)
+
+            binding.imageViewSettings.setImageDrawable(changeIconColor(context,dollar.image, R.color.black))
             binding.TextViewSettings.text = dollar.title
 
+        }
+
+        private fun changeIconColor(context: Context, drawableResource: Int, color: Int): Drawable? {
+            val drawable = ContextCompat.getDrawable(context, drawableResource) ?: return null
+            val wrappedDrawable = DrawableCompat.wrap(drawable)
+            DrawableCompat.setTint(wrappedDrawable, color)
+            return wrappedDrawable
         }
 
     }

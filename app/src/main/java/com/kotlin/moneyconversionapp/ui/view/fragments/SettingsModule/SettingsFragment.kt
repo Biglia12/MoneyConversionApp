@@ -47,16 +47,11 @@ class SettingsFragment @Inject constructor() : Fragment() {
 
     private fun initRecyclerView() {
 
-        val newIconColor = ContextCompat.getColor(requireContext(), R.color.black)
+        val settingShareApp = SettingsModel(R.drawable.ic_baseline_share_24, "compartir app")
+        val settingTheme = SettingsModel(R.drawable.ic_dollar_icon, "elegir tema")
+        val settingContact = SettingsModel(R.drawable.ic_email, "Contactar")
+        val settingReview = SettingsModel(R.drawable.ic_rate_review, "Dejar Reseña")
 
-        //settingViewModel.changeIconColor()
-
-        val settingShareApp = SettingsModel(changeIconColor(AppCompatResources.getDrawable(requireContext(),R.drawable.ic_baseline_share_24)!!, R.color.black), "compartir app")
-        val settingTheme = SettingsModel(resources.getDrawable(R.drawable.ic_dollar_icon), "elegir tema")
-        val settingContact = SettingsModel(resources.getDrawable(R.drawable.ic_email), "Contactar")
-        val settingReview = SettingsModel(resources.getDrawable(R.drawable.ic_rate_review), "Dejar Reseña")
-        // var settingShare: SettingsModel = SettingsModel(resources.getDrawable(R.drawable.ic_dollar_icon), "dasdsa")
-        // var settingShare: SettingsModel = SettingsModel(resources.getDrawable(R.drawable.ic_dollar_icon), "dasdsa")
 
 
         val listSettings = listOf(
@@ -71,12 +66,5 @@ class SettingsFragment @Inject constructor() : Fragment() {
         )
         binding.recyclerSettings.layoutManager = LinearLayoutManager(context)
         binding.recyclerSettings.adapter = adapter
-    }
-
-    // Crear un método para cambiar el color del ícono
-    fun changeIconColor(drawable: Drawable, color: Int): Drawable {
-            val wrappedDrawable = DrawableCompat.wrap(drawable)
-            DrawableCompat.setTint(wrappedDrawable, color)
-            return wrappedDrawable
     }
 }
