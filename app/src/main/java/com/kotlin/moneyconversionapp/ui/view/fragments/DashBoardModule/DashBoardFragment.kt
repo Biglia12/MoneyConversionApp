@@ -54,7 +54,7 @@ class DashBoardFragment @Inject constructor() : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.toolbar.title = "DolarArg"
+        binding.toolbar.title = requireActivity().resources.getString(R.string.app_name)
         binding.toolbar.setTitleTextColor(resources.getColor(R.color.white))
 
         funAdView() //funcion para publicidad
