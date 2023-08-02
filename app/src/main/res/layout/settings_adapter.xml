@@ -29,6 +29,7 @@
             android:layout_marginTop="5dp"
             android:layout_marginStart="10dp"
             android:textColor="@color/black"
+            android:textStyle="bold"
             tools:text="Compartir"
             android:textSize="15sp" />
 
