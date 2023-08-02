@@ -30,6 +30,7 @@ object Constants {
      const val BITCOIN ="Bitcoin"
      const val DOLLAR_TRUISTA = "Dolar turista"
      const val DOLLAR = "Dolar"
+     const val ARGENTINA = "Argentina"
 
      //Format
      const val PRICE_FORMAT = "%,.2f"

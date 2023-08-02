@@ -57,16 +57,17 @@ class CalculatorFragment @Inject constructor() : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.toolbar.title = "Calculadora"
-        binding.toolbar.setTitleTextColor(resources.getColor(R.color.white))
-        binding.versionApp.text = BuildConfig.VERSION_NAME
-
+        setToolbar()
         setSpinner()
         btnCalculateListener()
         sharePrice()
 
         }
-
+    private fun setToolbar(){
+        binding.toolbar.title = resources.getString(R.string.calculator)
+        binding.toolbar.setTitleTextColor(resources.getColor(R.color.white))
+        binding.versionApp.text = BuildConfig.VERSION_NAME
+    }
 
     private fun setSpinner() {
         if (moneyApplication.isConnected(requireContext())) {
