@@ -9,7 +9,6 @@
 
     <string name="price_buy">Precio de compra: </string>
     <string name="price_sell">Precio de venta: </string>
-    <string name="calculator">Calculadora</string>
     <string name="buy">compra</string>
     <string name="sell">venta</string>
     <string name="select_currency">Seleccione una moneda</string>
@@ -21,8 +20,17 @@
     <string name="CountryText">USA</string>
     <string name="TextVariation">Variacion</string>
     <string name="num_variation">0.00</string>
+
+    <!-- Menu NavagitaionBottom -->
     <string name="list">Lista</string>
+    <string name="calculator">Calculadora</string>
     <string name="graphic">Gráfico</string>
+    <string name="settings">Ajustes</string>
+
+    <string name="share_app">Compartir app</string>
+    <string name="choose_theme">Elegir tema</string>
+    <string name="contact">Contactar</string>
+    <string name="review_playstore">Dejar Reseña</string>
 
 
 </resources>
