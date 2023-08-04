@@ -68,7 +68,7 @@ class DollarViewModel @Inject constructor(
 
     private fun removeName(result: ArrayList<CasaResponse>) {
         for (i in result.indices) {
-            if (result[i].dollarCasa.nombre.toString() == "Argentina") {
+            if (result[i].dollarCasa.nombre.toString() == Constants.ARGENTINA) {
                 result.remove(result[i]) // se remueve de la lista ya "Argentina" que no nos sirve
             }
             casaResponse.postValue(result)
@@ -76,17 +76,14 @@ class DollarViewModel @Inject constructor(
     }
 
     fun setSpinner(result: ArrayList<CasaResponse>) { // se pasa array de nombres para el spinner
-
-//        casaResponseCalculator.value = spinnerCalculatorUseCase.setSpinner(result)
-
-//        val arrayNames = arrayListOf<CasaResponse>()
-//        for (i in result.indices) {
-//            arrayNames.add(result[i])
-//            if (result[i].dollarCasa.nombre.toString() == "Dolar Soja" || result[i].dollarCasa.nombre.toString() == "Bitcoin") {
-//                arrayNames.remove(result[i]) // se remueve del spinner ya que no nos sirve
-//            }
-//        }
-//        casaResponseCalculator.postValue(arrayNames)
+        val arrayNames = arrayListOf<CasaResponse>()
+        for (i in result.indices) {
+            arrayNames.add(result[i])
+            if (result[i].dollarCasa.nombre.toString() == Constants.DOLLAR_SOJA || result[i].dollarCasa.nombre.toString() == Constants.BITCOIN) {
+                arrayNames.remove(result[i]) // se remueve del spinner ya que no nos sirve
+            }
+        }
+        casaResponseCalculator.postValue(arrayNames)
     }
 
 
