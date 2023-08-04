@@ -47,13 +47,13 @@ class SettingsFragment @Inject constructor() : Fragment() {
 
     private fun initRecyclerView() {
 
-        val settingTheme = SettingsModel(R.drawable.ic_bitcoin_color, requireContext().resources.getString(R.string.choose_theme))
+        //val settingTheme = SettingsModel(R.drawable.ic_bitcoin_color, requireContext().resources.getString(R.string.choose_theme)) // se vera que ahcer con el cambio de tema ya que hay que pensar en los colores en cada elemento UI
         val settingShareApp = SettingsModel(R.drawable.ic_baseline_share_24,  requireContext().resources.getString(R.string.share_app))
         val settingContact = SettingsModel(R.drawable.ic_email, requireContext().resources.getString(R.string.contact))
         val settingReview = SettingsModel(R.drawable.ic_rate_review, requireContext().resources.getString(R.string.review_playstore))
 
         val listSettings = listOf(
-            settingTheme,
+            //settingTheme,
             settingShareApp,
             settingContact,
             settingReview

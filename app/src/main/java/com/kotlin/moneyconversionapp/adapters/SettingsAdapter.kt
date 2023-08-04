@@ -32,7 +32,7 @@ class SettingsAdapter(
                 false
             ),
 
-        )
+            )
     }
 
 
@@ -45,9 +45,9 @@ class SettingsAdapter(
 
     class SettingHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = SettingsAdapterBinding.bind(view)
-        fun bind( dollar: SettingsModel) {
+        fun bind(dollar: SettingsModel) {
             binding.imageViewSettings.setImageResource(dollar.image)
-            binding.imageViewSettings.setColorFilter(binding.root.context.resources.getColor(R.color.red))
+            binding.imageViewSettings.setColorFilter(binding.root.context.resources.getColor(R.color.darkGreen))
             binding.TextViewSettings.text = dollar.title
 
             clickItems()
@@ -55,14 +55,27 @@ class SettingsAdapter(
         }
 
 
-
         private fun clickItems() {
             binding.itemOptionSettings.setOnClickListener {
-                when(binding.TextViewSettings.text){
-                    binding.root.context.resources.getString(R.string.choose_theme) ->  chooseTheme() //Toast.makeText(binding.root.context, "elegir tema", Toast.LENGTH_SHORT).show()
-                    binding.root.context.resources.getString(R.string.share_app) ->  Toast.makeText(binding.root.context, "compartir app", Toast.LENGTH_SHORT).show()
-                    binding.root.context.resources.getString(R.string.contact) ->  Toast.makeText(binding.root.context, "Contactar", Toast.LENGTH_SHORT).show()
-                    binding.root.context.resources.getString(R.string.review_playstore) -> Toast.makeText(binding.root.context, "reseña", Toast.LENGTH_SHORT).show()
+                when (binding.TextViewSettings.text) {
+                    binding.root.context.resources.getString(R.string.choose_theme) -> chooseTheme() //Toast.makeText(binding.root.context, "elegir tema", Toast.LENGTH_SHORT).show()
+                    binding.root.context.resources.getString(R.string.share_app) -> Toast.makeText(
+                        binding.root.context,
+                        "compartir app",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    binding.root.context.resources.getString(R.string.contact) -> Toast.makeText(
+                        binding.root.context,
+                        "Contactar",
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    binding.root.context.resources.getString(R.string.review_playstore) -> Toast.makeText(
+                        binding.root.context,
+                        "reseña",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
         }
@@ -76,17 +89,11 @@ class SettingsAdapter(
             val builder = AlertDialog.Builder(binding.root.context)
             builder.setTitle("Select a text size")
             builder.setItems(fonts) { dialog, which ->
-                if ("Dark" == fonts[which]) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
-                    Toast.makeText(binding.root.context, "Dark", Toast.LENGTH_SHORT).show()
-                } else if ("Light" == fonts.get(which)) {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                    Toast.makeText(binding.root.context, "Light", Toast.LENGTH_SHORT).show()
-                } else {
-                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
-                    Toast.makeText(binding.root.context, "System", Toast.LENGTH_SHORT).show()
+                when (fonts[which]) {
+                    "Dark" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+                    "Light" -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
+                    else -> AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM)
                 }
-                // the user clicked on colors[which]
             }
             builder.show()
         }
