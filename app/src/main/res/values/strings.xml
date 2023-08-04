@@ -32,5 +32,8 @@
     <string name="contact">Contactar</string>
     <string name="review_playstore">Dejar Reseña</string>
 
+    <string name="share_message">¡Descarga la aplicación DolarArg y mantente informado sobre los precios del dólar!</string>
+    <string name="download_app">Descarga la app: </string>
+
 
 </resources>

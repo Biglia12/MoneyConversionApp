@@ -1,4 +1,4 @@
-package com.kotlin.moneyconversionapp.adapters
+package com.kotlin.moneyconversionapp.ui.adapters.DashBoardModule
 
 import android.content.Context
 import android.view.LayoutInflater
