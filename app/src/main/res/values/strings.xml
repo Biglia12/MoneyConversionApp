@@ -30,7 +30,8 @@
     <string name="share_app">Compartir app</string>
     <string name="choose_theme">Elegir Modo</string>
     <string name="contact">Contactar</string>
-    <string name="review_playstore">Dejar Reseña</string>
+    <string name="review_playstore">Calificar aplicación</string>
+    <string name="about">Acerca de</string>
 
     <string name="share_message">¡Descarga la aplicación DolarArg y mantente informado sobre los precios del dólar!</string>
     <string name="download_app">Descarga la app: </string>

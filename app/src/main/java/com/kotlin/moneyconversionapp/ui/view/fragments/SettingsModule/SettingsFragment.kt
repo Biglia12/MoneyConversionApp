@@ -56,15 +56,21 @@ class SettingsFragment @Inject constructor() : Fragment(), InterfaceSettings {
             requireContext().resources.getString(R.string.contact)
         )
         val settingReview = SettingsModel(
-            R.drawable.ic_rate_review,
+            R.drawable.ic_star,
             requireContext().resources.getString(R.string.review_playstore)
+        )
+
+        val about = SettingsModel(
+            R.drawable.ic_about,
+            requireContext().resources.getString(R.string.about)
         )
 
         val listSettings = listOf(
             //settingTheme,
             settingShareApp,
             settingContact,
-            settingReview
+            settingReview,
+            about
         )
 
         adapter = SettingsAdapter(
