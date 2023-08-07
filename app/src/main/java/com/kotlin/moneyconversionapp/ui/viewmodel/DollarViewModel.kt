@@ -1,6 +1,7 @@
 package com.kotlin.moneyconversionapp.ui.viewmodel
 
 import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -30,11 +31,11 @@ class DollarViewModel @Inject constructor(
     val resultCalculateSell = MutableLiveData<String>()
 
 
-    init {
+    //init {
 
-        callService()
+      //  callService()
 
-    }
+    //}
 
     fun callService() {
 

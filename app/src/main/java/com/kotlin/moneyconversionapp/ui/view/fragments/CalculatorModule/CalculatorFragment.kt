@@ -17,6 +17,7 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import com.kotlin.moneyconversionapp.BuildConfig
@@ -36,7 +37,7 @@ class CalculatorFragment @Inject constructor() : Fragment() {
     private var _binding: FragmentCalculatorBinding? = null
     private val binding get() = _binding!!
 
-    private val dollarViewModel: DollarViewModel by viewModels()
+    private val dollarViewModel: DollarViewModel by activityViewModels()
    // private val calculatorViewModel: CalculatorViewModel by activityViewModels()
 
     private  var priceWithDollarVenta : String = ""
@@ -83,6 +84,7 @@ class CalculatorFragment @Inject constructor() : Fragment() {
 
 
     fun spinner() {
+        //dollarViewModel._casaResponseCalculator.value
         dollarViewModel.casaResponseCalculator.observe(viewLifecycleOwner, Observer {
             val arrayNames = arrayListOf<String>()
             it.forEach {

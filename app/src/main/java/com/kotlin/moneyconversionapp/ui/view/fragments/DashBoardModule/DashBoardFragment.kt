@@ -106,6 +106,8 @@ class DashBoardFragment @Inject constructor() : Fragment() {
 
     private fun observeLiveData() {
 
+        dollarViewModel.callService()
+
         dollarViewModel.casaResponseShared.observe(viewLifecycleOwner, Observer {
             moneyApplication.setDollarValue(requireContext(),Constants.DOLLAR_VALUE, it)
         })
