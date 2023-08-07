@@ -40,9 +40,7 @@ class DollarViewModel @Inject constructor(
 
 
     init {
-
         callService()
-
     }
 
     fun callService() {
