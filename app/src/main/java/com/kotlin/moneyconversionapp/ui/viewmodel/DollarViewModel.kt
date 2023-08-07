@@ -31,11 +31,9 @@ class DollarViewModel @Inject constructor(
     val resultCalculateSell = MutableLiveData<String>()
 
 
-    //init {
-
-      //  callService()
-
-    //}
+    init {
+        callService()
+    }
 
     fun callService() {
 
@@ -89,9 +87,14 @@ class DollarViewModel @Inject constructor(
     }
 
 
-    fun setCalculate(dataEditText: String, dataValue: String, valueVentaWithPoint: String) { //pasar parametros para hacer el calculo de la cuenta
+    fun setCalculate(
+        dataEditText: String,
+        dataValue: String,
+        valueVentaWithPoint: String
+    ) { //pasar parametros para hacer el calculo de la cuenta
         resultCalculateBuy.value = calculatorUseCase.calculateResult(dataEditText, dataValue)
-        resultCalculateSell.value = calculatorUseCase.calculateResult(dataEditText, valueVentaWithPoint)
+        resultCalculateSell.value =
+            calculatorUseCase.calculateResult(dataEditText, valueVentaWithPoint)
     }
 
 }
