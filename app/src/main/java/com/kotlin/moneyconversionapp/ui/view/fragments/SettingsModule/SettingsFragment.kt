@@ -17,6 +17,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.zxing.BarcodeFormat
 import com.google.zxing.MultiFormatWriter
@@ -26,9 +27,10 @@ import com.kotlin.moneyconversionapp.data.model.settings.SettingsModel
 import com.kotlin.moneyconversionapp.databinding.FragmentSettingsBinding
 import com.kotlin.moneyconversionapp.ui.adapters.SettingsModule.SettingsAdapter
 import com.kotlin.moneyconversionapp.ui.viewmodel.Setting.SettingsViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
-
+@AndroidEntryPoint
 class SettingsFragment @Inject constructor() : Fragment(), InterfaceSettings {
 
     private var _binding: FragmentSettingsBinding? = null
@@ -124,20 +126,14 @@ class SettingsFragment @Inject constructor() : Fragment(), InterfaceSettings {
     }
 
     override fun shareAppQr() {
-
         val builder = AlertDialog.Builder(requireContext())
         val inflater = requireActivity().layoutInflater
         val dialogView = inflater.inflate(R.layout.qr_view, null)
         val qrImageView: ImageView = dialogView.findViewById(R.id.qrImageView)
 
-        try {
-            val multiFormatWriter = MultiFormatWriter()
-            val bitMatrix = multiFormatWriter.encode(playStoreUrl, BarcodeFormat.QR_CODE, 850, 850)
-            val barcodeEncoder = BarcodeEncoder()
-            val bitmap: Bitmap = barcodeEncoder.createBitmap(bitMatrix)
-            qrImageView.setImageBitmap(bitmap)
-        } catch (e: Exception) {
-            Log.e("error", e.toString())
+        settingViewModel.generateQr(playStoreUrl)
+        settingViewModel.qrCodeImage.observe(viewLifecycleOwner) {
+            qrImageView.setImageBitmap(it)
         }
 
         builder.setView(dialogView)
