@@ -1,7 +1,6 @@
 package com.kotlin.moneyconversionapp.ui.view.fragments.SettingsModule
 
 import android.content.Intent
-import android.graphics.Bitmap
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
@@ -9,7 +8,6 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.TextUtils
 import android.text.style.StyleSpan
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -17,11 +15,7 @@ import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
-import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.google.zxing.BarcodeFormat
-import com.google.zxing.MultiFormatWriter
-import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.data.model.settings.SettingsModel
 import com.kotlin.moneyconversionapp.databinding.FragmentSettingsBinding
