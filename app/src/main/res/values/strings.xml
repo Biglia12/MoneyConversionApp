@@ -29,6 +29,7 @@
     <string name="settings">Ajustes</string>
 
     <string name="share_app">Compartir app</string>
+    <string name="share_app_qr">Compartir app con QR</string>
     <string name="choose_theme">Elegir Modo</string>
     <string name="contact">Contactar</string>
     <string name="review_playstore">Calificar aplicación</string>

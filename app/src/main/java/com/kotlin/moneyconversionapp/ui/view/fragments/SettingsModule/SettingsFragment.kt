@@ -1,6 +1,7 @@
 package com.kotlin.moneyconversionapp.ui.view.fragments.SettingsModule
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
@@ -8,13 +9,18 @@ import android.text.Spannable
 import android.text.SpannableStringBuilder
 import android.text.TextUtils
 import android.text.style.StyleSpan
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.zxing.BarcodeFormat
+import com.google.zxing.MultiFormatWriter
+import com.journeyapps.barcodescanner.BarcodeEncoder
 import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.data.model.settings.SettingsModel
 import com.kotlin.moneyconversionapp.databinding.FragmentSettingsBinding
@@ -32,6 +38,9 @@ class SettingsFragment @Inject constructor() : Fragment(), InterfaceSettings {
 
     private lateinit var adapter: SettingsAdapter
 
+    private lateinit var  appPackageName: String
+    private lateinit var  playStoreUrl: String
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -46,9 +55,14 @@ class SettingsFragment @Inject constructor() : Fragment(), InterfaceSettings {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-
+        initStrings()
         initRecyclerView()
 
+    }
+
+    private fun initStrings() {
+        appPackageName = requireActivity().packageName
+        playStoreUrl = "https://play.google.com/store/apps/details?id=$appPackageName"
     }
 
     private fun initRecyclerView() {
@@ -57,6 +71,10 @@ class SettingsFragment @Inject constructor() : Fragment(), InterfaceSettings {
         val settingShareApp = SettingsModel(
             R.drawable.ic_baseline_share_24,
             requireContext().resources.getString(R.string.share_app)
+        )
+        val settingShareQr = SettingsModel(
+            R.drawable.ic_qr,
+            requireContext().resources.getString(R.string.share_app_qr)
         )
         val settingContact = SettingsModel(
             R.drawable.ic_email,
@@ -75,6 +93,7 @@ class SettingsFragment @Inject constructor() : Fragment(), InterfaceSettings {
         val listSettings = listOf(
             //settingTheme,
             settingShareApp,
+            settingShareQr,
             settingContact,
             settingReview,
             about
@@ -91,9 +110,6 @@ class SettingsFragment @Inject constructor() : Fragment(), InterfaceSettings {
 
 
     override fun shareApp() {
-
-        val appPackageName = requireActivity().packageName
-        val playStoreUrl = "https://play.google.com/store/apps/details?id=$appPackageName"
         val messageToShare = requireContext().resources.getString(R.string.share_message)
         val downloadAppText = requireContext().resources.getString(R.string.download_app)
 
@@ -107,12 +123,44 @@ class SettingsFragment @Inject constructor() : Fragment(), InterfaceSettings {
 
     }
 
-    override fun openGooglePlay() {
-        val appPackageName = requireActivity().packageName
+    override fun shareAppQr() {
+
+        val builder = AlertDialog.Builder(requireContext())
+        val inflater = requireActivity().layoutInflater
+        val dialogView = inflater.inflate(R.layout.qr_view, null)
+        val qrImageView: ImageView = dialogView.findViewById(R.id.qrImageView)
+
         try {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")))
+            val multiFormatWriter = MultiFormatWriter()
+            val bitMatrix = multiFormatWriter.encode(playStoreUrl, BarcodeFormat.QR_CODE, 850, 850)
+            val barcodeEncoder = BarcodeEncoder()
+            val bitmap: Bitmap = barcodeEncoder.createBitmap(bitMatrix)
+            qrImageView.setImageBitmap(bitmap)
         } catch (e: Exception) {
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")))
+            Log.e("error", e.toString())
+        }
+
+        builder.setView(dialogView)
+        builder.setCancelable(true)
+        val dialog = builder.create()
+        dialog.show()
+    }
+
+    override fun openGooglePlay() {
+        try {
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("market://details?id=$appPackageName")
+                )
+            )
+        } catch (e: Exception) {
+            startActivity(
+                Intent(
+                    Intent.ACTION_VIEW,
+                    Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
+                )
+            )
         }
     }
 
@@ -125,7 +173,8 @@ class SettingsFragment @Inject constructor() : Fragment(), InterfaceSettings {
 
     override fun openDialogAbout() {
 
-        val messageGooglePlay = requireContext().resources.getString(R.string.message_like_google_play)
+        val messageGooglePlay =
+            requireContext().resources.getString(R.string.message_like_google_play)
 
         val aboutMessage = requireContext().resources.getString(R.string.thanks_message)
         val start = 0

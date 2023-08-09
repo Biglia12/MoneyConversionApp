@@ -47,6 +47,7 @@ class SettingsAdapter(private val listSettings: List<SettingsModel>, private val
                 when (binding.TextViewSettings.text) {
                     //binding.root.context.resources.getString(R.string.choose_theme) -> chooseTheme() //Toast.makeText(binding.root.context, "elegir tema", Toast.LENGTH_SHORT).show()
                     binding.root.context.resources.getString(R.string.share_app) -> interfaceSettings.shareApp()
+                    binding.root.context.resources.getString(R.string.share_app_qr) -> interfaceSettings.shareAppQr()
                     binding.root.context.resources.getString(R.string.contact) -> interfaceSettings.openMail()
                     binding.root.context.resources.getString(R.string.review_playstore) -> interfaceSettings.openGooglePlay()
                     binding.root.context.resources.getString(R.string.about) -> interfaceSettings.openDialogAbout()
