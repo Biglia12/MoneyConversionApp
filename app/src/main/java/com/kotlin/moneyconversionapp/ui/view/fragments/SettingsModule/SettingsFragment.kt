@@ -1,21 +1,27 @@
 package com.kotlin.moneyconversionapp.ui.view.fragments.SettingsModule
 
-import android.content.ClipDescription
 import android.content.Intent
+import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
+import android.text.Spannable
+import android.text.SpannableStringBuilder
+import android.text.TextUtils
+import android.text.style.StyleSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.kotlin.moneyconversionapp.R
-import com.kotlin.moneyconversionapp.ui.adapters.SettingsModule.SettingsAdapter
 import com.kotlin.moneyconversionapp.data.model.settings.SettingsModel
 import com.kotlin.moneyconversionapp.databinding.FragmentSettingsBinding
+import com.kotlin.moneyconversionapp.ui.adapters.SettingsModule.SettingsAdapter
 import com.kotlin.moneyconversionapp.ui.viewmodel.Setting.SettingsViewModel
 import javax.inject.Inject
+
 
 class SettingsFragment @Inject constructor() : Fragment(), InterfaceSettings {
 
@@ -39,6 +45,7 @@ class SettingsFragment @Inject constructor() : Fragment(), InterfaceSettings {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
 
         initRecyclerView()
 
@@ -100,11 +107,46 @@ class SettingsFragment @Inject constructor() : Fragment(), InterfaceSettings {
 
     }
 
+    override fun openGooglePlay() {
+        val appPackageName = requireActivity().packageName
+        try {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")))
+        } catch (e: Exception) {
+            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")))
+        }
+    }
+
     override fun openMail() {
         val intent = Intent(Intent.ACTION_SENDTO)
         intent.data = Uri.parse("mailto:")
         intent.putExtra(Intent.EXTRA_EMAIL, arrayOf("sfeal12@gmail.com"))
-        //intent.setPackage("com.google.android.gm")
         requireContext().startActivity(intent)
     }
+
+    override fun openDialogAbout() {
+
+        val messageGooglePlay = requireContext().resources.getString(R.string.message_like_google_play)
+
+        val aboutMessage = requireContext().resources.getString(R.string.thanks_message)
+        val start = 0
+        val end: Int = aboutMessage.length
+
+        val fancySentence = SpannableStringBuilder(aboutMessage)
+        fancySentence.setSpan(
+            StyleSpan(Typeface.BOLD),
+            start,
+            end,
+            Spannable.SPAN_EXCLUSIVE_EXCLUSIVE
+        )
+
+        val cDialog =
+            AlertDialog.Builder(requireContext(), R.style.Theme_MaterialComponents_Dialog_Alert)
+                .setTitle(requireContext().resources.getString(R.string.about))
+                .setMessage(TextUtils.concat(fancySentence, "\r\n\n$messageGooglePlay"))
+                .setPositiveButton(requireContext().resources.getString(R.string.acept)) { dialog, _ -> dialog.dismiss() }
+                .show()
+        val colorPrimary = requireContext().getColor(R.color.colorPrimary)
+        cDialog.getButton(AlertDialog.BUTTON_POSITIVE).setTextColor(colorPrimary)
+    }
+
 }

@@ -20,6 +20,7 @@
     <string name="CountryText">USA</string>
     <string name="TextVariation">Variacion</string>
     <string name="num_variation">0.00</string>
+    <string name="acept">Aceptar</string>
 
     <!-- Menu NavagitaionBottom -->
     <string name="list">Lista</string>
@@ -36,5 +37,7 @@
     <string name="share_message">¡Descarga la aplicación DolarArg y mantente informado sobre los precios del dólar!</string>
     <string name="download_app">Descarga la app: </string>
 
+    <string name="thanks_message">"Gracias Por utlizar nuestra app"</string>
+    <string name="message_like_google_play">"Si te gusto la aplicación, por favor deja una calificación positiva o un comentarion en Google Play."</string>
 
 </resources>
