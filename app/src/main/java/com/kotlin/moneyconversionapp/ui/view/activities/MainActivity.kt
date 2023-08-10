@@ -60,6 +60,9 @@ class MainActivity : AppCompatActivity(), InterfaceAppUpdate.view {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        Log.i("saveInstanceMain", savedInstanceState.toString())
+
+
         setStatusBar()
 
         appUpdate = AppUpdate(this)
@@ -123,16 +126,21 @@ class MainActivity : AppCompatActivity(), InterfaceAppUpdate.view {
     }
 
     private fun showFragment(fragment: Fragment) { // para que el fragmento no se vuevla a recrear. (lo hgacemos para no volver a llamar varias veces a el servicio sin nesecidad)
-        supportFragmentManager.beginTransaction().apply {
-            hide(currentFragment)
-            if (fragment.isAdded) {
-                show(fragment)
-            } else {
-                add(R.id.fragment_container, fragment)
-                show(fragment)
-            }
-            commit()
+        val transaction = supportFragmentManager.beginTransaction()
+
+        if (fragment.isAdded) {
+            transaction.show(fragment)
+        } else {
+            transaction.add(R.id.fragment_container, fragment)
         }
+
+        for (existingFragment in supportFragmentManager.fragments) {
+            if (existingFragment != fragment) {
+                transaction.hide(existingFragment)
+            }
+        }
+
+        transaction.commit()
         currentFragment = fragment
     }
 
