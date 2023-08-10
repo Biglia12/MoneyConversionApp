@@ -16,6 +16,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.kotlin.moneyconversionapp.Constants
 import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.data.model.settings.SettingsModel
 import com.kotlin.moneyconversionapp.databinding.FragmentSettingsBinding
@@ -58,7 +59,7 @@ class SettingsFragment @Inject constructor() : Fragment(), InterfaceSettings {
 
     private fun initStrings() {
         appPackageName = requireActivity().packageName
-        playStoreUrl = "https://play.google.com/store/apps/details?id=$appPackageName"
+        playStoreUrl = Constants.GOOGLE_PLAY + appPackageName
     }
 
     private fun initRecyclerView() {
@@ -148,7 +149,7 @@ class SettingsFragment @Inject constructor() : Fragment(), InterfaceSettings {
             startActivity(
                 Intent(
                     Intent.ACTION_VIEW,
-                    Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
+                    Uri.parse(playStoreUrl)
                 )
             )
         }

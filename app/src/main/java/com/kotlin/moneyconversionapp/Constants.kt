@@ -35,4 +35,7 @@ object Constants {
      //Format
      const val PRICE_FORMAT = "%,.2f"
 
+     //GooglePlay
+     const val GOOGLE_PLAY="https://play.google.com/store/apps/details?id="
+
 }
