@@ -56,7 +56,7 @@ class SettingsAdapter(private val listSettings: List<SettingsModel>, private val
         }
 
 
-        private fun chooseTheme() {
+       /* private fun chooseTheme() {
 
             val fonts = arrayOf(
                 "Dark", "Light", "System"
@@ -72,7 +72,7 @@ class SettingsAdapter(private val listSettings: List<SettingsModel>, private val
                 }
             }
             builder.show()
-        }
+        }*/
 
 
     }
