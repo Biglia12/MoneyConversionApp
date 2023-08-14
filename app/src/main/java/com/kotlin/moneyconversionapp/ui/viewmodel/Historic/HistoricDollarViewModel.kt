@@ -4,21 +4,16 @@ import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.github.mikephil.charting.utils.Utils.init
-import com.kotlin.moneyconversionapp.MoneyApplication
 import com.kotlin.moneyconversionapp.data.model.HistoricDollar.HistoricDollarModel
 import com.kotlin.moneyconversionapp.domain.usecases.HistoricDollarUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class HistoricDollarViewModel @Inject constructor(private val getDollarHistoricUseCases: HistoricDollarUseCase) : ViewModel() {
 
-    val historicDollarBlueLiveData = MutableLiveData<ArrayList<HistoricDollarModel>>()
-    val historicDollarOficialLiveData = MutableLiveData<ArrayList<HistoricDollarModel>>()
+    val historicDollarLiveData = MutableLiveData<ArrayList<HistoricDollarModel>>()
    // private val getDollarHistoricUseCases = HistoricDollarUseCase()
     val loading = MutableLiveData<Boolean>()
     val graphicVisible = MutableLiveData<Boolean>()
@@ -45,21 +40,8 @@ class HistoricDollarViewModel @Inject constructor(private val getDollarHistoricU
                     loading.postValue(false)
                     graphicVisible.postValue(true)
 
-                    val lowArrayDollar = result
-
-                    for (i in result.size - 1 downTo 500) { // el json nostra 7500 elementos lo que hace una gran carga para la app por lo que se dejara solo 500 elementos
-                        lowArrayDollar.removeAt(i)
-                    }
-
-                    lowArrayDollar.reverse()
-
-                    val blueDollarModels = ArrayList(lowArrayDollar.filter { it.source == "Blue" })
-                    val oficialDollarModels =
-                        ArrayList(lowArrayDollar.filter { it.source == "Oficial" })
-
-
-                    historicDollarBlueLiveData.postValue(blueDollarModels)
-                    historicDollarOficialLiveData.postValue(oficialDollarModels)
+                    result.reverse()
+                    historicDollarLiveData.postValue(result)
 
                 } else {
                     error.postValue(true)

@@ -1,20 +1,17 @@
 package com.kotlin.moneyconversionapp.ui.view.fragments.HistoricModule
 
-import android.annotation.SuppressLint
-import android.opengl.Visibility
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.annotation.RequiresApi
-import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import com.github.mikephil.charting.charts.Chart
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -127,24 +124,22 @@ class HistoryFragment @Inject constructor() : Fragment() {
             historicDollarViewModel.reloadService()
         }
 
-        historicDollarViewModel.historicDollarBlueLiveData.observe(viewLifecycleOwner, Observer {
+        historicDollarViewModel.historicDollarLiveData.observe(viewLifecycleOwner, Observer {
             graphic(it)
         })
 
-        historicDollarViewModel.historicDollarOficialLiveData.observe(viewLifecycleOwner, Observer {
-            graphic(it)
-        })
     }
 
 
     @RequiresApi(Build.VERSION_CODES.O)
     private fun graphic(historicDollarModels: ArrayList<HistoricDollarModel>) {
 
-        if (historicDollarModels[0].source == "Blue") {
-            datesBlueOrOfical(historicDollarModels, binding.lineChartBlue)
-        } else {
-            datesBlueOrOfical(historicDollarModels, binding.lineChartOficial)
-        }
+        val blueDollarModels = ArrayList(historicDollarModels.filter { it.source == "Blue" })
+        datesBlueOrOfical(blueDollarModels, binding.lineChartBlue)
+
+        val oficialDollarModels = ArrayList(historicDollarModels.filter { it.source == "Oficial" })
+        datesBlueOrOfical(oficialDollarModels, binding.lineChartOficial)
+
     }
 
     @RequiresApi(Build.VERSION_CODES.O)
@@ -171,6 +166,7 @@ class HistoryFragment @Inject constructor() : Fragment() {
         lineChart.setScaleEnabled(true)
         lineChart.setPinchZoom(true)
         lineChart.isDragDecelerationEnabled = true
+        lineChart.description.isEnabled = false
 
         lineChart.data = data
 
