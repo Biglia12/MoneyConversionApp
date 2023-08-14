@@ -34,7 +34,7 @@ class SettingsAdapter(private val listSettings: List<SettingsModel>, private val
         private val binding = SettingsAdapterBinding.bind(view)
         fun bind(dollar: SettingsModel, interfaceSettings: InterfaceSettings) {
             binding.imageViewSettings.setImageResource(dollar.image)
-            binding.imageViewSettings.setColorFilter(binding.root.context.resources.getColor(R.color.purple_700))
+            binding.imageViewSettings.setColorFilter(binding.root.context.resources.getColor(R.color.colorPrimary))
             binding.TextViewSettings.text = dollar.title
 
             clickItems(interfaceSettings)
