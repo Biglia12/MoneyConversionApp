@@ -80,11 +80,12 @@ class DollarViewModel @Inject constructor(
     }
 
     private fun removeName(result: ArrayList<CasaResponse>) {
+        val filteredList = arrayListOf<CasaResponse>()
         for (i in result.indices) {
-            if (result[i].dollarCasa.nombre.toString() == "Argentina") {
-                result.remove(result[i]) // se remueve de la lista ya "Argentina" que no nos sirve
+            if (result[i].dollarCasa.nombre.toString() != "Argentina" && result[i].dollarCasa.nombre.toString() != Constants.BITCOIN) {
+                filteredList.add(result[i]) // se remueve de la lista ya "Argentina" que no nos sirve
             }
-            casaResponse.postValue(result)
+            casaResponse.postValue(filteredList)
         }
     }
 

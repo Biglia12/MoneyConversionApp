@@ -63,7 +63,7 @@ class DashBoardAdapter(private val dollarList: ArrayList<CasaResponse>, private 
 
             when {
                 dollar.dollarCasa.nombre.isNullOrEmpty() -> changeText(binding.txtTypeDollar)
-                dollar.dollarCasa.venta.isNullOrEmpty() -> changeText(binding.txtSellMoney)
+                dollar.dollarCasa.venta.toString().isNullOrEmpty() || dollar.dollarCasa.venta.toString() == "null" ||  dollar.dollarCasa.venta.toString() == "{}"-> changeText(binding.txtSellMoney)
                 dollar.dollarCasa.compra.isNullOrEmpty() -> changeText(binding.txtBuyMoney)
                 dollar.dollarCasa.variacion.toString().isNullOrEmpty() || dollar.dollarCasa.variacion.toString() == "null" -> changeText(binding.textViewVariation) // lo se es horrible esto pero al ser un servicio de terceros no hay muchas formas de solucionarlo ya que a veces el json viene con diferentes tipos de valores y no siempre es un string
                 dollar.dollarCasa.variacion.toString().contains("-") -> binding.textViewVariation.setTextColor(ContextCompat.getColor(context,R.color.red))
