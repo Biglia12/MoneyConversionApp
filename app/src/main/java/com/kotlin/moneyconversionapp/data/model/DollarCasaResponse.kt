@@ -11,7 +11,7 @@ data class DollarCasaResponse(
 
     @SerializedName("venta")
     @Expose
-    var venta: String? = null,
+    var venta: Any? = null,//lo tuvimos que pasar a Any ya que a veces el servicio nos devuelve  otro tipo de valor y no un string como esperabamos
 
     @SerializedName("agencia")
     @Expose
