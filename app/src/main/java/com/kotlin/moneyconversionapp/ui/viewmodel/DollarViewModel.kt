@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kotlin.moneyconversionapp.Constants
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
+import com.kotlin.moneyconversionapp.domain.usecases.DashBoard.DashBoardUseCase
 import com.kotlin.moneyconversionapp.domain.usecases.calculator.CalculatorUseCase
 import com.kotlin.moneyconversionapp.domain.usecases.DollarUseCases
 import com.kotlin.moneyconversionapp.domain.usecases.calculator.SpinnerCalculatorUseCase
@@ -17,6 +18,7 @@ import javax.inject.Inject
 @HiltViewModel
 class DollarViewModel @Inject constructor(
     private val getDollarUseCases: DollarUseCases,
+    private val dashBoardUseCase: DashBoardUseCase,
     private val calculatorUseCase: CalculatorUseCase,
     private val spinnerCalculatorUseCase: SpinnerCalculatorUseCase
 ) : ViewModel() {
@@ -46,7 +48,11 @@ class DollarViewModel @Inject constructor(
             showRecycler.postValue(false)
 
             if (!result.isNullOrEmpty()) {
-                removeName(result)
+
+                val removeName = dashBoardUseCase.removeName(result)
+                casaResponse.postValue(removeName)
+
+                //removeName(result)
                 isLoading.postValue(false)
                 showError.postValue(false)
                 showRecycler.postValue(true)
@@ -54,7 +60,7 @@ class DollarViewModel @Inject constructor(
                 val arrayNamesForSpinner = spinnerCalculatorUseCase.setSpinner(result)
                 casaResponseCalculator.postValue(arrayNamesForSpinner)
                 //setSpinner(result)
-                casaResponseShared.postValue(result)
+                casaResponseShared.postValue(arrayNamesForSpinner)
 
                 Log.d("dada", "dasdasd")
 
@@ -66,7 +72,7 @@ class DollarViewModel @Inject constructor(
         }
     }
 
-    private fun removeName(result: ArrayList<CasaResponse>) {
+  /*  private fun removeName(result: ArrayList<CasaResponse>) {
         val filteredList = arrayListOf<CasaResponse>()
         for (i in result.indices) {
             if (result[i].dollarCasa.nombre.toString() != Constants.BITCOIN && result[i].dollarCasa.nombre.toString() != Constants.ARGENTINA ) {
@@ -75,16 +81,9 @@ class DollarViewModel @Inject constructor(
         }
         casaResponse.postValue(filteredList)
     }
-
-    fun setSpinner(result: ArrayList<CasaResponse>) { // se pasa array de nombres para el spinner
-        val arrayNames = arrayListOf<CasaResponse>()
-        for (i in result.indices) {
-            arrayNames.add(result[i])
-            if (result[i].dollarCasa.nombre.toString() == Constants.DOLLAR_SOJA || result[i].dollarCasa.nombre.toString() == Constants.BITCOIN) {
-                arrayNames.remove(result[i]) // se remueve del spinner ya que no nos sirve
-            }
-        }
-        casaResponseCalculator.postValue(arrayNames)
+*/
+    fun setSpinnerShared(result: ArrayList<CasaResponse>) { // se pasa array de nombres para el spinner
+        casaResponseCalculator.postValue(result)
     }
 
 

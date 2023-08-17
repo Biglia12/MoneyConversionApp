@@ -16,7 +16,5 @@ class SpinnerCalculatorUseCase  @Inject constructor() {
         return arrayNames
         //casaResponseCalculator.postValue(arrayNames)
     }
-
-
-
+    
 }
