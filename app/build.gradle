@@ -23,7 +23,7 @@ android {
         applicationId "com.kotlin.moneyconversionapp"
         minSdk 24
         targetSdk 31
-        versionCode 10
+        versionCode 14
         versionName "1.2"
         signingConfig signingConfigs.config
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
@@ -127,4 +127,9 @@ dependencies {
     //dagger hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"
     kapt "com.google.dagger:hilt-android-compiler:$hilt_version"
+
+    //QR
+    implementation 'com.journeyapps:zxing-android-embedded:4.3.0'
+    coreLibraryDesugaring 'com.android.tools:desugar_jdk_libs:2.0.3'
+    implementation "androidx.multidex:multidex:2.0.1"
 }
