@@ -67,7 +67,6 @@ class CalculatorFragment @Inject constructor() : Fragment() {
     private fun setToolbar(){
         binding.toolbar.title = resources.getString(R.string.calculator)
         binding.toolbar.setTitleTextColor(resources.getColor(R.color.white))
-        binding.versionApp.text = BuildConfig.VERSION_NAME
     }
 
     private fun setSpinner() {
