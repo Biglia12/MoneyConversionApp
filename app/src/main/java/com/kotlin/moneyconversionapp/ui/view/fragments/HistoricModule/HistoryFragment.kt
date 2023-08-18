@@ -19,9 +19,13 @@ import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet
+import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
 import com.kotlin.moneyconversionapp.MoneyApplication
 import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.data.model.HistoricDollar.HistoricDollarModel
@@ -39,6 +43,7 @@ class HistoryFragment @Inject constructor() : Fragment() {
     private val binding get() = _binding!!
     private val historicDollarViewModel: HistoricDollarViewModel by activityViewModels()
     private val moneyApplication: MoneyApplication = MoneyApplication()
+    private var interstitial: InterstitialAd? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,6 +62,8 @@ class HistoryFragment @Inject constructor() : Fragment() {
 
 
         funAdView() //funcion para publicidad
+        funAdViewInter() //funcion para publicidad de Interstitial
+        showAdsInterstitial()
 
         if (moneyApplication.isConnected(requireContext())) {
             observeLiveData()
@@ -64,8 +71,34 @@ class HistoryFragment @Inject constructor() : Fragment() {
             binding.constraintErrorServiceHistoric.visibility = View.VISIBLE
         }
 
+        btnReloadService()
+
     }
 
+
+    private fun funAdViewInter() {
+        val adRequest = AdRequest.Builder().build()
+        InterstitialAd.load(requireContext(), requireActivity().resources.getString(R.string.ad_unit_id_interstitial), adRequest, object : InterstitialAdLoadCallback(){
+            override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                interstitial = interstitialAd
+            }
+            override fun onAdFailedToLoad(p0: LoadAdError) {
+                interstitial = null
+            }
+        })
+    }
+
+    private fun showAdsInterstitial() {
+        interstitial?.fullScreenContentCallback = object: FullScreenContentCallback() {
+            override fun onAdDismissedFullScreenContent() {
+            }
+            override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+            }
+            override fun onAdShowedFullScreenContent() {
+                interstitial = null
+            }
+        }
+    }
     private fun funAdView() {
 
         val adRequest = AdRequest.Builder().build()
@@ -120,14 +153,27 @@ class HistoryFragment @Inject constructor() : Fragment() {
             binding.lineChartOficial.isVisible = it
         })
 
-        binding.imgBtnRefresh.setOnClickListener {
-            historicDollarViewModel.reloadService()
-        }
-
         historicDollarViewModel.historicDollarLiveData.observe(viewLifecycleOwner, Observer {
             graphic(it)
         })
 
+    }
+
+    private fun btnReloadService() {
+        var count = 0
+        binding.imgBtnRefresh.setOnClickListener {
+            count++
+            if (count == 2) { // Mostrar el anuncio cada dos taps
+                showAds()
+                count = 0
+                funAdViewInter()
+            }
+            historicDollarViewModel.reloadService()
+        }
+    }
+
+    fun showAds() {
+        interstitial?.show(requireActivity())
     }
 
 

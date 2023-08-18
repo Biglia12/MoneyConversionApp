@@ -1,5 +1,6 @@
 package com.kotlin.moneyconversionapp.ui.view.fragments.DashBoardModule
 
+import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -14,9 +15,18 @@ import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.google.android.gms.ads.AdError
 import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
+import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
+import com.google.android.gms.ads.MobileAds
+import com.google.android.gms.ads.OnUserEarnedRewardListener
+import com.google.android.gms.ads.initialization.OnInitializationCompleteListener
+import com.google.android.gms.ads.interstitial.InterstitialAd
+import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
+import com.google.android.gms.ads.rewarded.RewardedAd
+import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.kotlin.moneyconversionapp.Constants
 import com.kotlin.moneyconversionapp.MoneyApplication
 import com.kotlin.moneyconversionapp.R
@@ -32,7 +42,7 @@ class DashBoardFragment @Inject constructor() : Fragment() {
 
     private var _binding: FragmentDashBoardBinding? = null
     private val binding get() = _binding!!
-
+    private var interstitial: InterstitialAd? = null
     private lateinit var adapter: DashBoardAdapter
 
     private val dollarViewModel: DollarViewModel by activityViewModels()
@@ -54,6 +64,8 @@ class DashBoardFragment @Inject constructor() : Fragment() {
         binding.toolbar.setTitleTextColor(resources.getColor(R.color.white))
 
         funAdView() //funcion para publicidad
+        funAdViewInter() //funcion para publicidad de Interstitial
+        showAdsInterstitial()
 
         if (moneyApplication.isConnected(requireContext())) {
             observeLiveData()
@@ -64,6 +76,30 @@ class DashBoardFragment @Inject constructor() : Fragment() {
 
         swipeRefresh()//metodo para volver a llamar al servicio
 
+    }
+
+    private fun funAdViewInter() {
+        val adRequest = AdRequest.Builder().build()
+        InterstitialAd.load(requireContext(), requireActivity().resources.getString(R.string.ad_unit_id_interstitial), adRequest, object : InterstitialAdLoadCallback(){
+            override fun onAdLoaded(interstitialAd: InterstitialAd) {
+                interstitial = interstitialAd
+            }
+            override fun onAdFailedToLoad(p0: LoadAdError) {
+                interstitial = null
+            }
+        })
+    }
+
+    private fun showAdsInterstitial() {
+        interstitial?.fullScreenContentCallback = object: FullScreenContentCallback() {
+            override fun onAdDismissedFullScreenContent() {
+            }
+            override fun onAdFailedToShowFullScreenContent(p0: AdError) {
+            }
+            override fun onAdShowedFullScreenContent() {
+                interstitial = null
+            }
+        }
     }
 
     private fun funAdView() {
@@ -108,7 +144,7 @@ class DashBoardFragment @Inject constructor() : Fragment() {
 
         dollarViewModel.casaResponse.observe(viewLifecycleOwner, Observer {
             initRecyler(it)
-            moneyApplication.setDollarValue(requireContext(),Constants.DOLLAR_VALUE, it)
+            moneyApplication.setDollarValue(requireContext(), Constants.DOLLAR_VALUE, it)
         })
 
         dollarViewModel.showRecycler.observe(viewLifecycleOwner, Observer {
@@ -148,14 +184,26 @@ class DashBoardFragment @Inject constructor() : Fragment() {
     }
 
     private fun swipeRefresh() {
+        var countTap = 0
         binding.swipeDash.setOnRefreshListener {
+            countTap++
+            if (countTap == 2) { // Mostrar el anuncio cada dos taps
+                showAds()
+                countTap = 0
+                funAdViewInter()
+            }
             binding.recyclerResumeFragment.isVisible =
                 false //lo hacemos invisble para que el usuario vea que se vuelve a recargar el lsitado de las monedas
             Handler(Looper.getMainLooper()).postDelayed({
                 dollarViewModel.callService()
             }, 1000)//le asginamos un tiempo al swipe para que no sea tan rapido.
+
         }
     }
 
+
+    fun showAds() {
+       interstitial?.show(requireActivity())
+    }
 }
 
