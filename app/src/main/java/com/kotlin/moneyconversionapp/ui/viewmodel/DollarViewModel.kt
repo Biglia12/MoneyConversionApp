@@ -20,11 +20,9 @@ class DollarViewModel @Inject constructor(
     private val getDollarUseCases: DollarUseCases,
     private val dashBoardUseCase: DashBoardUseCase,
     private val calculatorUseCase: CalculatorUseCase,
-    private val spinnerCalculatorUseCase: SpinnerCalculatorUseCase
 ) : ViewModel() {
 
     val casaResponse = MutableLiveData<ArrayList<CasaResponse>>()
-    val casaResponseShared = MutableLiveData<ArrayList<CasaResponse>>()
     val casaResponseCalculator = MutableLiveData<ArrayList<CasaResponse>>()
     val isLoading = MutableLiveData<Boolean>()
     val showError = MutableLiveData<Boolean>()
@@ -51,16 +49,15 @@ class DollarViewModel @Inject constructor(
 
                 val removeName = dashBoardUseCase.removeName(result)
                 casaResponse.postValue(removeName)
-
                 //removeName(result)
+
                 isLoading.postValue(false)
                 showError.postValue(false)
                 showRecycler.postValue(true)
 
-                val arrayNamesForSpinner = spinnerCalculatorUseCase.setSpinner(result)
+                val arrayNamesForSpinner = calculatorUseCase.setSpinner(result)
                 casaResponseCalculator.postValue(arrayNamesForSpinner)
                 //setSpinner(result)
-                casaResponseShared.postValue(arrayNamesForSpinner)
 
                 Log.d("dada", "dasdasd")
 
@@ -72,16 +69,8 @@ class DollarViewModel @Inject constructor(
         }
     }
 
-  /*  private fun removeName(result: ArrayList<CasaResponse>) {
-        val filteredList = arrayListOf<CasaResponse>()
-        for (i in result.indices) {
-            if (result[i].dollarCasa.nombre.toString() != Constants.BITCOIN && result[i].dollarCasa.nombre.toString() != Constants.ARGENTINA ) {
-                filteredList.add(result[i]) // se remueve de la lista ya "Argentina" que no nos sirve
-            }
-        }
-        casaResponse.postValue(filteredList)
-    }
-*/
+
+
     fun setSpinnerShared(result: ArrayList<CasaResponse>) { // se pasa array de nombres para el spinner
         casaResponseCalculator.postValue(result)
     }

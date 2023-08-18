@@ -106,16 +106,13 @@ class DashBoardFragment @Inject constructor() : Fragment() {
 
     private fun observeLiveData() {
 
-        dollarViewModel.casaResponseShared.observe(viewLifecycleOwner, Observer {
+        dollarViewModel.casaResponse.observe(viewLifecycleOwner, Observer {
+            initRecyler(it)
             moneyApplication.setDollarValue(requireContext(),Constants.DOLLAR_VALUE, it)
         })
 
         dollarViewModel.showRecycler.observe(viewLifecycleOwner, Observer {
             binding.recyclerResumeFragment.isVisible = it
-        })
-
-        dollarViewModel.casaResponse.observe(viewLifecycleOwner, Observer {
-            initRecyler(it)
         })
 
         activity?.let {
