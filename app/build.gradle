@@ -18,11 +18,11 @@ android {
         }
     }
 
-    compileSdk 31
+    compileSdk 33
     defaultConfig {
         applicationId "com.kotlin.moneyconversionapp"
         minSdk 24
-        targetSdk 31
+        targetSdk 33
         versionCode 14
         versionName "1.2"
         signingConfig signingConfigs.config
