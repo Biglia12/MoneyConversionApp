@@ -9,7 +9,7 @@
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorPrimaryTransparent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent">
@@ -24,7 +24,7 @@
         android:id="@+id/img_btn_refresh"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@color/colorPrimary"
+        android:background="@color/colorPrimaryTransparent"
         app:srcCompat="@drawable/ic_baseline_refresh_24" />
 
     </LinearLayout>

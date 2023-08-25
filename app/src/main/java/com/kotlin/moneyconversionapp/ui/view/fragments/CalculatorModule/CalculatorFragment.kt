@@ -58,24 +58,24 @@ class CalculatorFragment @Inject constructor() : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.toolbar.title = "Calculadora"
-        binding.toolbar.setTitleTextColor(resources.getColor(R.color.white))
-        binding.versionApp.text = BuildConfig.VERSION_NAME
-
+        setToolbar()
         setSpinner()
         btnCalculateListener()
         sharePrice()
 
         }
-
+    private fun setToolbar(){
+        binding.toolbar.title = resources.getString(R.string.calculator)
+        binding.toolbar.setTitleTextColor(resources.getColor(R.color.white))
+    }
 
     private fun setSpinner() {
         if (moneyApplication.isConnected(requireContext())) {
             spinner()
         }else {
            if (moneyApplication.getDollarValue(requireContext(),Constants.DOLLAR_VALUE) != null){
-               dollarViewModel.setSpinner(moneyApplication.getDollarValue(requireContext(),Constants.DOLLAR_VALUE)!!)//le pasamos lo que tenemos almacenado al view model para poder seguir con la calculadora con los ultimos datos guardados
-               spinner()
+               dollarViewModel.setSpinnerShared(moneyApplication.getDollarValue(requireContext(),Constants.DOLLAR_VALUE)!!)//le pasamos lo que tenemos almacenado al view model para poder seguir con la calculadora con los ultimos datos guardados
+               //spinner()
            }
             Toast.makeText(activity,"No hay conexion",Toast.LENGTH_SHORT).show()
         }
@@ -83,6 +83,7 @@ class CalculatorFragment @Inject constructor() : Fragment() {
 
 
     fun spinner() {
+        //dollarViewModel._casaResponseCalculator.value
         dollarViewModel.casaResponseCalculator.observe(viewLifecycleOwner, Observer {
             val arrayNames = arrayListOf<String>()
             it.forEach {
@@ -131,7 +132,11 @@ class CalculatorFragment @Inject constructor() : Fragment() {
 
     }
 
+    private fun setWithoutPrices(priceWithCero: String) {
+        binding.textSellPrice.text = priceWithCero
+        binding.textBuyPrice.text = priceWithCero
 
+    }
 
     private fun btnCalculateListener() {
 
@@ -150,12 +155,6 @@ class CalculatorFragment @Inject constructor() : Fragment() {
         imm.hideSoftInputFromWindow(requireView().windowToken, 0)
     }
 
-
-    private fun setWithoutPrices(priceWithCero: String) {
-        binding.textSellPrice.text = priceWithCero
-        binding.textBuyPrice.text = priceWithCero
-
-    }
 
     private fun setPrices(casaResponse: CasaResponse) {
          priceWithDollarVenta = casaResponse.dollarCasa.venta.toString()

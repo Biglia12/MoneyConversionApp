@@ -1,5 +1,6 @@
 package com.kotlin.moneyconversionapp.ui.view.activities
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +18,7 @@ import com.kotlin.moneyconversionapp.databinding.ActivityMainBinding
 import com.kotlin.moneyconversionapp.ui.view.fragments.CalculatorModule.CalculatorFragment
 import com.kotlin.moneyconversionapp.ui.view.fragments.DashBoardModule.DashBoardFragment
 import com.kotlin.moneyconversionapp.ui.view.fragments.HistoricModule.HistoryFragment
+import com.kotlin.moneyconversionapp.ui.view.fragments.SettingsModule.SettingsFragment
 import com.kotlin.moneyconversionapp.ui.viewmodel.Main.MainViewModel
 import com.kotlin.moneyconversionapp.ui.viewmodel.Main.MainViewModelFactory
 import com.kotlin.moneyconversionapp.utils.AppUpdate
@@ -39,13 +41,16 @@ class MainActivity : AppCompatActivity(), InterfaceAppUpdate.view {
     @Inject
     lateinit var calculatorFragment: CalculatorFragment
 
+    @Inject
+    lateinit var settingsFragment: SettingsFragment
+
     private lateinit var currentFragment: Fragment
 
     private val moneyApplication: MoneyApplication = MoneyApplication()
 
- /*   private val mainViewModel: MainViewModel by viewModels {
-        MainViewModelFactory(this)
-    }*/
+    /*   private val mainViewModel: MainViewModel by viewModels {
+           MainViewModelFactory(this)
+       }*/
 
     private lateinit var appUpdate: AppUpdate
 
@@ -55,10 +60,20 @@ class MainActivity : AppCompatActivity(), InterfaceAppUpdate.view {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        Log.i("saveInstanceMain", savedInstanceState.toString())
+
+
+        setStatusBar()
+
         appUpdate = AppUpdate(this)
 
         checkConecction()
 
+    }
+
+    private fun setStatusBar() {
+        val window = this.window
+        window.statusBarColor = resources.getColor(R.color.colorPrimary)
     }
 
     override fun onResume() {
@@ -68,7 +83,7 @@ class MainActivity : AppCompatActivity(), InterfaceAppUpdate.view {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
-        appUpdate.onActivityResult(requestCode,resultCode,data)
+        appUpdate.onActivityResult(requestCode, resultCode, data)
     }
 
     override fun onDestroy() {
@@ -104,27 +119,33 @@ class MainActivity : AppCompatActivity(), InterfaceAppUpdate.view {
                 R.id.item_resume -> showFragment(dashBoardFragment)
                 R.id.item_history -> showFragment(historyFragment)
                 R.id.item_conversor -> showFragment(calculatorFragment)
+                R.id.item_settings -> showFragment(settingsFragment)
             }
             true
         }
     }
 
     private fun showFragment(fragment: Fragment) { // para que el fragmento no se vuevla a recrear. (lo hgacemos para no volver a llamar varias veces a el servicio sin nesecidad)
-        supportFragmentManager.beginTransaction().apply {
-            hide(currentFragment)
-            if (fragment.isAdded) {
-                show(fragment)
-            } else {
-                add(R.id.fragment_container, fragment)
-                show(fragment)
-            }
-            commit()
+        val transaction = supportFragmentManager.beginTransaction()
+
+        if (fragment.isAdded) {
+            transaction.show(fragment)
+        } else {
+            transaction.add(R.id.fragment_container, fragment)
         }
+
+        for (existingFragment in supportFragmentManager.fragments) {
+            if (existingFragment != fragment) {
+                transaction.hide(existingFragment)
+            }
+        }
+
+        transaction.commit()
         currentFragment = fragment
     }
 
     override fun getDownloadToast(download: String) {
-        Toast.makeText(this,download,Toast.LENGTH_SHORT).show()
+        Toast.makeText(this, download, Toast.LENGTH_SHORT).show()
     }
 
 

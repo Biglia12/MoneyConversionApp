@@ -30,8 +30,12 @@ object Constants {
      const val BITCOIN ="Bitcoin"
      const val DOLLAR_TRUISTA = "Dolar turista"
      const val DOLLAR = "Dolar"
+     const val ARGENTINA = "Argentina"
 
      //Format
      const val PRICE_FORMAT = "%,.2f"
+
+     //GooglePlay
+     const val GOOGLE_PLAY="https://play.google.com/store/apps/details?id="
 
 }

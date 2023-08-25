@@ -9,6 +9,36 @@
 
     <string name="price_buy">Precio de compra: </string>
     <string name="price_sell">Precio de venta: </string>
+    <string name="buy">compra</string>
+    <string name="sell">venta</string>
+    <string name="select_currency">Seleccione una moneda</string>
+    <string name="amount_calculate">Ingrese monto a calcular</string>
+    <string name="price_zero">$0</string>
+    <string name="btn_calculator">CALCULAR</string>
+    <string name="version_tittle">Version:</string>
+    <string name="connection_Error">No tiene conexion, vuelva a intentarlo</string>
+    <string name="CountryText">USA</string>
+    <string name="TextVariation">Variacion</string>
+    <string name="num_variation">0.00</string>
+    <string name="acept">Aceptar</string>
 
+    <!-- Menu NavagitaionBottom -->
+    <string name="list">Lista</string>
+    <string name="calculator">Calculadora</string>
+    <string name="graphic">Gráfico</string>
+    <string name="settings">Ajustes</string>
+
+    <string name="share_app">Compartir app</string>
+    <string name="share_app_qr">Compartir app con QR</string>
+    <string name="choose_theme">Elegir Modo</string>
+    <string name="contact">Contactar</string>
+    <string name="review_playstore">Calificar aplicación</string>
+    <string name="about">Acerca de</string>
+
+    <string name="share_message">¡Descarga la aplicación DolarArg y mantente informado sobre los precios del dólar!</string>
+    <string name="download_app">Descarga la app: </string>
+
+    <string name="thanks_message">"Gracias Por utlizar nuestra app"</string>
+    <string name="message_like_google_play">"Si te gusto la aplicación, por favor deja una calificación positiva o un comentarion en Google Play."</string>
 
 </resources>

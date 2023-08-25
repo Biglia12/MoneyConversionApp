@@ -5,24 +5,24 @@
         android:id="@+id/item_resume"
         android:icon="@drawable/ic_baseline_dashboard"
         android:visible="true"
-        android:title="Lista" />
+        android:title="@string/list" />
 
     <item
         android:id="@+id/item_conversor"
         android:icon="@drawable/ic_baseline_calculate_24"
         android:visible="true"
-        android:title="Calculadora" />
+        android:title="@string/calculator" />
 
     <item
         android:id="@+id/item_history"
         android:icon="@drawable/ic_baseline_show_chart_24"
         android:visible="true"
-        android:title="Gráfico" />
+        android:title="@string/graphic" />
 
-   <!-- <item
-        android:id="@+id/item_moneys"// ver que ira mas adelante
-        android:icon="@drawable/ic_baseline_monetization_on_24"
+    <item
+        android:id="@+id/item_settings"
+        android:icon="@drawable/baseline_settings_24"
         android:visible="true"
-        android:title="Monedas" />-->
+        android:title="@string/settings" />
 
 </menu>
