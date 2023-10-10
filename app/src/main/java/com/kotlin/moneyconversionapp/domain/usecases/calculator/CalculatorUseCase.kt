@@ -2,6 +2,7 @@ package com.kotlin.moneyconversionapp.domain.usecases.calculator
 
 import com.kotlin.moneyconversionapp.Constants
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
+import java.text.DecimalFormat
 import javax.inject.Inject
 
 class CalculatorUseCase @Inject constructor() {
@@ -13,23 +14,34 @@ class CalculatorUseCase @Inject constructor() {
 
     fun calculateResult(value: String, dataValue: String): String { //logca para calculos de la calculadora
 
-        val valueWithPoint = dataValue.replace(",", ".")
+        val cleanedValue = value.replace("[,.]".toRegex(), "")
+        val cleanedDataValue = dataValue.replace("[,.]".toRegex(), "")
 
-        if (value.isNullOrEmpty() || valueWithPoint.isNullOrEmpty() || valueWithPoint == "No Cotiza") {
+        if (value.isNullOrEmpty() || dataValue.isNullOrEmpty() || dataValue == "No Cotiza") {
             return dataValue
         } else {
-            result = value.toLong() * valueWithPoint.toDouble()
-            resultToString = Constants.PRICE_FORMAT.format(result)
+            val valueDouble = cleanedValue.toDouble() / 100  // Dividir por 100 para ajustar la posición del decimal
+            val cleanedDataValueDouble = cleanedDataValue.toDouble()
+
+            val result = valueDouble * cleanedDataValueDouble
+            val resultString = formatNumber(result) // Formatear el resultado
+
+            return resultString
         }
 
         return resultToString
+    }
+
+    fun formatNumber(number: Double): String {
+        val decimalFormat = DecimalFormat("#,##0.00")
+        return decimalFormat.format(number)
     }
 
     fun setSpinner(result: ArrayList<CasaResponse>): ArrayList<CasaResponse> {// loigca para remover bitcoin y "Aregntina" de la list
         val arrayNames = arrayListOf<CasaResponse>()
         for (i in result.indices) {
             arrayNames.add(result[i])
-            if (result[i].dollarCasa.nombre.toString() == "Dolar Soja" || result[i].dollarCasa.nombre.toString() == "Bitcoin") {
+            if (result[i].dollarCasa.nombre.toString() == "Dolar Soja" || result[i].dollarCasa.nombre.toString() == "Bitcoin" || result[i].dollarCasa.nombre.toString() == "Argentina") {
                 arrayNames.remove(result[i]) // se remueve del spinner ya que no nos sirve
             }
         }
