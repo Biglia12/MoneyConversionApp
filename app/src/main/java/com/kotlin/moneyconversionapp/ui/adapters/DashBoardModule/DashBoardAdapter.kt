@@ -8,10 +8,10 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.kotlin.moneyconversionapp.R
-import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.databinding.ItemDashboardBinding
+import com.kotlin.moneyconversionapp.domain.model.DollarCasa
 
-class DashBoardAdapter(private val dollarList: ArrayList<CasaResponse>, private val context: Context) :
+class DashBoardAdapter(private val dollarList: List<DollarCasa>, private val context: Context) :
     RecyclerView.Adapter<DashBoardAdapter.DashBoardHolder>() {
 
 
@@ -29,18 +29,18 @@ class DashBoardAdapter(private val dollarList: ArrayList<CasaResponse>, private 
 
     }
 
-    fun removeItem(position: Int) {
+   /* fun removeItem(position: Int) {
         dollarList.removeAt(position)
         notifyItemRemoved(position)
-    }
+    }*/
 
 
     class DashBoardHolder(view: View) : RecyclerView.ViewHolder(view) {
         private val binding = ItemDashboardBinding.bind(view)
 
-        fun bind(dollar: CasaResponse, context: Context) {
-            var sellMoney = "$" + dollar.dollarCasa.venta
-            var buyMoney = "$" + dollar.dollarCasa.compra
+        fun bind(dollar: DollarCasa, context: Context) {
+            var sellMoney = "$" + dollar.venta
+            var buyMoney = "$" + dollar.compra
 
 
             if (buyMoney.contains("No Cotiza")) {
@@ -51,22 +51,22 @@ class DashBoardAdapter(private val dollarList: ArrayList<CasaResponse>, private 
                 sellMoney = removeSignDolla(sellMoney)
             }
 
-            binding.txtTypeDollar.text = dollar.dollarCasa.nombre
+            binding.txtTypeDollar.text = dollar.nombre
             binding.txtSellMoney.text = sellMoney
             binding.txtBuyMoney.text = buyMoney
-            binding.textViewVariation.text = dollar.dollarCasa.variacion.toString()
+            binding.textViewVariation.text = dollar.variacion.toString()
             binding.imageViewCountry.setImageResource(R.drawable.ic_bitcoin_color)
 
-            if (dollar.dollarCasa.nombre?.startsWith("Dolar") == true) {
+            if (dollar.nombre?.startsWith("Dolar") == true) {
                 binding.imageViewCountry.setImageResource(R.drawable.ic_dollar_icon)
             }
 
             when {
-                dollar.dollarCasa.nombre.isNullOrEmpty() -> changeText(binding.txtTypeDollar)
-                dollar.dollarCasa.venta.toString().isNullOrEmpty() || dollar.dollarCasa.venta.toString() == "null" ||  dollar.dollarCasa.venta.toString() == "{}"-> changeText(binding.txtSellMoney)
-                dollar.dollarCasa.compra.isNullOrEmpty() -> changeText(binding.txtBuyMoney)
-                dollar.dollarCasa.variacion.toString().isNullOrEmpty() || dollar.dollarCasa.variacion.toString() == "null"||  dollar.dollarCasa.variacion.toString() == "{}" -> changeText(binding.textViewVariation) // lo se es horrible esto pero al ser un servicio de terceros no hay muchas formas de solucionarlo ya que a veces el json viene con diferentes tipos de valores y no siempre es un string
-                dollar.dollarCasa.variacion.toString().contains("-") -> binding.textViewVariation.setTextColor(ContextCompat.getColor(context,R.color.red))
+                dollar.nombre.isNullOrEmpty() -> changeText(binding.txtTypeDollar)
+                dollar.venta.toString().isNullOrEmpty() || dollar.venta.toString() == "null" ||  dollar.venta.toString() == "{}"-> changeText(binding.txtSellMoney)
+                dollar.compra.isNullOrEmpty() -> changeText(binding.txtBuyMoney)
+                dollar.variacion.toString().isNullOrEmpty() || dollar.variacion.toString() == "null"||  dollar.variacion.toString() == "{}" -> changeText(binding.textViewVariation) // lo se es horrible esto pero al ser un servicio de terceros no hay muchas formas de solucionarlo ya que a veces el json viene con diferentes tipos de valores y no siempre es un string
+                dollar.variacion.toString().contains("-") -> binding.textViewVariation.setTextColor(ContextCompat.getColor(context,R.color.red))
             }
 
         }

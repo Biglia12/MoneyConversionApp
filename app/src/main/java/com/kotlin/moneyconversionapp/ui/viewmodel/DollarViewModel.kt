@@ -1,16 +1,14 @@
 package com.kotlin.moneyconversionapp.ui.viewmodel
 
 import android.util.Log
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.kotlin.moneyconversionapp.Constants
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.domain.usecases.DashBoard.DashBoardUseCase
 import com.kotlin.moneyconversionapp.domain.usecases.calculator.CalculatorUseCase
 import com.kotlin.moneyconversionapp.domain.usecases.DollarUseCases
-import com.kotlin.moneyconversionapp.domain.usecases.calculator.SpinnerCalculatorUseCase
+import com.kotlin.moneyconversionapp.domain.model.DollarCasa
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -22,8 +20,8 @@ class DollarViewModel @Inject constructor(
     private val calculatorUseCase: CalculatorUseCase,
 ) : ViewModel() {
 
-    val casaResponse = MutableLiveData<ArrayList<CasaResponse>>()
-    val casaResponseCalculator = MutableLiveData<ArrayList<CasaResponse>>()
+    val casaResponse = MutableLiveData<List<DollarCasa>>()
+    val casaResponseCalculator = MutableLiveData<List<DollarCasa>>()
     val isLoading = MutableLiveData<Boolean>()
     val showError = MutableLiveData<Boolean>()
     val showRecycler = MutableLiveData<Boolean>()
@@ -71,7 +69,7 @@ class DollarViewModel @Inject constructor(
 
 
 
-    fun setSpinnerShared(result: ArrayList<CasaResponse>) { // se pasa array de nombres para el spinner
+    fun setSpinnerShared(result: ArrayList<DollarCasa>) { // se pasa array de nombres para el spinner
         casaResponseCalculator.postValue(result)
     }
 
