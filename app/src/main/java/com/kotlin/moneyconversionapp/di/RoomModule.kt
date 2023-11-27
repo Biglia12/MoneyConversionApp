@@ -2,7 +2,7 @@ package com.kotlin.moneyconversionapp.di
 
 import android.content.Context
 import androidx.room.Room
-import com.kotlin.moneyconversionapp.data.database.DollarCasaDataBase
+import com.kotlin.moneyconversionapp.data.database.AppDataBase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,9 +19,9 @@ object RoomModule {
     @Singleton
     @Provides
     fun provideRoom(@ApplicationContext context: Context) =
-        Room.databaseBuilder(context, DollarCasaDataBase::class.java, CASA_DATABASE_NAME).build()
+        Room.databaseBuilder(context, AppDataBase::class.java, CASA_DATABASE_NAME).build()
 
     @Singleton
     @Provides
-    fun provideCasaDao(db: DollarCasaDataBase) = db.getCasaDao()
+    fun provideCasaDao(db: AppDataBase) = db.getCasaDao()
 }

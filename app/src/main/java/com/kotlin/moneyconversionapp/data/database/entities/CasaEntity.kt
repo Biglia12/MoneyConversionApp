@@ -20,4 +20,4 @@ data class CasaEntity(
 )
 
 
-fun DollarCasa.toDataBase() = CasaEntity(compra = compra, venta = venta as String?, agencia = agencia, nombre = nombre, variacion = variacion as String?, ventaCero = ventaCero, decimales = decimales)
+fun DollarCasa.toDataBase() = CasaEntity(compra = compra, venta = venta, agencia = agencia, nombre = nombre, variacion = variacion, ventaCero = ventaCero, decimales = decimales)

@@ -6,6 +6,6 @@ import com.kotlin.moneyconversionapp.data.database.dao.DollarCasaDao
 import com.kotlin.moneyconversionapp.data.database.entities.CasaEntity
 
 @Database(entities = [CasaEntity::class], version = 1)
-abstract class DollarCasaDataBase: RoomDatabase() {
+abstract class AppDataBase: RoomDatabase() {
     abstract fun getCasaDao(): DollarCasaDao
 }
