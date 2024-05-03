@@ -7,6 +7,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.kotlin.moneyconversionapp.Constants
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
+import com.kotlin.moneyconversionapp.data.model.DollarResponse
 import com.kotlin.moneyconversionapp.domain.usecases.DashBoard.DashBoardUseCase
 import com.kotlin.moneyconversionapp.domain.usecases.calculator.CalculatorUseCase
 import com.kotlin.moneyconversionapp.domain.usecases.DollarUseCases
@@ -22,8 +23,8 @@ class DollarViewModel @Inject constructor(
     private val calculatorUseCase: CalculatorUseCase,
 ) : ViewModel() {
 
-    val casaResponse = MutableLiveData<ArrayList<CasaResponse>>()
-    val casaResponseCalculator = MutableLiveData<ArrayList<CasaResponse>>()
+    val casaResponse = MutableLiveData<ArrayList<DollarResponse>>()
+    val casaResponseCalculator = MutableLiveData<ArrayList<DollarResponse>>()
     val isLoading = MutableLiveData<Boolean>()
     val showError = MutableLiveData<Boolean>()
     val showRecycler = MutableLiveData<Boolean>()
@@ -47,16 +48,16 @@ class DollarViewModel @Inject constructor(
 
             if (!result.isNullOrEmpty()) {
 
-                val removeName = dashBoardUseCase.removeName(result)
-                casaResponse.postValue(removeName)
+                //val removeName = dashBoardUseCase.removeName(result)
+                casaResponse.postValue(result)
                 //removeName(result)
 
                 isLoading.postValue(false)
                 showError.postValue(false)
                 showRecycler.postValue(true)
 
-                val arrayNamesForSpinner = calculatorUseCase.setSpinner(result)
-                casaResponseCalculator.postValue(arrayNamesForSpinner)
+                //val arrayNamesForSpinner = calculatorUseCase.setSpinner(result)
+                casaResponseCalculator.postValue(result)
                 //setSpinner(result)
 
                 Log.d("dada", "dasdasd")
@@ -71,7 +72,7 @@ class DollarViewModel @Inject constructor(
 
 
 
-    fun setSpinnerShared(result: ArrayList<CasaResponse>) { // se pasa array de nombres para el spinner
+    fun setSpinnerShared(result: ArrayList<DollarResponse>) { // se pasa array de nombres para el spinner
         casaResponseCalculator.postValue(result)
     }
 

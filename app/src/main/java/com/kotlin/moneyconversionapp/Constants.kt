@@ -7,7 +7,8 @@ object Constants {
      const val MONEYPROD = "MONEYCONVERSION_Production"
 
      //BaseUrl
-     const val BASE_URL_DOLARSI = "https://www.dolarsi.com/api/"
+//     const val BASE_URL_DOLARSI = "https://www.dolarsi.com/api/"
+     const val BASE_URL_DOLARAPI = "https://dolarapi.com/"
      const val BASE_URL_API_DOLLAR = "https://api-dolar-argentina.herokuapp.com/"
      const val BASE_URL_HISTORIC = "https:api.bluelytics.com.ar/v2/"
 
@@ -31,6 +32,17 @@ object Constants {
      const val DOLLAR_TRUISTA = "Dolar turista"
      const val DOLLAR = "Dolar"
      const val ARGENTINA = "Argentina"
+
+     //DollaApi
+     const val OFICIAL ="Oficial"
+     const val BLUE="Blue"
+     const val BOLSA="Bolsa"
+     const val CONTADO_LIQUI="Contado con liqui"
+     const val MAYORISTA="Mayorista"
+     const val CRYPTO="Crypto"
+     const val TARJETA="Tarjeta"
+
+
 
      //Format
      const val PRICE_FORMAT = "%,.2f"

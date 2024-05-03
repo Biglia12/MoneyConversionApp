@@ -25,6 +25,7 @@ import com.kotlin.moneyconversionapp.Constants
 import com.kotlin.moneyconversionapp.MoneyApplication
 import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
+import com.kotlin.moneyconversionapp.data.model.DollarResponse
 import com.kotlin.moneyconversionapp.databinding.FragmentCalculatorBinding
 import com.kotlin.moneyconversionapp.ui.viewmodel.DollarViewModel
 import dagger.hilt.android.AndroidEntryPoint
@@ -87,14 +88,14 @@ class CalculatorFragment @Inject constructor() : Fragment() {
         dollarViewModel.casaResponseCalculator.observe(viewLifecycleOwner, Observer {
             val arrayNames = arrayListOf<String>()
             it.forEach {
-                    arrayNames.add(it.dollarCasa.nombre.toString())
+                    arrayNames.add(it.nombre?: " ")
                 }
 
             val adapterSpinner = activity?.let { it1 ->
                 ArrayAdapter(
                     it1,
                     android.R.layout.simple_spinner_item,
-                    arrayNames
+                    it
                 )
             }
             binding.spinnerChoose.adapter = adapterSpinner
@@ -105,7 +106,7 @@ class CalculatorFragment @Inject constructor() : Fragment() {
 
    private fun setSpinnerSelection(
         arrayNames: ArrayList<String>,
-        casaResponses: ArrayList<CasaResponse>
+        casaResponses: ArrayList<DollarResponse>
     ) {
         binding.spinnerChoose.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
             override fun onNothingSelected(parent: AdapterView<*>?) {
@@ -116,14 +117,13 @@ class CalculatorFragment @Inject constructor() : Fragment() {
                 val names = arrayNames[position]
                 val selectedCasaResponse = casaResponses[position]
                 when (names) {
-                    Constants.DOLLAR_OFICIAL,
-                    Constants.DOLLAR_BLUE,
-                    Constants.DOLLAR_SOJA,
-                    Constants.DOLLAR_CONTADO_LIQUI,
-                    Constants.DOLLAR_BOLSA,
-                    Constants.BITCOIN,
-                    Constants.DOLLAR_TRUISTA,
-                    Constants.DOLLAR -> setPrices(selectedCasaResponse)
+                    Constants.OFICIAL,
+                    Constants.BLUE,
+                    Constants.CONTADO_LIQUI,
+                    Constants.BOLSA,
+                    Constants.CRYPTO,
+                    Constants.TARJETA,
+                    Constants.MAYORISTA -> setPrices(selectedCasaResponse)
                     else -> setWithoutPrices("$0")
                 }
             }
@@ -156,9 +156,9 @@ class CalculatorFragment @Inject constructor() : Fragment() {
     }
 
 
-    private fun setPrices(casaResponse: CasaResponse) {
-         priceWithDollarVenta = casaResponse.dollarCasa.venta.toString()
-         priceWithDollarCompra = casaResponse.dollarCasa.compra.toString()
+    private fun setPrices(casaResponse: DollarResponse) {
+         priceWithDollarVenta = casaResponse.venta.toString()
+         priceWithDollarCompra = casaResponse.compra.toString()
 
         binding.textSellPrice.text = stringWithDollarSign(priceWithDollarVenta)
         binding.textBuyPrice.text = stringWithDollarSign(priceWithDollarCompra)

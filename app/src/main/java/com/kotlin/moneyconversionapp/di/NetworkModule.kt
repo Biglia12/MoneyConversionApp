@@ -18,13 +18,19 @@ import javax.inject.Singleton
 object NetworkModule {
 
 
+//    @Singleton
+//    @Provides
+//    @Named("baseUrlDolarSi")
+//    fun provideRetrofit(): Retrofit{
+//        return createRetrofit(Constants.BASE_URL_DOLARSI)
+//    }
+
     @Singleton
     @Provides
-    @Named("baseUrlDolarSi")
+    @Named("baseUrlDolarApi")
     fun provideRetrofit(): Retrofit{
-        return createRetrofit(Constants.BASE_URL_DOLARSI)
+        return createRetrofit(Constants.BASE_URL_DOLARAPI)
     }
-
     @Singleton
     @Provides
     @Named("baseurlHistoric")
@@ -52,6 +58,13 @@ object NetworkModule {
     @Provides
     @Named("baseUrlDolarSi")
     fun provideServices(@Named("baseUrlDolarSi")retrofit: Retrofit): Services{
+        return retrofit.create(Services::class.java)
+    }
+
+    @Singleton
+    @Provides
+    @Named("baseUrlDolarApi")
+    fun provideServicesDollar(@Named("baseUrlDolarApi")retrofit: Retrofit): Services{
         return retrofit.create(Services::class.java)
     }
 

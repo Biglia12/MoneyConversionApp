@@ -33,6 +33,7 @@ import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.ui.adapters.DashBoardModule.DashBoardAdapter
 import com.kotlin.moneyconversionapp.databinding.FragmentDashBoardBinding
 import com.kotlin.moneyconversionapp.data.model.CasaResponse
+import com.kotlin.moneyconversionapp.data.model.DollarResponse
 import com.kotlin.moneyconversionapp.ui.viewmodel.DollarViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
@@ -174,7 +175,7 @@ class DashBoardFragment @Inject constructor() : Fragment() {
     }
 
 
-    private fun initRecyler(arrayList: ArrayList<CasaResponse>) {
+    private fun initRecyler(arrayList: ArrayList<DollarResponse>) {
         adapter = DashBoardAdapter(
             arrayList,
             requireContext()
