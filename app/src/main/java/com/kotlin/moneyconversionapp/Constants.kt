@@ -50,4 +50,10 @@ object Constants {
      //GooglePlay
      const val GOOGLE_PLAY="https://play.google.com/store/apps/details?id="
 
+     //FormatDate
+     const val INPUT_DATE = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+     const val OUTPUT_DATE = "dd/MM/yyyy HH:mm"
+
+
+
 }

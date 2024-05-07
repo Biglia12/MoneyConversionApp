@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.kotlin.moneyconversionapp.R
-import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.data.model.DollarResponse
 import com.kotlin.moneyconversionapp.databinding.ItemDashboardBinding
 
@@ -55,15 +54,14 @@ class DashBoardAdapter(private val dollarList: ArrayList<DollarResponse>, privat
             binding.txtTypeDollar.text = dollar.nombre
             binding.txtSellMoney.text = sellMoney
             binding.txtBuyMoney.text = buyMoney
-            binding.textViewDate.text = dollar.fechaActulizacion
+            binding.textViewDate.text = dollar.formatDate()
             binding.imageViewCountry.setImageResource(R.drawable.ic_dollar_icon)
 
             when {
                 dollar.nombre.isNullOrEmpty() -> changeText(binding.txtTypeDollar)
                 dollar.venta.toString().isNullOrEmpty() || dollar.venta.toString() == "null" ||  dollar.venta.toString() == "{}"-> changeText(binding.txtSellMoney)
                 dollar.compra.toString().isNullOrEmpty() -> changeText(binding.txtBuyMoney)
-                dollar.fechaActulizacion.toString().isNullOrEmpty() || dollar.fechaActulizacion.toString() == "null"||  dollar.fechaActulizacion.toString() == "{}" -> changeText(binding.textViewDate) // lo se es horrible esto pero al ser un servicio de terceros no hay muchas formas de solucionarlo ya que a veces el json viene con diferentes tipos de valores y no siempre es un string
-                dollar.fechaActulizacion.toString().contains("-") -> binding.textViewDate.setTextColor(ContextCompat.getColor(context,R.color.red))
+                dollar.fechaActualizacion.toString().isNullOrEmpty() || dollar.fechaActualizacion.toString() == "null"||  dollar.fechaActualizacion.toString() == "{}" -> changeText(binding.textViewDate) // lo se es horrible esto pero al ser un servicio de terceros no hay muchas formas de solucionarlo ya que a veces el json viene con diferentes tipos de valores y no siempre es un string
             }
 
         }
