@@ -95,7 +95,7 @@ class CalculatorFragment @Inject constructor() : Fragment() {
                 ArrayAdapter(
                     it1,
                     android.R.layout.simple_spinner_item,
-                    it
+                    arrayNames
                 )
             }
             binding.spinnerChoose.adapter = adapterSpinner

@@ -23,14 +23,26 @@ class DollarViewModel @Inject constructor(
     private val calculatorUseCase: CalculatorUseCase,
 ) : ViewModel() {
 
-    val casaResponse = MutableLiveData<ArrayList<DollarResponse>>()
-    val casaResponseCalculator = MutableLiveData<ArrayList<DollarResponse>>()
-    val isLoading = MutableLiveData<Boolean>()
-    val showError = MutableLiveData<Boolean>()
-    val showRecycler = MutableLiveData<Boolean>()
-    val resultCalculateBuy = MutableLiveData<String>()
-    val resultCalculateSell = MutableLiveData<String>()
+    val casaResponse :LiveData<ArrayList<DollarResponse>> get() = _casaResponse
+    private val _casaResponse = MutableLiveData<ArrayList<DollarResponse>>()
 
+    val casaResponseCalculator :LiveData<ArrayList<DollarResponse>> get() = _casaResponseCalculator
+    private val _casaResponseCalculator = MutableLiveData<ArrayList<DollarResponse>>()
+
+    val isLoading: LiveData<Boolean> get() = _isLoading
+    private val _isLoading = MutableLiveData<Boolean>()
+
+    val showError :LiveData<Boolean> get() = _showError
+    private val _showError = MutableLiveData<Boolean>()
+
+    val showRecycler: LiveData<Boolean> get() = _showRecycler
+    private val _showRecycler = MutableLiveData<Boolean>()
+
+    val resultCalculateBuy :LiveData<String> get() = _resultCalculateBuy
+    private val _resultCalculateBuy = MutableLiveData<String>()
+
+    val resultCalculateSell : LiveData<String> get() = _resultCalculateSell
+    private val _resultCalculateSell = MutableLiveData<String>()
 
     init {
         callService()
@@ -42,30 +54,30 @@ class DollarViewModel @Inject constructor(
 
             val result = getDollarUseCases()
 
-            isLoading.postValue(true)
+            _isLoading.postValue(true)
 
-            showRecycler.postValue(false)
+            _showRecycler.postValue(false)
 
             if (!result.isNullOrEmpty()) {
 
                 //val removeName = dashBoardUseCase.removeName(result)
-                casaResponse.postValue(result)
+                _casaResponse.postValue(result)
                 //removeName(result)
 
-                isLoading.postValue(false)
-                showError.postValue(false)
-                showRecycler.postValue(true)
+                _isLoading.postValue(false)
+                _showError.postValue(false)
+                _showRecycler.postValue(true)
 
                 //val arrayNamesForSpinner = calculatorUseCase.setSpinner(result)
-                casaResponseCalculator.postValue(result)
+                _casaResponseCalculator.postValue(result)
                 //setSpinner(result)
 
                 Log.d("dada", "dasdasd")
 
 
             } else {
-                showError.postValue(true)
-                isLoading.postValue(false)
+                _showError.postValue(true)
+                _isLoading.postValue(false)
             }
         }
     }
@@ -73,7 +85,7 @@ class DollarViewModel @Inject constructor(
 
 
     fun setSpinnerShared(result: ArrayList<DollarResponse>) { // se pasa array de nombres para el spinner
-        casaResponseCalculator.postValue(result)
+        _casaResponseCalculator.postValue(result)
     }
 
 
@@ -82,8 +94,8 @@ class DollarViewModel @Inject constructor(
         dataValue: String,
         valueVentaWithPoint: String
     ) { //pasar parametros para hacer el calculo de la cuenta
-        resultCalculateBuy.value = calculatorUseCase.calculateResult(dataEditText, dataValue)
-        resultCalculateSell.value = calculatorUseCase.calculateResult(dataEditText, valueVentaWithPoint)
+        _resultCalculateBuy.value = calculatorUseCase.calculateResult(dataEditText, dataValue)
+        _resultCalculateSell.value = calculatorUseCase.calculateResult(dataEditText, valueVentaWithPoint)
     }
 
 }

@@ -12,7 +12,9 @@ class CalculatorUseCase @Inject constructor() {
     private var result: Double = 0.0
     private var resultToString: String = ""
 
-    fun calculateResult(value: String, dataValue: String): String { //logca para calculos de la calculadora
+    fun calculateResult(value: String, dataValue: String): String { //logica para calculos de la calculadora
+
+
 
         val cleanedValue = value.replace("[,.]".toRegex(), "")
         val cleanedDataValue = dataValue.replace("[,.]".toRegex(), "")
@@ -20,13 +22,20 @@ class CalculatorUseCase @Inject constructor() {
         if (value.isNullOrEmpty() || dataValue.isNullOrEmpty() || dataValue == "No Cotiza") {
             return dataValue
         } else {
-            val valueDouble = cleanedValue.toDouble() / 100  // Dividir por 100 para ajustar la posición del decimal
-            val cleanedDataValueDouble = cleanedDataValue.toDouble()
 
-            val result = valueDouble * cleanedDataValueDouble
-            val resultString = formatNumber(result) // Formatear el resultado
+            val valueToDouble = value.toDouble()
+            val dataValueToDouble = dataValue.toDouble()
 
-            return resultString
+            val result: Double  = valueToDouble * dataValueToDouble
+            resultToString = result.toString()
+
+            //val valueDouble = cleanedValue.toDouble() / 100  // Dividir por 100 para ajustar la posición del decimal
+            //val cleanedDataValueDouble = cleanedDataValue.toDouble(////)
+
+            //val result = valueDouble * cleanedDataValueDouble
+            //val resultString = formatNumber(result) // Formatear el resultado
+
+            return resultToString
         }
 
         return resultToString
