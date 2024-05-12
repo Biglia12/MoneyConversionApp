@@ -1,6 +1,5 @@
 package com.kotlin.moneyconversionapp.ui.view.fragments.DashBoardModule
 
-import android.content.ContentValues.TAG
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
@@ -20,19 +19,13 @@ import com.google.android.gms.ads.AdListener
 import com.google.android.gms.ads.AdRequest
 import com.google.android.gms.ads.FullScreenContentCallback
 import com.google.android.gms.ads.LoadAdError
-import com.google.android.gms.ads.MobileAds
-import com.google.android.gms.ads.OnUserEarnedRewardListener
-import com.google.android.gms.ads.initialization.OnInitializationCompleteListener
 import com.google.android.gms.ads.interstitial.InterstitialAd
 import com.google.android.gms.ads.interstitial.InterstitialAdLoadCallback
-import com.google.android.gms.ads.rewarded.RewardedAd
-import com.google.android.gms.ads.rewarded.RewardedAdLoadCallback
 import com.kotlin.moneyconversionapp.Constants
 import com.kotlin.moneyconversionapp.MoneyApplication
 import com.kotlin.moneyconversionapp.R
 import com.kotlin.moneyconversionapp.ui.adapters.DashBoardModule.DashBoardAdapter
 import com.kotlin.moneyconversionapp.databinding.FragmentDashBoardBinding
-import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.data.model.DollarResponse
 import com.kotlin.moneyconversionapp.ui.viewmodel.DollarViewModel
 import dagger.hilt.android.AndroidEntryPoint

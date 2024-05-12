@@ -1,8 +1,6 @@
 package com.kotlin.moneyconversionapp.data.services
 
 import android.util.Log
-import com.kotlin.moneyconversionapp.Constants
-import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.data.model.DollarResponse
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

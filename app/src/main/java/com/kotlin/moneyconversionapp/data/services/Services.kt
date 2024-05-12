@@ -1,11 +1,9 @@
 package com.kotlin.moneyconversionapp.data.services
 
-import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.data.model.DollarResponse
 import com.kotlin.moneyconversionapp.data.model.HistoricDollar.HistoricDollarModel
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Query
 
 interface Services {
 

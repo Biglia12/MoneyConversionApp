@@ -1,21 +1,17 @@
 package com.kotlin.moneyconversionapp
 
-import android.app.Activity
 import android.app.Application
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.util.Log
-import android.view.WindowManager
 import com.google.android.gms.ads.MobileAds
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.data.model.DollarResponse
 import com.kotlin.moneyconversionapp.ui.view.activities.MainActivity
 import com.onesignal.OneSignal

@@ -1,7 +1,5 @@
 package com.kotlin.moneyconversionapp.data
 
-import com.kotlin.moneyconversionapp.data.model.CasaResponse
-import com.kotlin.moneyconversionapp.data.model.DollarCasaResponse
 import com.kotlin.moneyconversionapp.data.model.DollarProvider
 import com.kotlin.moneyconversionapp.data.model.DollarResponse
 import com.kotlin.moneyconversionapp.data.services.DollarService

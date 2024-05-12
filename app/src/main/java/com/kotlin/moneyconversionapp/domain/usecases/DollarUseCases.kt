@@ -1,7 +1,6 @@
 package com.kotlin.moneyconversionapp.domain.usecases
 
 import com.kotlin.moneyconversionapp.data.DollarRepository
-import com.kotlin.moneyconversionapp.data.model.CasaResponse
 import com.kotlin.moneyconversionapp.data.model.DollarResponse
 import javax.inject.Inject
 
