@@ -88,7 +88,7 @@ class CalculatorFragment @Inject constructor() : Fragment() {
         dollarViewModel.casaResponseCalculator.observe(viewLifecycleOwner, Observer {
             val arrayNames = arrayListOf<String>()
             it.forEach {
-                    arrayNames.add(it.nombre?: " ")
+                    arrayNames.add(it.nombre?: "")
                 }
 
             val adapterSpinner = activity?.let { it1 ->

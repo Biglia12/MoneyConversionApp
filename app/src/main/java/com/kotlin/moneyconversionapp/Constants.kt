@@ -37,9 +37,9 @@ object Constants {
      const val OFICIAL ="Oficial"
      const val BLUE="Blue"
      const val BOLSA="Bolsa"
-     const val CONTADO_LIQUI="Contado con liqui"
+     const val CONTADO_LIQUI="Contado con liquidación"
      const val MAYORISTA="Mayorista"
-     const val CRYPTO="Crypto"
+     const val CRYPTO="Cripto"
      const val TARJETA="Tarjeta"
 
 
