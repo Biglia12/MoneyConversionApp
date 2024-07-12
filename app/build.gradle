@@ -18,13 +18,13 @@ android {
         }
     }
 
-    compileSdk 33
+    compileSdk 34
     defaultConfig {
         applicationId "com.kotlin.moneyconversionapp"
         minSdk 24
-        targetSdk 33
-        versionCode 17
-        versionName "1.3"
+        targetSdk 34
+        versionCode 18
+        versionName "2.0"
         signingConfig signingConfigs.config
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -107,9 +107,9 @@ dependencies {
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0'
 
     // ViewModel
-    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.7.0"
     // LiveData
-    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.3.1"
+    implementation "androidx.lifecycle:lifecycle-livedata-ktx:2.7.0"
 
     //Corrutinas
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.5.0'
@@ -121,8 +121,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-ads:22.0.0'
 
     //appUpdate (update app)
-    implementation("com.google.android.play:app-update:2.0.1")
-    implementation 'com.google.android.play:app-update-ktx:2.0.1'
+    implementation("com.google.android.play:app-update:2.1.0")
+    implementation 'com.google.android.play:app-update-ktx:2.1.0'
 
     //dagger hilt
     implementation "com.google.dagger:hilt-android:$hilt_version"

@@ -1,21 +1,18 @@
 package com.kotlin.moneyconversionapp
 
-import android.app.Activity
 import android.app.Application
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import android.graphics.Color
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.os.Build
 import android.util.Log
-import android.view.WindowManager
 import com.google.android.gms.ads.MobileAds
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import com.kotlin.moneyconversionapp.data.model.CasaResponse
+import com.kotlin.moneyconversionapp.data.model.DollarResponse
 import com.kotlin.moneyconversionapp.ui.view.activities.MainActivity
 import com.onesignal.OneSignal
 import dagger.hilt.android.HiltAndroidApp
@@ -100,7 +97,7 @@ class MoneyApplication : Application() {
     }
 
     //Store in SharedPreference
-    fun setDollarValue(context: Context,key: String?, value: ArrayList<CasaResponse>) {
+    fun setDollarValue(context: Context,key: String?, value: ArrayList<DollarResponse>) {
         val prefs: SharedPreferences = context.getSharedPreferences("APP", 0)
         val editor: SharedPreferences.Editor = prefs.edit()
         editor.putString(key, Gson().toJson(value))
@@ -108,11 +105,11 @@ class MoneyApplication : Application() {
     }
 
     //Retrieve from SharedPreference
-    fun getDollarValue(context: Context,key: String?): ArrayList<CasaResponse>? {
+    fun getDollarValue(context: Context,key: String?): ArrayList<DollarResponse>? {
         val prefs: SharedPreferences = context.getSharedPreferences("APP", 0)
         val gson = Gson()
         val json = prefs.getString(key, null)
-        val type = object : TypeToken<ArrayList<CasaResponse>>() {}.type
+        val type = object : TypeToken<ArrayList<DollarResponse>>() {}.type
         return gson.fromJson(json, type)
     }
 

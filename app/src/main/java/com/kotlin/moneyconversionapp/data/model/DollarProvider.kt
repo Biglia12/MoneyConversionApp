@@ -5,5 +5,5 @@ import javax.inject.Singleton
 
 @Singleton
 class DollarProvider @Inject constructor() {
-    var dollars: ArrayList<CasaResponse> = arrayListOf()
+    var dollars: ArrayList<DollarResponse> = arrayListOf()
 }
