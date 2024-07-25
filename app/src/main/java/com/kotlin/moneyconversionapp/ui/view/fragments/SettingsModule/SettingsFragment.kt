@@ -1,6 +1,7 @@
 package com.kotlin.moneyconversionapp.ui.view.fragments.SettingsModule
 
 import android.content.Intent
+import android.content.pm.PackageInfo
 import android.graphics.Typeface
 import android.net.Uri
 import android.os.Bundle
@@ -25,6 +26,7 @@ import com.kotlin.moneyconversionapp.ui.viewmodel.Setting.SettingsViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+
 @AndroidEntryPoint
 class SettingsFragment @Inject constructor() : Fragment(), InterfaceSettings {
 
@@ -37,6 +39,7 @@ class SettingsFragment @Inject constructor() : Fragment(), InterfaceSettings {
 
     private lateinit var  appPackageName: String
     private lateinit var  playStoreUrl: String
+    private lateinit var  versionName: String
 
 
     override fun onCreateView(
@@ -54,12 +57,16 @@ class SettingsFragment @Inject constructor() : Fragment(), InterfaceSettings {
 
         initStrings()
         initRecyclerView()
+        binding.textViewVersion.text = versionName
 
     }
 
     private fun initStrings() {
         appPackageName = requireActivity().packageName
         playStoreUrl = Constants.GOOGLE_PLAY + appPackageName
+
+        val pInfo: PackageInfo? = requireActivity().packageManager.getPackageInfo(requireActivity().packageName, 0);
+        versionName = pInfo?.versionName.toString()
     }
 
     private fun initRecyclerView() {
